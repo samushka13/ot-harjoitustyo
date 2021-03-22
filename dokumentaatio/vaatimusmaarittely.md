@@ -59,6 +59,7 @@ TODO: Lisää luonnos käyttöliittymästä.
 ## Toimintaympäristön rajoitteet
 
 - Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
+  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä laitoksen Linux-koneilla.
 - Käyttäjien tiedot talletetaan paikalliselle levylle (jatkokehityksen myötä mahdollisesti muualle)
 
 ## Jatkokehitysideoita
