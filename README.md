@@ -1,5 +1,9 @@
 # Ohjelmistotekniikka, harjoitustyö
 
+## Trivial Pursuit - Custom Edition (Python)
+
+[Vaatimusmäärittely](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmarittely.md)
+
 ## Tehtävät
 
 ### *Viikko 1*
