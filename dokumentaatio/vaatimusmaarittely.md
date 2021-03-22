@@ -56,6 +56,11 @@ TODO: Lisää luonnos käyttöliittymästä.
 
   -> Täältä voi siirtyä vain näkymään "Pelin asetukset".
 
+## Toimintaympäristön rajoitteet
+
+- Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
+- Käyttäjien tiedot talletetaan paikalliselle levylle (jatkokehityksen myötä mahdollisesti muualle)
+
 ## Jatkokehitysideoita
 
 - Pelin asetuksissa voi valita vaikeustason (Helppo / Keskitaso / Haastava).
