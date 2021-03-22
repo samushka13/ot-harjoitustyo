@@ -1,0 +1,113 @@
+commit a695572b53fcfbf58ae87b643057275e88171bed
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 18:03:20 2021 +0200
+
+    vikat muutokset
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 9cdbcc21bf99e1e0980d88833028bbc894316e8f
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:52:59 2021 +0200
+
+    uusi hakemisto ja tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 00becab4b912f58b074bd88a15c9164bc342e17b
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:48:13 2021 +0200
+
+    muutettu tiedostoja
+
+ eka.txt    | 7 +++----
+ kolmas.txt | 2 +-
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+commit 3ed3f2e78b21951ecafa72d22bbd52a6360cd39d
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:45:51 2021 +0200
+
+    nimetty tiedosto uudelleen
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 9ec6076df1c95ab8bdec4a8a15fa43a825c700f5
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:43:26 2021 +0200
+
+    poistettu toinen
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit cb48385192dd27e7d3507e868a36024aedf47df6
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:42:02 2021 +0200
+
+    uusi muutos tiedostoon
+
+ tiedosto.txt | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit af41ca961748a24947b317c0a3d6889de6ea8cc1
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:40:32 2021 +0200
+
+    muutos tiedostoon
+
+ tiedosto.txt | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 8065b9bdea7c017d9ac9b60f1accd9172e755fa8
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:33:35 2021 +0200
+
+    luotu stuff ja neljäs tiedosto
+
+ stuff/neljas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 18d36ff5b33a8ef8cbc7e8a1d9884b9e36f0a33b
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:32:01 2021 +0200
+
+    muutettu tokaa ja kolmatta
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit d7cb4c55f5ef41963d2752f9f0746a4562712739
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:30:43 2021 +0200
+
+    kolmas lisätty
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1927b9fe250cf9d6131831bcf18b0fba4ee77a98
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:28:40 2021 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 552056543d35999af8dc46b06caebfd4cf9a01bd
+Author: samushka13 <56408918+samushka13@users.noreply.github.com>
+Date:   Mon Mar 22 17:26:23 2021 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
