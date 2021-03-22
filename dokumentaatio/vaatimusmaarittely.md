@@ -60,7 +60,7 @@ TODO: Lisää luonnos käyttöliittymästä.
 
 - Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
   - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä laitoksen Linux-koneilla.
-- Käyttäjien tiedot talletetaan paikalliselle levylle (jatkokehityksen myötä mahdollisesti muualle)
+- Käyttäjien tiedot talletetaan tietokantaan, josta niitä myös luetaan.
 
 ## Jatkokehitysideoita
 
