@@ -1,1 +1,9 @@
-*Tämä* on **otsikko**
+# Ohjelmistotekniikka, harjoitustyö
+
+## Tehtävät
+
+### *Viikko 1*
+
+[gitlog.txt](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+
+[komentorivi.txt](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
