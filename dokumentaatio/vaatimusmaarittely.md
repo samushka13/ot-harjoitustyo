@@ -2,11 +2,11 @@
 
 ## Sovelluksen tarkoitus
 
-Sovellus on Trivial Pursuitin kaltainen tietopeli. Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita. Jokaista pelisessio on laajasti kustomoitavissa esimerkiksi pelaajamäärien ja kysymyskategorioiden suhteen. 
+Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa. Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
 
 ## Käyttäjät
 
-Sovelluksella on vain yksi normaali käyttäjärooli, joka voi olla joko vieraileva tai rekisteröitynyt käyttäjä.
+Sovelluksella on vain yksi, normaali käyttäjärooli, joka voi olla joko vieraileva tai rekisteröitynyt käyttäjä.
 
 ## Käyttöliittymä ja toiminnallisuudet
 
