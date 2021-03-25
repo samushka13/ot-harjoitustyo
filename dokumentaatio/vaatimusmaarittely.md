@@ -1,5 +1,7 @@
 # Vaatimusmäärittely
 
+Tämä on sovelluksen alustava vaatimusmäärittely, joka saattaa joiltain osin muuttua työn aikana.
+
 ## Sovelluksen tarkoitus
 
 Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa. Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
@@ -10,7 +12,7 @@ Sovelluksella on vain yksi, normaali käyttäjärooli, joka voi olla joko vierai
 
 ## Käyttöliittymä ja toiminnallisuudet
 
-TODO: Lisää luonnos käyttöliittymästä.
+**TODO**: Lisää luonnos käyttöliittymästä.
 
 ### Kirjautuminen / Rekisteröityminen
 
@@ -19,7 +21,7 @@ TODO: Lisää luonnos käyttöliittymästä.
   - Sovellukseen kirjaudutaan käyttäjätunnuksella, joka syötetään lomakkeelle.
     - Mikäli käyttäjää ei ole, sovellus ilmoittaa siitä käyttäjälle.
   - Vaiheen voi myös ohittaa, jolloin sovellus ilmoittaa, että tiettyjä ominaisuuksia ei voi käyttää kirjautumatta.
-    - Toisin sanoen: omia kysymyksiä ei voi luoda eikä käyttää, jolloin pelin kysymykset haetaan yksinomaan [Open Trivia Databasesta] (https://opentdb.com/api_config.php).
+    - Toisin sanoen: omia kysymyksiä ei voi luoda eikä käyttää, jolloin pelin kysymykset haetaan yksinomaan [Open Trivia Databasesta](https://opentdb.com/api_config.php).
   
   -> Täältä voi siirtyä vain näkymään "Pelin asetukset".
   
@@ -47,7 +49,7 @@ TODO: Lisää luonnos käyttöliittymästä.
 
 ### Pelin kulku
 
-  - Huomion keskipisteenä on jonkinlainen (alkeellinen) pelilauta tai muu pelin seuraamisen kannalta välttämätön asia.
+  - Huomion keskipisteenä on jonkinlainen alkeellinen pelilauta tai muu pelin etenemisen/seuraamisen kannalta välttämätön asia.
   - Sivupalkissa tai vastaavassa näkyy pelaajien edistyminen.
   - Sivupalkissa on myös nappula pelin lopetukselle. 
   - Kun yksi pelaajista saa kaikki kategoriat oikein, peli päättyy.
@@ -59,7 +61,7 @@ TODO: Lisää luonnos käyttöliittymästä.
 ## Toimintaympäristön rajoitteet
 
 - Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
-  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä laitoksen Linux-koneilla.
+  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä Tietojenkäsittelytieteen laitoksen Linux-koneilla.
 - Käyttäjien tiedot talletetaan tietokantaan, josta niitä myös luetaan.
 
 ## Jatkokehitysideoita
