@@ -1,0 +1,9 @@
+// Monopoly-luokkakaavio 1
+
+[Monopoly]1--1[Lauta]1--40[Ruutu]1--0..8[Nappula]1--1[Pelaaja]2..8--1[Monopoly]
+
+[Monopoly]1--2[Noppa]
+
+[Monopoly]1--8[Nappula]
+
+[Pelaaja]1--2[Noppa]

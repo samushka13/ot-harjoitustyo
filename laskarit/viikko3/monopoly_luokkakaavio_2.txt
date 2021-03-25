@@ -1,0 +1,21 @@
+// Monopoly-luokkakaavio 2
+
+[Monopoly]1--1[Lauta]1--40[Ruutu]1--0..8[Nappula]1--1[Pelaaja]2..8--1[Monopoly]
+
+[Monopoly]1--2[Noppa]
+[Monopoly]1--8[Nappula]
+[Pelaaja]1--2[Noppa]
+[Pelaaja]0..8--*[Rahat]
+[Rahat]*--1[Pankki]
+[Ruutu]0..1--1[Lähtöruutu]1--1[Erilaisia toimintoja]
+[Ruutu]0..1--1[Vankila]1--*[Erilaisia toimintoja]
+[Ruutu]0..1--1[Mene vankilaan]
+[Ruutu]0..1--1[Vapaa pysäköinti]1--1[Erilaisia toimintoja]
+[Ruutu]0..1--3[Sattuma]*--1[Korttipakka (Sattuma)]*--*[Erilaisia toimintoja]
+[Ruutu]0..1--3[Yhteismaa]*--1[Korttipakka (Yhteismaa)]*--*[Erilaisia toimintoja]
+[Ruutu]0..1--6[Asemat ja laitokset]0..6--*[Erilaisia toimintoja]
+[Ruutu]0..1--2[Vero]0..2--*[Erilaisia toimintoja]
+[Ruutu]0..1--22[Katu]1--[Talot (0..4) TAI Hotelli (0..1)]
+[Katu]0..22--0..8[Pelaaja]
+[Katu]*--*[Erilaisia toimintoja]
+[Vankila]1--1[Mene vankilaan]
