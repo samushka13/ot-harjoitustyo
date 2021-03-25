@@ -17,3 +17,8 @@
 ### Viikko 2
 
 [Kattavuusraportti](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko2/kattavuusraportti.png)
+
+### Viikko 3
+
+[Tehtävä 1](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/monopoly_luokkakaavio_1.png)
+[Tehtävä 2](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/monopoly_luokkakaavio_2.png)
