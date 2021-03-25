@@ -16,3 +16,4 @@
 
 ### Viikko 2
 
+[Kattavuusraportti](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko2/kattavuusraportti.png)
