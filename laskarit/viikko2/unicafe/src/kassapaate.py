@@ -1,8 +1,8 @@
 class Kassapaate:
-    def __init__(self):
-        self.kassassa_rahaa = 100000
-        self.edulliset = 0
-        self.maukkaat = 0
+    def __init__(self, kassassa_rahaa, edulliset, maukkaat):
+        self.kassassa_rahaa = kassassa_rahaa
+        self.edulliset = edulliset
+        self.maukkaat = maukkaat
 
     def syo_edullisesti_kateisella(self, maksu):
         if maksu >= 240:

@@ -3,7 +3,7 @@ from kassapaate import Kassapaate
 
 
 def main():
-    unicafe_exactum = Kassapaate()
+    unicafe_exactum = Kassapaate(100000, 0, 0)
     kortti = Maksukortti(10000)
 
     unicafe_exactum.syo_edullisesti_kortilla(kortti)
