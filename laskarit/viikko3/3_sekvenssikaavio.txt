@@ -1,0 +1,15 @@
+title Tehtävä 3: Sekvenssikaavio
+
+Main->Machine: Machine()
+Machine->FuelTank: FuelTank()
+FuelTank-->Machine:
+Machine->FuelTank: _tank.fill(40)
+Machine->Engine: Engine(self._tank)
+Engine-->Machine:
+Machine-->Main:
+Main->Machine: Machine.drive()
+Machine->Engine: _engine.start()
+Engine->FuelTank: _fuel_tank.consume(5)
+Machine->Engine: _engine.use_energy()
+Engine->FuelTank: _fuel_tank.consume(10)
+Machine-->Main:
