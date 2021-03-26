@@ -40,6 +40,10 @@ Sovelluksen toiminta on testattu Python-versiolla 3.9.2. Yhteensopivuutta vanhem
 
        poetry run invoke coverage-report-html
 
+4. Laatuvaatimukset voi tarkistaa komennolla:
+
+       poetry run invoke lint
+
 ## Tehtävät
 
 ### Viikko 1

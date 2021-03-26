@@ -24,3 +24,10 @@ def coverage_report_html(ctx):
 def coverage_report_xml(ctx):
     ctx.run("coverage xml")
 
+@task
+def lint(ctx):
+    ctx.run("pylint src")
+
+@task
+def format(ctx):
+    ctx.run("poetry run invoke format")
