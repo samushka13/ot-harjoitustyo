@@ -20,25 +20,25 @@ Sovelluksen toiminta on testattu Python-versiolla 3.9.2. Yhteensopivuutta vanhem
 
 3. Asenna projektin riippuvuudet komennolla:
 
-> poetry install
+       poetry install
 
 4. Käynnistä projekti komennolla:
 
-> poetry run invoke start
+       poetry run invoke start
 
 ### Testaus
 
 1. Testit voi suorittaa komennolla: 
 
-> poetry run invoke test
+       poetry run invoke test
 
 2. Testikattavuusraportin voi luoda komennolla:
 
-> poetry run invoke coverage-report
+       poetry run invoke coverage-report
 
 3. Tai vaihtoehtoisesti HTML-muodossa komennolla:
 
-> poetry run invoke coverage-report-html
+       poetry run invoke coverage-report-html
 
 ## Tehtävät
 
