@@ -20,6 +20,8 @@
 
 ### Viikko 3
 
-[Tehtävä 1](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/monopoly_luokkakaavio_1.png)
+[Tehtävä 1](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/1_monopoly_luokkakaavio.png)
 
-[Tehtävä 2](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/monopoly_luokkakaavio_2.png)
+[Tehtävä 2](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/2_monopoly_luokkakaavio.png)
+
+[Tehtävä 3](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/3_sekvenssikaavio.png)
