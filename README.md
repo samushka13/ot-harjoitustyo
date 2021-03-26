@@ -2,6 +2,12 @@
 
 ## Trivial Pursuit - Custom Edition (Python)
 
+Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa. Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
+
+Sovelluksen toiminta on testattu Python-versiolla 3.9.2. Yhteensopivuutta vanhempien Python-versioiden kanssa ei siten voida taata.
+
+### Dokumentaatio
+
 [Vaatimusmäärittely](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
 [Työaikakirjanpito](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
