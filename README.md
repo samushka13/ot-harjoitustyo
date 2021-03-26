@@ -12,6 +12,29 @@ Sovelluksen toiminta on testattu Python-versiolla 3.9.2. Yhteensopivuutta vanhem
 
 [Työaikakirjanpito](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
+### Asennus
+
+1. Varmista, että koneellasi on asianmukainen Python-versio (^3.9).
+
+2. Varmista, että koneellasi on asianmukainen Poetry-versio (^1.1.5).
+
+3. Asenna projektin riippuvuudet komennolla:
+<poetry install>
+
+4. Käynnistä projekti komennolla:
+<poetry run invoke start>
+
+### Testaus
+
+1. Testit voi suorittaa komennolla:
+<poetry run invoke test>
+
+2. Testikattavuusraportin voi luoda komennolla:
+<poetry run invoke coverage-report>
+
+tai vaihtoehtoisesti HTML-muodossa komennolla:
+<poetry run invoke coverage-report-html>
+
 ## Tehtävät
 
 ### Viikko 1
