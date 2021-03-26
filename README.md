@@ -25,3 +25,5 @@
 [Tehtävä 2](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/2_monopoly_luokkakaavio.png)
 
 [Tehtävä 3](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/3_sekvenssikaavio.png)
+
+[Tehtävä 4](https://github.com/samushka13/ot-harjoitustyo/blob/master/laskarit/viikko3/4_sekvenssikaavio.png)
