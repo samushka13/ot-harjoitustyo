@@ -4,7 +4,7 @@ Tämä on sovelluksen alustava vaatimusmäärittely, joka saattaa joiltain osin 
 
 ## Sovelluksen tarkoitus
 
-Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa. Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
+Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa (kuvaus tarkentuu myöhemmin). Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
 
 ## Käyttäjät
 
@@ -12,9 +12,11 @@ Sovelluksella on vain yksi, normaali käyttäjärooli, joka voi olla joko vierai
 
 ## Käyttöliittymä ja toiminnallisuudet
 
-**TODO**: Lisää luonnos käyttöliittymästä.
+**TODO**: Luonnos käyttöliittymästä.
 
 ### Kirjautuminen / Rekisteröityminen
+
+HUOM: Nämä toiminnallisuudet voidaan toteuttaa joko samaan tai eri näkymään.
 
   - Käyttäjä voi luoda (lokaalin) käyttäjätunnuksen (uniikki ja pituudeltaan vähintään 3 merkkiä).
     - Mikäli tunnus ei täytyä ehtoja, sovellus ilmoittaa siitä käyttäjälle.
@@ -22,50 +24,49 @@ Sovelluksella on vain yksi, normaali käyttäjärooli, joka voi olla joko vierai
     - Mikäli käyttäjää ei ole, sovellus ilmoittaa siitä käyttäjälle.
   - Vaiheen voi myös ohittaa, jolloin sovellus ilmoittaa, että tiettyjä ominaisuuksia ei voi käyttää kirjautumatta.
     - Toisin sanoen: omia kysymyksiä ei voi luoda eikä käyttää, jolloin pelin kysymykset haetaan yksinomaan [Open Trivia Databasesta](https://opentdb.com/api_config.php).
+  - Kun käyttäjä on kirjautunut (tai ohittanut koko vaiheen), sovellus siirtyy näkymään "Pelaa".
   
-  -> Täältä voi siirtyä vain näkymään "Pelin asetukset".
-  
-### Pelin asetukset
+### Pelaa
 
-  - Pelaajien lukumäärä ja "nappuloiden" värit (2-6)
-  - Kysymysten kategoriat (6)
-  - Nappula: "Aloita peli"
-
-  -> Täältä voi siirtyä joko näkymään "Pelin kulku" tai "Omat kysymykset ja kategoriat".
+  - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
+    - Mikäli vieraileva käyttäjä yrittää tätä, ilmoitetaan, että käyttäjän on kirjauduttava siirtyäkseen kyseiseen näkymään.
+  - Käyttäjä voi aloittaa pelin seuraavasti:
+    - Käyttäjä valitsee pelaajien lukumäärän (2-6, oletusarvona 2).
+    - Käyttäjä valitsee kysymysten kategoriat (yhteensä 5, useita vaihtoehtoja, oletusarvot annettu).
+    - Käyttäjä aloittaa pelin painikkeella, jossa lukee "Aloita peli!", jolloin siirrytään näkymään "Pelin kulku".
 
 ### Omat kysymykset ja kategoriat
 
-  - Selaa
-    - Kaikki listana tai kategorioittain.
-  - Poista
-    - Käyttäjältä pyydetään vahvistus. 
-  - Muokkaa
-    - Voi muokata kysymystä, vastausta tai kategoriaa.
-  - Luo uusi
-    - Uusi kysymys sisältää kentät kysymykselle, vastaukselle ja kategorialle.
-    - HUOM: Uusi kategoria luodaan luomalla kysymys kyseiseen kategoriaan.
-
-  -> Täältä voi siirtyä vain näkymään "Pelin kulku".
+  - Käyttäjä voi selata luomiaan kysymyksiä kategorioittain.
+  - Käyttäjä voi muokata luomiaan kysymyksiä ja kategorioita.
+  - Käyttäjä voi poistaa luomiaan kysymyksiä ja kategorioita.
+    - Käyttäjältä pyydetään tällöin vahvistus. 
+  - Käyttäjä voi luoda uuden kysymyksen seuraavasti:
+    - Käyttäjä syöttää yhteen tekstikenttään kategorian (joko olemassa oleva tai uusi).
+    - Käyttäjä syöttää toiseen tekstikenttään kysymyksen.
+      - Käyttäjälle ilmoitetaan, mikäli täsmälleen sama kysymys on olemassa.
+    - Käyttäjä syöttää kolmanteen tekstikenttään vastauksen.
+    - HUOM: Uusi kategoria luodaan siis luomalla kysymys kyseiseen kategoriaan.
+  - Käyttäjä voi milloin tahansa palata takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
 
 ### Pelin kulku
 
-  - Huomion keskipisteenä on jonkinlainen alkeellinen pelilauta tai muu pelin etenemisen/seuraamisen kannalta välttämätön asia.
-  - Sivupalkissa tai vastaavassa näkyy pelaajien edistyminen.
-  - Sivupalkissa on myös nappula pelin lopetukselle. 
-  - Kun yksi pelaajista saa kaikki kategoriat oikein, peli päättyy.
-    - Ilmoitetaan tyyliin "Pelaaja 1 voitti!".
-    - Samalla ilmestyy nappula, jota painamalla pääsee takaisin pelin asetuksiin.
-
-  -> Täältä voi siirtyä vain näkymään "Pelin asetukset".
+  - Käyttäjän on pystyttävä seuraamaan peliä ja sen edistymistä jonkinlaiselta (alkeelliselta) pelilaudalta.
+  - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelaa" milloin tahansa asianmukaisen painikkeen avulla.
+    - Käyttäjältä pyydetään tällöin vahvistus.
+  - Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
+    - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
+    - Käyttäjä voi poistua pelistä asianmukaisella painikkeella, jolloin siirrytään takaisin näkymään "Pelaa".
 
 ## Toimintaympäristön rajoitteet
 
 - Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
-  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä Tietojenkäsittelytieteen laitoksen Linux-koneilla.
+  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä Tietojenkäsittelytieteen laitoksen Linux-koneilla asianmukaisia ohjeita noudattamalla.
 - Käyttäjien tiedot talletetaan tietokantaan, josta niitä myös luetaan.
 
 ## Jatkokehitysideoita
 
+- Pelin asetuksissa voi valita pelaajien värit vapaasti (tai pelaajille voi asettaa omat kuvakkeet).
 - Pelin asetuksissa voi valita vaikeustason (Helppo / Keskitaso / Haastava).
 - Pelin asetuksissa voi valita vaikeustason pelaajittain (esim. lapsille kiva lisä).
 - Pelin asetuksissa voi valita 'pikapelin', joka on normaalia lyhyempi pelimuoto.
