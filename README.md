@@ -2,7 +2,7 @@
 
 ## Untitled Trivia Game (Python)
 
-Sovellus on hieman Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa (kuvaus tarkentuu myöhemmin). Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
+Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa (kuvaus tarkentuu myöhemmin). Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
 
 Sovelluksen toiminta on testattu Python-versiolla 3.9.2. Yhteensopivuutta vanhempien Python-versioiden kanssa ei siten voida taata.
 
