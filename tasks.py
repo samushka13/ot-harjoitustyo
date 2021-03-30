@@ -29,5 +29,5 @@ def lint(ctx):
     ctx.run("pylint src")
 
 @task
-def format(ctx):
+def formatting(ctx):
     ctx.run("poetry run invoke format")
