@@ -4,4 +4,5 @@
 | 22.3. | 2        | Alustava vaatimusmäärittely                                                 |
 | 26.3. | 2        | Pohjustusta (Poetry, Coverage, Invoke jne.)                                 |
 | 30.3. | 0,5      | Päivitetty vaatimusmäärittelyä                                              |
-|  yht. | 5,5      |                                                                             |
+| 31.3. | 2        | Pohjustusta (Pygame, Tkinter jne.)                                          |
+|  yht. | 7,5      |                                                                             |
