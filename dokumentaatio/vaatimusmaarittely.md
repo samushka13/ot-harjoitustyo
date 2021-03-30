@@ -52,6 +52,7 @@ HUOM: Nämä toiminnallisuudet voidaan toteuttaa joko samaan tai eri näkymään
 ### Pelin kulku
 
   - Käyttäjän on pystyttävä seuraamaan peliä ja sen edistymistä jonkinlaiselta (alkeelliselta) pelilaudalta.
+    - Lisäksi kunkin pelaajan on pystyttävä 'vierittämään' noppaa pelivuoronsa aikana.
   - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelaa" milloin tahansa asianmukaisen painikkeen avulla.
     - Käyttäjältä pyydetään tällöin vahvistus.
   - Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
