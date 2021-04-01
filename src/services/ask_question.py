@@ -11,11 +11,13 @@ def ask_question():
     question = db.execute(f"SELECT question FROM Questions WHERE category='{category['category']}' ORDER BY RANDOM()").fetchone()
     answer = db.execute(f"SELECT answer FROM Questions WHERE question='{question['question']}'").fetchone()
 
+    print()
     print(f"Question: {question['question']}")
     print()
     input("Press 'Enter' to show the correct answer.")
     print()
     print(f"Answer: {answer['answer']}")
+    print()
 
     correct = input("Was the player's answer correct? (y/n) ")
     if correct == "y":
