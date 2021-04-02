@@ -6,5 +6,6 @@
 | 30.3. | 0,5      | Päivitetty vaatimusmäärittelyä.                                     |
 | 30.3. | 2        | Pohjustusta (Pygame, Tkinter jne.).                                 |
 | 31.3. | 4        | Lisätty sqlite-tuki ja muutamia palveluja. Testailua.               |
-|  1.4. | 4        | Sisällön lisääminen ja poistaminen toteutettu (raakaversio)         |
-|  yht. | 15,5     |                                                                     |
+|  1.4. | 4        | Sisällön lisääminen ja poistaminen toteutettu (raakaversio).        |
+|  2.4. | 3        | Pelinäkymän toimintojen protoilua.                                  |
+|  yht. | 18,5     |                                                                     |

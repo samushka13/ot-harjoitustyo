@@ -1,6 +1,7 @@
 import tkinter as tk
 import sqlite3
 from tkinter import messagebox
+from tkinter import ttk
 
 db = sqlite3.connect("test.db")
 db.isolation_level = None
@@ -15,6 +16,7 @@ class CustomQuestionsView:
         self.window.title('Trivioboros')
         self.window.minsize(1280, 720)
         self.window.geometry('%dx%d+0+0' % (self.window.winfo_screenwidth(), self.window.winfo_screenheight()))
+        self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
 
         # -------------------------------------------------------------------
         # Left-side widgets start.
@@ -26,8 +28,7 @@ class CustomQuestionsView:
         label = tk.Label(text="Category")
         label.grid(column=0, row=1, padx=X, pady=Y)
 
-        self.category_entry = tk.Entry(self.window, width=50)
-        self.category_entry.grid(column=0, row=2, padx=X, pady=Y)
+        self.get_category_combobox()
 
         label = tk.Label(text="Question")
         label.grid(column=0, row=3, padx=X, pady=Y)
@@ -43,7 +44,6 @@ class CustomQuestionsView:
 
         save = tk.Button(self.window, text="Save", width=10, command=self.save_item)
         save.grid(column=0, row=7, padx=X, pady=Y)
-        self.window.bind('<Return>', lambda event=None: save.invoke())
 
         clear = tk.Button(self.window, text="Clear", width=10, command=self.clear_item)
         clear.grid(column=0, row=8, padx=X, pady=Y)
@@ -65,6 +65,9 @@ class CustomQuestionsView:
         delete = tk.Button(self.window, text="Delete", width=10, command=self.delete_item)
         delete.grid(column=2, row=8, padx=X, pady=Y)
 
+        delete_all = tk.Button(self.window, text="Delete all", width=10, command=self.delete_all)
+        delete_all.grid(column=1, columnspan=2, row=9, padx=X, pady=Y)
+
         # -------------------------------------------------------------------
         # Right-side widgets end.
         # -------------------------------------------------------------------
@@ -76,15 +79,17 @@ class CustomQuestionsView:
 
     def save_item(self):
         user_id = 1
-        category = self.category_entry.get()
+        category = self.category_combobox.get()
         question = self.question_entry.get()
         answer = self.answer_entry.get()
         db.execute("INSERT INTO Questions (user_id, category, question, answer) VALUES (?,?,?,?)", (user_id, category, question, answer))
         messagebox.showinfo("HOORAY!", "Question added successfully.")
         self.get_listbox()
+        self.get_category_combobox()
+
 
     def clear_item(self):
-        self.category_entry.delete(0, 'end')
+        self.category_combobox.delete(0, 'end')
         self.question_entry.delete(0, 'end')
         self.answer_entry.delete(0, 'end')
 
@@ -94,21 +99,45 @@ class CustomQuestionsView:
     def delete_item(self):
         confirmation = messagebox.askquestion("Delete", "Are you sure you want to delete the selected question?")
         if confirmation == 'yes':
-            tk.messagebox.showinfo('Delete','Your question has been deleted.')
             db.execute(f"DELETE FROM Questions WHERE id='{str(self.listbox.get(self.listbox.curselection())).split(' ', 1)[0]}'")
             self.get_listbox()
+            self.get_category_combobox()
+            tk.messagebox.showinfo('Delete','Your question has been deleted.')
+
+    def delete_all(self):
+        confirmation = messagebox.askquestion("Delete", "Are you sure you want to delete all your questions?")
+        if confirmation == 'yes':
+            db.execute("DELETE FROM Questions")
+            self.get_listbox()
+            self.get_category_combobox()
+            tk.messagebox.showinfo('Delete','Your questions have been deleted.')
+
+        # These will be used to enable a feature,
+        # where the current user can view every user's questions (in the same database),
+        # but only delete (or edit) their own.
+        # user_id = db.execute(f"SELECT id FROM Users WHERE username='{current_user}'").fetchone()
+        # db.execute(f"DELETE FROM Questions WHERE user_id='{user_id['id']}'")
 
     def get_listbox(self):
         entries = []
         for row in db.execute("SELECT id, category, question, answer FROM Questions").fetchall():
             entries.append(f"{row['id']}      C: {row['category']}     Q: {row['question']}     A: {row['answer']}")
-
         self.listbox_entries = entries
         self.listbox = tk.Listbox(self.window, width=50, height=30)
         for entry in self.listbox_entries:
             self.listbox.insert(tk.END, entry)
             self.listbox.select_set(0)
-
         self.listbox.grid(column=1, row=1, columnspan=2, rowspan=7, padx=X, pady=Y)
-
         return self.listbox
+
+    def get_category_combobox(self):
+        self.category_combobox = ttk.Combobox(self.window, width=50, textvariable=tk.StringVar())
+        values = []
+        for row in db.execute("SELECT category FROM Questions GROUP BY category").fetchall():
+            values.append(f"{row['category']}")
+        self.category_combobox['values'] = values
+        self.category_combobox.grid(column = 0, row = 2, padx=X, pady=Y)
+        return self.category_combobox
+
+    def bind_key_to_button(self, window):
+        window.widget.invoke()
