@@ -1,6 +1,4 @@
 import sqlite3
-import tkinter as tk
-from tkinter import ttk
 import pygame as pg
 from entities.board import Board
 
@@ -15,6 +13,7 @@ Y = 10
 class GameView:
     def __init__(self):
         pg.init()
+        pg.display.set_caption('Trivioboros')
         board = Board(2, 30, ["Computer Science", "TV Shows", "Memes", "Sports", "Leisure"])
         Board.display(board)
         pg.display.flip()

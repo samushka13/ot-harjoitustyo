@@ -20,13 +20,13 @@ class Board:
         pg.draw.circle(surface, (255, 0, 255, 100), (900, height/2), 300, 100)
         window.blit(surface, (0,0))
 
-        c = 1
-        q = 2
-        a = 3
+        c_text = 1
+        q_text = 2
+        a_text = 3
 
-        category = font.render(f'Category:\n{c}', True, (0, 0, 0))
-        question = font.render(f'Question:\n{q}', True, (0, 0, 0))
-        answer = font.render(f'Answer:\n{a}', True, (0, 0, 0))
+        category = font.render(f'Category:\n{c_text}', True, (0, 0, 0))
+        question = font.render(f'Question:\n{q_text}', True, (0, 0, 0))
+        answer = font.render(f'Answer:\n{a_text}', True, (0, 0, 0))
 
         window.blit(category, (100,100))
         window.blit(question, (100,200))

@@ -8,4 +8,5 @@
 | 31.3. | 4        | Lisätty sqlite-tuki ja muutamia palveluja. Testailua.               |
 |  1.4. | 4        | Sisällön lisääminen ja poistaminen toteutettu (raakaversio).        |
 |  2.4. | 3        | Pelinäkymän toimintojen protoilua.                                  |
-|  yht. | 18,5     |                                                                     |
+|  2.4. | 2        | Loginin protoilua.                                                  |
+|  yht. | 20,5     |                                                                     |

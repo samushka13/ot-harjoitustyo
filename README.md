@@ -1,6 +1,6 @@
 # Ohjelmistotekniikka, harjoitustyö
 
-## Untitled Trivia Game (Python)
+## Trivioboros (Python)
 
 Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa (kuvaus tarkentuu myöhemmin). Rekisteröityneet käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita.
 
