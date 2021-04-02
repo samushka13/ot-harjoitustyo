@@ -6,8 +6,10 @@ class Rules:
             Kierretään ympyränmuotoista pelilautaa.
             Mitä pienempi lauta, sitä haastavampi peli (jatkokehitysjuttu).
 
-            Jos pelaaja ei saa oikeita vastuauksia kierroksen aikana, pelaaja menettää pisteen.
-            Jos pisteitä ei vielä ole, pelaaja ei menetä mitään.
-            Kuitenkin: kolme peräkkäistä kierrosta ilman oikeita vastauksia johtaa pelaajan hylkäämiseen.
-            HUOM: Miten menetetty piste määrätään? Eka? Viimeisin? Toisen valitsema? Vai menettääkö kaikki (voisi olla valittavana lisähaasteen vuoksi)?
+            Jos pelaaja ei saa oikeita vastauksia johonkin kategoriaan kierroksen aikana, 
+            pelaaja menettää kategorian pisteen.
+            Jos pistettä ei vielä kategoriassa ole, pelaaja ei menetä mitään.
+            HUOM: Pisteitä voisi seurata siten, että lasketaan oikeat vastaukset kategoriassa
+            ja kierroksen loputtua verrataan määrää tyyliin 
+            'if correct_answers_in_category_x == 0: remove_category_point'.
         """
