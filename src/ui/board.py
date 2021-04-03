@@ -1,8 +1,11 @@
 import sqlite3
 from textwrap import fill
 from math import sin,cos,radians
+import random
+import string
 import pygame as pg
 from pygame import gfxdraw
+
 
 db = sqlite3.connect("test.db")
 db.isolation_level = None
@@ -100,7 +103,8 @@ class Board:
             i += 1
 
     def get_questions(self):
-        select = "A" # Placeholder.
+        # Placeholder:
+        select = ''.join(random.choice(string.ascii_uppercase) for i in range(1))
 
         self.c_label = self.bold_font.render('Category', True, (0, 0, 0))
         category = db.execute(f"SELECT category FROM Questions WHERE category='{select}'").fetchone()
