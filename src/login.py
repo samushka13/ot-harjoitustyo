@@ -1,6 +1,7 @@
 import tkinter as tk
 import sqlite3
 from tkinter import Frame
+from settings import SettingsView
 
 db = sqlite3.connect("test.db")
 db.isolation_level = None
@@ -17,7 +18,8 @@ class LoginView:
         self.window.geometry('360x360')
         self.window.resizable(False, False)
         self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
-
+        self.window.focus()
+        
         frame = Frame(self.window)
         frame.grid(row=0, column=0, sticky="NESW")
         for i in (0,5):
@@ -37,6 +39,7 @@ class LoginView:
 
         self.input_username = tk.Entry(frame, width=30)
         self.input_username.grid(column=0, row=2, columnspan=2, padx=X, pady=Y)
+        self.input_username.focus()
 
         label = tk.Label(frame, text="Password")
         label.grid(column=0, row=3, padx=X, columnspan=2, pady=Y)
@@ -62,8 +65,9 @@ class LoginView:
 
         self.window.mainloop()
 
-    def destroy_login_view(self):
+    def open_settings_view(self):
         self.window.destroy()
+        SettingsView()
 
     def check_for_usernames(self):
         credentials = []
@@ -71,16 +75,20 @@ class LoginView:
             credentials.append((row['username'],row['password']))
         if len(self.input_username.get()) < 3:
             tk.messagebox.showinfo('Invalid Username','Username should be 3 or more characters long.')
+            self.window.focus()
+            self.input_username.focus()
         elif (self.input_username.get(),self.input_password.get()) in credentials:
             tk.messagebox.showinfo('Logged in!',f'Welcome back, {self.input_username.get()}!')
-            self.destroy_login_view()
+            self.open_settings_view()
         else:
             if [item for item in credentials if item[0] == self.input_username.get()]:
                 tk.messagebox.showinfo('Login Error',"Username and password don't match.")
+                self.window.focus()
+                self.input_username.focus()
             else:
                 db.execute("INSERT INTO Users (username, password) VALUES (?,?)", (self.input_username.get(), self.input_password.get()))
                 tk.messagebox.showinfo('Username Created',f'Nice to meet you, {self.input_username.get()}!')
-                self.destroy_login_view()
+                self.open_settings_view()
 
     def list_all_users(self):
         users = []
@@ -88,9 +96,12 @@ class LoginView:
             users.append(f"{user['username']}")
         if len(users) > 0:
             userlist = '\n'.join(sorted(users))
-            tk.messagebox.showinfo('Users',f'List of users on this device: \n\n{userlist}')
+            info = tk.messagebox.showinfo('Users',f'List of users on this device: \n\n{userlist}')
         else:
-            tk.messagebox.showinfo('Users','There are currently no users on this device.')
+            info = tk.messagebox.showinfo('Users','There are currently no users on this device.')
+        if info == 'ok':
+            self.window.focus()
+            self.input_username.focus()
 
     def bind_key_to_button(self, window):
         window.widget.invoke()

@@ -10,4 +10,5 @@
 |  2.4. | 3   | Pelinäkymän toimintojen protoilua.                                  |
 |  2.4. | 6   | Loginin ja pelilaudan protoilua.                                    |
 |  3.4. | 3   | Loginin ja sisällönhallinnan parantelua.                            |
-|  yht. | 28  |                                                                     |
+|  4.4. | 5   | Toimintojen ja käyttökokemuksen parantelua.                         |
+|  yht. | 33  |                                                                     |

@@ -22,15 +22,15 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli se
     - Sovellus ilmoittaa käyttäjälle asianmukaisesti, mikäli
       - tunnus ei täytyä ehtoja (uniikki ja pituudeltaan vähintään 3 merkkiä),
       - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
-  - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelaa".
+  - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
-### Pelaa
+### Pelin asetukset
 
   - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
   - Käyttäjä voi muokata pelin asetuksia valitsemalla
     - pelaajien lukumäärän (2-6, oletusarvona 2),
     - kysymysten kategoriat (yhteensä 5, useita vaihtoehtoja, oletusarvot annettu).
-  - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelin kulku".
+  - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
 
 ### Omat kysymykset ja kategoriat
 
@@ -46,16 +46,16 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli se
       - HUOM: Uusi kategoria luodaan siis luomalla kysymys kyseiseen kategoriaan.
   - Käyttäjä voi milloin tahansa palata takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
 
-### Pelin kulku
+### Pelisessio
 
   - Käyttäjän on pystyttävä seuraamaan peliä ja sen edistymistä jonkinlaiselta (alkeelliselta) pelilaudalta.
-    - Lisäksi kunkin pelaajan on pystyttävä 'vierittämään' noppaa pelivuoronsa aikana.
+    - Lisäksi kunkin pelaajan on pystyttävä 'heittämään' noppaa pelivuoronsa aikana.
   - Kysymykset haetaan lokaalista tietokannasta ja/tai [Open Trivia Databasesta](https://opentdb.com/api_config.php) riippuen pelin asetuksista.
-  - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelaa" milloin tahansa asianmukaisen painikkeen avulla.
+  - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
     - Käyttäjältä pyydetään tällöin vahvistus.
   - Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
     - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
-    - Käyttäjä voi poistua pelistä asianmukaisella painikkeella, jolloin siirrytään takaisin näkymään "Pelaa".
+    - Käyttäjä voi poistua pelistä asianmukaisella painikkeella, jolloin siirrytään takaisin näkymään "Pelin asetukset".
 
 ## Toimintaympäristön rajoitteet
 
@@ -66,23 +66,25 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli se
 ## Jatkokehitysideoita
 
 - Pelin asetuksissa voi valita 
-  - pelaajien värit vapaasti (tai pelaajille voi asettaa omat kuvakkeet),
-  - vaikeustason (Helppo / Keskitaso / Haastava),
-  - vaikeustason pelaajittain (esim. lapsille kiva lisä),
-  - 'pikapelin', joka on normaalia lyhyempi pelimuoto,
+  - pelaajien värit vapaasti (tai jopa omat kuvakkeet),
+  - vaikeustason (Easy / Intermediate / Advanced Trivialist / Hardcore Madness),
+  - kysymysten vaikeustason pelaajittain,
+  - vaikeustason kategorioittain,
+  - noppien lukumäärän (1-2),
+  - 'pikapelimoodin', joka on normaalia lyhyempi pelimuoto,
   - 'maratonimoodin', joka on normaalia pidempi pelimuoto,
   - kysymysten kategorioita vapaammin (esim. 1-12),
-  - kysymysten kategorioille asettaa haluamansa värit,
+  - kysymysten kategorioille haluamansa värit,
   - mukaan vain esimerkiksi monivalintakysymyksiä,
   - pelilaudan koon,
   - ruutujen järjestyksen.
-  - laudalle 'jokeriruutuja', josta voi tulla kysymyksiä mistä tahansa kategoriasta,
+  - laudalle 'jokeriruutuja', joista voi tulla kysymyksiä mistä tahansa kategoriasta,
   - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset.
 - Omien kysymysten selaamiseen hakutoiminto.
 - Omien kysymysten luokittelu avoimiin kysymyksiin, monivalintoihin ja kyllä-tai-ei-kysymyksiin.
 - Pelilaudan kehittäminen näyttävämmäksi.
-- Voitosta ilmoittavan näkymän kustomointi voittaneen pelaajan mukaiseksi (esim. näytetään oikeanvärinen nappula).
-- Pelisession tilastot (pelin päätyttyä), josta näkee mm. kysymysten, oikeiden vastausten ja väärien vastausten määrän per pelaaja.
-- Muiden pelaajien luomien kysymysten ja kategorioiden tuonti.
-- Pelaajan poistaminen (ja lisääminen?) kesken pelin.
+- Voitosta ilmoittavan näkymän kustomointi voittaneen pelaajan mukaiseksi.
+- Pelisession tilastot (sekä kesken pelin että pelin päätyttyä), joista näkee mm. kysymysten, oikeiden vastausten ja väärien vastausten määrän per pelaaja.
+- Kysymysten ja kategorioiden tuonti muualta.
+- Pelaajan poistaminen kesken pelin.
 - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.

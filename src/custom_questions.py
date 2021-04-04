@@ -2,7 +2,6 @@ import tkinter as tk
 import sqlite3
 from tkinter import messagebox, ttk
 
-
 db = sqlite3.connect("test.db")
 db.isolation_level = None
 db.row_factory = sqlite3.Row
@@ -18,6 +17,7 @@ class CustomQuestionsView:
         self.window.geometry('1280x720')
         self.window.resizable(False, False)
         self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
+        self.window.focus()
 
         self.window.grid_rowconfigure(0, weight=2)
         self.window.grid_rowconfigure(11, weight=2)
@@ -29,23 +29,24 @@ class CustomQuestionsView:
         title = tk.Label(self.window, text="Create", font=('Helvetica', 16, 'bold'))
         title.grid(column=0, row=0, columnspan=2, padx=X, pady=Y)
 
-        label = tk.Label(text="Category")
+        label = tk.Label(self.window, text="Category")
         label.grid(column=0, row=1, columnspan=2, padx=X, pady=Y)
 
         self.get_category_combobox()
+        self.category_combobox.focus()
 
-        label = tk.Label(text="Difficulty")
+        label = tk.Label(self.window, text="Difficulty")
         label.grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
 
         self.get_difficulty_combobox()
 
-        label = tk.Label(text="Question")
+        label = tk.Label(self.window, text="Question")
         label.grid(column=0, row=5, columnspan=2, padx=X, pady=Y)
 
         self.question_entry = tk.Entry(self.window, width=50)
         self.question_entry.grid(column=0, row=6, columnspan=2, padx=X, pady=Y)
 
-        label = tk.Label(text="Answer")
+        label = tk.Label(self.window, text="Answer")
         label.grid(column=0, row=7, columnspan=2, padx=X, pady=Y)
 
         self.answer_entry = tk.Entry(self.window, width=50)
@@ -56,6 +57,9 @@ class CustomQuestionsView:
 
         clear = tk.Button(self.window, text="Clear", width=10, command=self.clear_item)
         clear.grid(column=1, row=9, padx=X, pady=Y)
+
+        clear = tk.Button(self.window, text="Back to Settings", width=20, command=self.open_settings_view)
+        clear.grid(column=0, row=11, columnspan=2, padx=X, pady=Y)
 
         # -------------------------------------------------------------------
         # Left-side widgets end.
@@ -89,17 +93,29 @@ class CustomQuestionsView:
         difficulty = self.difficulty_combobox.get()
         question = self.question_entry.get()
         answer = self.answer_entry.get()
-        db.execute("INSERT INTO Questions (user_id, category, difficulty, question, answer) VALUES (?,?,?,?,?)", (user_id, category, difficulty, question, answer))
-        messagebox.showinfo("HOORAY!", "Question added successfully.")
-        self.clear_item()
-        self.get_listbox()
-        self.get_category_combobox()
+        if "" in (category, difficulty, question, answer):
+            messagebox.showinfo("Save Error", "Ensure that all fields have text in them.")
+            self.window.focus()
+            self.category_combobox.focus()
+        else:
+            if question.endswith('?') is False:
+                question = question + "?"
+            if answer.endswith('.') is False:
+                answer = answer + "."
+            db.execute("INSERT INTO Questions (user_id, category, difficulty, question, answer) VALUES (?,?,?,?,?)", (user_id, category, difficulty, question, answer))
+            messagebox.showinfo("Hooray!", "Question saved successfully. Create more to improve the gaming experience.")
+            self.clear_item()
+            self.get_listbox()
+            self.get_category_combobox()
+            self.window.focus()
+            self.category_combobox.focus()
 
     def clear_item(self):
         self.category_combobox.delete(0, 'end')
         self.difficulty_combobox.delete(0, 'end')
         self.question_entry.delete(0, 'end')
         self.answer_entry.delete(0, 'end')
+        self.category_combobox.focus()
 
     def edit_item(self):
 
@@ -113,7 +129,8 @@ class CustomQuestionsView:
             db.execute(f"DELETE FROM Questions WHERE id='{str(self.listbox.get(self.listbox.curselection())).split(' ', 1)[0]}'")
             self.get_listbox()
             self.get_category_combobox()
-            tk.messagebox.showinfo('Delete','Your question has been deleted.')
+            self.window.focus()
+            self.listbox.focus()
 
     def delete_all(self):
         confirmation = messagebox.askquestion("Delete", "Are you sure you want to delete all your questions?")
@@ -121,7 +138,8 @@ class CustomQuestionsView:
             db.execute("DELETE FROM Questions")
             self.get_listbox()
             self.get_category_combobox()
-            tk.messagebox.showinfo('Delete','Your questions have been deleted.')
+            self.window.focus()
+            self.listbox.focus()
 
         # These will be used to enable a feature,
         # where the current user can view every user's questions (in the same database),
@@ -159,8 +177,9 @@ class CustomQuestionsView:
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X, pady=Y)
         return self.difficulty_combobox
 
-    def bind_key_to_button(self, window):
-        window.widget.invoke()
+    def bind_key_to_button(self):
+        self.window.widget.invoke()
 
-    def destroy_custom_questions_view(self):
+    def open_settings_view(self):
         self.window.destroy()
+        # SettingsView()

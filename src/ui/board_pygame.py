@@ -14,7 +14,7 @@ db.row_factory = sqlite3.Row
 X = 15
 Y = 10
 
-class GameView:
+class GameViewPygame:
     def __init__(self):
         pg.init()
         pg.display.set_caption('Trivioboros')
@@ -104,7 +104,7 @@ class Board:
 
     def get_questions(self):
         # Placeholder:
-        select = ''.join(random.choice(string.ascii_uppercase) for i in range(1))
+        select = 'A' # ''.join(random.choice(string.ascii_uppercase) for i in range(1))
 
         self.c_label = self.bold_font.render('Category', True, (0, 0, 0))
         category = db.execute(f"SELECT category FROM Questions WHERE category='{select}'").fetchone()
@@ -141,13 +141,3 @@ class Board:
             rect.center = (100,500+i)
             self.window.blit(text, rect)
             i += 25
-
-        # Button to show the answer...
-
-        # Buttons that ask:
-        # correct = input("Was the player's answer correct? (y/n) ")
-        # if correct == "y":
-        #     print("Well done!")
-        #     Give point to player if they don't already have one in that category.
-        # else:
-        #     print("Better luck next time!")
