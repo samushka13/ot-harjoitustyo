@@ -177,8 +177,8 @@ class CustomQuestionsView:
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X, pady=Y)
         return self.difficulty_combobox
 
-    def bind_key_to_button(self):
-        self.window.widget.invoke()
+    def bind_key_to_button(self, window):
+        window.widget.invoke()
 
     def open_settings_view(self):
         self.window.destroy()

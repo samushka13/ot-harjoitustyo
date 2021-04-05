@@ -97,5 +97,5 @@ class SettingsView:
         self.window.destroy()
         GameView()
 
-    def bind_key_to_button(self):
-        self.window.widget.invoke()
+    def bind_key_to_button(self, window):
+        window.widget.invoke()

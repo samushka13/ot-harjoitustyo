@@ -15,6 +15,8 @@ class GameView:
         self.window.title('Trivioboros')
         self.window.geometry('1280x720')
         self.window.resizable(False, False)
+        self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
+        self.window.focus()
         self.window.configure(background="lightblue")
 
         for i in range(0,15):
@@ -129,6 +131,7 @@ class GameView:
         global placeholder
         placeholder = tk.Text(self.window, height=4, width=30, font=('Helvetica', 18, 'bold'), cursor="arrow", wrap=WORD, bg="lightblue", highlightthickness=0)
         placeholder.grid(column=0, row=6, columnspan=2, padx=X, pady=Y, sticky="W")
+        placeholder.config(state=DISABLED)
 
         global btn_show_answer
         btn_show_answer = tk.Button(
@@ -192,3 +195,6 @@ class GameView:
         if confirmation == 'yes':
             # Remove player somehow.
             pass
+
+    def bind_key_to_button(self, window):
+        window.widget.invoke()

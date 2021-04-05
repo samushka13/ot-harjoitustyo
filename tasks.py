@@ -20,10 +20,6 @@ def coverage_report(ctx):
 def coverage_report_html(ctx):
     ctx.run("coverage html")
 
-@task(coverage)
-def coverage_report_xml(ctx):
-    ctx.run("coverage xml")
-
 @task
 def lint(ctx):
     ctx.run("pylint src")
