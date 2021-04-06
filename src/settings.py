@@ -21,10 +21,12 @@ class SettingsView:
         self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
         self.window.focus()
 
-        for i in (0,9):
+        for i in (0,11):
             self.window.grid_rowconfigure(i, weight=2)
-        for i in (1,2,3,4,5,6,7,8):
+        for i in (1,3,5):
             self.window.grid_rowconfigure(i, weight=1)
+        for i in (2,4,6,7,8,9,10):
+            self.window.grid_rowconfigure(i, weight=0)
         for i in (0,1):
             self.window.grid_columnconfigure(i, weight=1)
 
@@ -36,8 +38,13 @@ class SettingsView:
 
         self.get_players_combobox()
 
-        label = tk.Label(self.window, text="Categories")
+        label = tk.Label(self.window, text="Board Size")
         label.grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
+
+        self.get_board_size_combobox()
+
+        label = tk.Label(self.window, text="Categories")
+        label.grid(column=0, row=5, columnspan=2, padx=X, pady=Y)
 
         self.get_category_comboboxes()
 
@@ -47,7 +54,7 @@ class SettingsView:
             width=15,
             command=self.open_questions_view,
         )
-        btn_questions.grid(column=0, row=9, padx=X, pady=Y, sticky="E")
+        btn_questions.grid(column=0, row=11, padx=X, pady=Y, sticky="E")
 
         btn_users = tk.Button(
             self.window,
@@ -55,17 +62,25 @@ class SettingsView:
             width=15,
             command=self.open_game_view,
         )
-        btn_users.grid(column=1, row=9, padx=X, pady=Y, sticky="W")
+        btn_users.grid(column=1, row=11, padx=X, pady=Y, sticky="W")
 
         self.window.mainloop()
 
     def get_players_combobox(self):
         players_combobox = ttk.Combobox(self.window, width=30)
-        players_combobox['values'] = [2,3,4,5,6]
+        values = players_combobox['values'] = [2,3,4,5,6]
         players_combobox.state(['readonly'])
-        players_combobox.set('2')
+        players_combobox.set(values[0])
         players_combobox.grid(column=0, row=2, columnspan=2, padx=X, pady=Y)
         return players_combobox, players_combobox.focus()
+
+    def get_board_size_combobox(self):
+        board_size_combobox = ttk.Combobox(self.window, width=30)
+        values = board_size_combobox['values'] = ["Extra Large (least difficult)","Large","Medium","Small","Insane (most difficult)"]
+        board_size_combobox.state(['readonly'])
+        board_size_combobox.set(values[2])
+        board_size_combobox.grid(column=0, row=4, columnspan=2, padx=X, pady=Y)
+        return board_size_combobox
 
     def get_category_comboboxes(self):
         comboboxes = []
@@ -85,7 +100,7 @@ class SettingsView:
                     category_combobox.set(values[0])
             else:
                 category_combobox.set(values[i])
-            category_combobox.grid(column=0, row=4+i, columnspan=2, padx=X, pady=0)
+            category_combobox.grid(column=0, row=6+i, columnspan=2, padx=X, pady=Y)
             comboboxes.append(category_combobox)
             i += 1
         return comboboxes

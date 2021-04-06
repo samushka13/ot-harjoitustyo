@@ -103,7 +103,7 @@ class CustomQuestionsView:
             if answer.endswith('.') is False:
                 answer = answer + "."
             db.execute("INSERT INTO Questions (user_id, category, difficulty, question, answer) VALUES (?,?,?,?,?)", (user_id, category, difficulty, question, answer))
-            messagebox.showinfo("Hooray!", "Question saved successfully. Create more to improve the gaming experience.")
+            messagebox.showinfo("Hooray!", "Question saved successfully. \n\nCreate more questions to improve gaming experience.\n\n")
             self.clear_item()
             self.get_listbox()
             self.get_category_combobox()
