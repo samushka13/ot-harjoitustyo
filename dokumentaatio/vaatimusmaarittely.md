@@ -8,7 +8,7 @@ Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustom
 
 ## Käyttäjät
 
-Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli sekä admin-rooli, joka voi poistaa muiden käyttäjätilejä ja niiden luomia sisältöjä.
+Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli että admin-rooli, joka voi poistaa muiden käyttäjätilejä ja niiden luomia sisältöjä.
 
 ## Käyttöliittymä ja toiminnallisuudet
 

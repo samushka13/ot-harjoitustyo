@@ -7,6 +7,10 @@ def main():
 
     # TODOS
     # ------------------------------------------------------------------
+    # Service luo olion (esim. Question(user_id, category, difficulty, question, answer)),
+    # joka menee databasehandlerin tms käsiteltäväksi.
+    # Databasehandler hoitaa tiedon tallennuksen tietokantaan.
+
     # CUSTOM: Implement edit.
     # CUSTOM: Add filters and a search field above listbox.
     # GAME: Add image of ouroboros.
@@ -16,6 +20,7 @@ def main():
     # GAME: Add 'referee' mode where players' points can be manually altered in case of mistakes were made.
     # LOGIN: Implement error texts instead of messageboxes (create label that shows text on button command, otherwise emptystring).
     # SETTINGS: Ensure categories are updated when relevant changes are made in CustomQuestionsView.
+    # SETTINGS: Enable giving names to players.
     # GENERAL: Try to make everything run in a single window that simply changes size and widgets based on current view.
     # GENERAL: Implement OpenTrivia Api stuff.
     # GENERAL: Implement a way to delete profile (and all questions, optionally).

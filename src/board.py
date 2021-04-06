@@ -15,6 +15,11 @@ background = "lightblue"
 categories = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8"]
 players = ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6"]
 colors = ["red", "yellow", "green", "purple", "orange", "blue", "grey", "brown"]
+difficulties = [1,3,5,7,9]
+difficulty = difficulties[2]
+segments = len(categories)*difficulty+1
+segment = 360/segments
+starting_positions = [360, 360, 360, 360, 360, 360]
 
 class GameView:
     def __init__(self):
@@ -142,9 +147,6 @@ class GameView:
         # Right-side stuff.
         self.board = tk.Canvas(self.window, bg=background, height=720, width=720, highlightbackground=background)
         self.board.place(x=920, y=360, anchor="center")
-        difficulty = [9,7,5,3,1]
-        segments = len(categories)*difficulty[2]+1
-        segment = 360/segments
 
         # This calculates the segments where categories are.
         # Required to allow changing the amount of categories in Game Settings.
@@ -154,7 +156,7 @@ class GameView:
             j = 0
             k = 1 + i
             category_segments = []
-            while j <= difficulty[2]:
+            while j <= difficulty:
                 category_segments.append(k)
                 k += len(categories)
                 j += 1
@@ -198,8 +200,10 @@ class GameView:
         # Player tokens.
         i = 0
         j = 0
+        self.tokens = []
         while i < len(players):
-            self.board.create_arc(115+j, 115+j, 605-j, 605-j, start=360, extent=-segment, outline=colors[i], width=10, style=tk.ARC)
+            token = self.board.create_arc(115+j, 115+j, 605-j, 605-j, start=starting_positions[i], extent=-segment, outline=colors[i], width=10, style=tk.ARC)
+            self.tokens.append(token)
             i += 1
             j += 15
 
@@ -256,17 +260,26 @@ class GameView:
 
     def cast_die(self):
         die_faces = [
-            r'src/assets/die_1.png',
-            r'src/assets/die_2.png',
-            r'src/assets/die_3.png',
-            r'src/assets/die_4.png',
-            r'src/assets/die_5.png',
-            r'src/assets/die_6.png',
+            (r'src/assets/die_1.png', 1),
+            (r'src/assets/die_2.png', 2),
+            (r'src/assets/die_3.png', 3),
+            (r'src/assets/die_4.png', 4),
+            (r'src/assets/die_5.png', 5),
+            (r'src/assets/die_6.png', 6),
         ]
-        self.img = ImageTk.PhotoImage(Image.open(random.choice(die_faces)))
+        self.number = random.choice(die_faces)
+        self.img = ImageTk.PhotoImage(Image.open(self.number[0]))
         self.board.create_image(360, 340, anchor="center", image=self.img)
         self.hide_cast_button()
         self.get_question()
+        self.move_token()
+
+    def move_token(self):
+        self.new_position = starting_positions[0]-segment*(self.number[1])
+        self.board.delete(self.tokens[0])
+        starting_positions[0] = self.new_position
+        token = self.board.create_arc(115, 115, 605, 605, start=self.new_position, extent=-segment, outline=colors[0], width=10, style=tk.ARC)
+        self.tokens[0] = token
 
     def quit_game(self):
         from settings import SettingsView

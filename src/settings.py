@@ -76,7 +76,7 @@ class SettingsView:
 
     def get_board_size_combobox(self):
         board_size_combobox = ttk.Combobox(self.window, width=30)
-        values = board_size_combobox['values'] = ["Extra Large (least difficult)","Large","Medium","Small","Insane (most difficult)"]
+        values = board_size_combobox['values'] = ["Tiny (least difficult)","Small","Medium","Large","Insane (most difficult)"]
         board_size_combobox.state(['readonly'])
         board_size_combobox.set(values[2])
         board_size_combobox.grid(column=0, row=4, columnspan=2, padx=X, pady=Y)
