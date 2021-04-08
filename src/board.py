@@ -1,32 +1,40 @@
 import tkinter as tk
-import sqlite3
 import random
 from tkinter import DISABLED, WORD, messagebox
 from PIL import ImageTk, Image
+from ui.rules import show_rules
+from ui.stylings import (
+    BOARD_WINDOW_NAME,
+    BOARD_WINDOW_SIZE,
+    BACKGROUND,
+    BOARD_TEXT_FONT,
+    BASIC_CURSOR,
+    DIE_FACES,
+    DEFAULT_DIE_FACE,
+)
+from services.database_connection import db
+from entities.settings import (
+    CATEGORIES,
+    CATEGORY_COLORS,
+    SPECIAL,
+    SPECIAL_COLOR,
+    PLAYERS,
+    PLAYER_COLORS,
+    BOARD_SIZES,
+    BOARD_SIZE,
+)
 
-db = sqlite3.connect("test.db")
-db.isolation_level = None
-db.row_factory = sqlite3.Row
-
-X = 20
-Y = 0
-text_font = ('Helvetica', 18, 'bold')
-background = "lightblue"
-categories = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8"]
-players = ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6"]
-colors = ["red", "yellow", "green", "purple", "orange", "blue", "grey", "brown"]
-difficulties = [1,3,5,7,9]
-difficulty = difficulties[2]
-segments = len(categories)*difficulty+1
+segments = len(CATEGORIES)*BOARD_SIZE+1
 segment = 360/segments
 starting_positions = [360, 360, 360, 360, 360, 360]
 
 class GameView:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title('Trivioboros')
-        self.window.geometry('1280x720')
+        self.window.title(BOARD_WINDOW_NAME)
+        self.window.geometry(BOARD_WINDOW_SIZE)
         self.window.resizable(False, False)
+        self.window.configure(bg=BACKGROUND)
         self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
         self.window.focus()
         self.build_everything()
@@ -37,29 +45,50 @@ class GameView:
         self.build_cast_button()
         self.build_left_side_buttons()
         self.build_scoreboard()
+        self.build_category_board()
 
     def build_scoreboard(self):
         i = 0
         j = 0
-        while i < len(players):
-            player = tk.Text(self.window, height=1, width=20, font=text_font, cursor="arrow", wrap=WORD, bg=background, highlightbackground=background)
+        while i < len(PLAYERS):
+            player = tk.Text(self.window, height=1, width=15, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
             player.place(x=30, y=30+j, anchor="w")
-            player.insert(tk.END, players[i])
-            player.config(state=DISABLED, fg=colors[i])
+            player.insert(tk.END, PLAYERS[i])
+            player.config(state=DISABLED, fg=PLAYER_COLORS[i])
             i += 1
             j += 30
 
         i = 0
         l = 0
-        while i < len(players):
+        while i < len(PLAYERS):
             j = 0
             k = 0
-            while j < len(categories):
-                self.scores.create_oval(530-k, 20+l, 510-k, 40+l, fill="", outline=colors[j])
+            self.scores.create_oval(530, 20+l, 510, 40+l, fill="", outline=SPECIAL_COLOR)
+            while j < len(CATEGORIES):
+                self.scores.create_oval(500-k, 20+l, 480-k, 40+l, fill="", outline=CATEGORY_COLORS[j])
                 j += 1
                 k += 30
             i += 1
             l += 30
+
+    def build_category_board(self):
+        i = 0
+        j = 0
+        k = 0
+        special_category = tk.Text(self.window, height=1, width=20, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+        special_category.place(x=30+k, y=560+j, anchor="w")
+        special_category.insert(tk.END, SPECIAL)
+        special_category.config(state=DISABLED, fg=SPECIAL_COLOR)
+        while i < len(CATEGORIES):
+            category = tk.Text(self.window, height=1, width=20, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+            category.place(x=30+k, y=590+j, anchor="w")
+            category.insert(tk.END, CATEGORIES[i])
+            category.config(state=DISABLED, fg=CATEGORY_COLORS[i])
+            i += 1
+            j += 30
+            if i == 4:
+                k += 250
+                j = -30
 
     def get_question(self):
         # This should be determined by the player's position on the game board.
@@ -67,8 +96,8 @@ class GameView:
         category = db.execute(f"SELECT category FROM Questions WHERE category='{select}'").fetchone()
 
         self.question = db.execute(f"SELECT question FROM Questions WHERE category='{category['category']}' ORDER BY RANDOM()").fetchone()
-        q_text = tk.Text(self.window, height=12, width=45, font=text_font, cursor="arrow", wrap=WORD, bg=background, highlightbackground=background)
-        q_text.place(x=30, y=360, anchor="w")
+        q_text = tk.Text(self.window, height=6, width=45, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+        q_text.place(x=30, y=305, anchor="w")
         q_text.insert(tk.END, self.question['question'])
         q_text.config(state=DISABLED)
 
@@ -76,19 +105,19 @@ class GameView:
             self.window,
             text="Show answer",
             width=15,
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=self.show_answer,
         )
-        self.btn_show_answer.place(x=280, y=410, anchor="center")
+        self.btn_show_answer.place(x=280, y=420, anchor="center")
 
     def build_placeholder(self):
-        placeholder = tk.Text(self.window, height=12, width=45, font=text_font, cursor="arrow", wrap=WORD, bg=background, highlightbackground=background)
-        placeholder.place(x=30, y=360, anchor="w")
+        placeholder = tk.Text(self.window, height=13, width=45, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+        placeholder.place(x=30, y=370, anchor="w")
         placeholder.insert(tk.END, "")
         placeholder.config(state=DISABLED)
 
     def hide_cast_button(self):
-        placeholder = tk.Text(self.window, height=1, width=15, font=text_font, cursor="arrow", wrap=WORD, bg=background, highlightbackground=background)
+        placeholder = tk.Text(self.window, height=1, width=15, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
         placeholder.place(x=900, y=420, anchor="center")
         placeholder.insert(tk.END, "")
         placeholder.config(state=DISABLED)
@@ -96,8 +125,8 @@ class GameView:
     def show_answer(self):
         self.btn_show_answer.forget()
         answer = db.execute(f"SELECT answer FROM Questions WHERE question='{self.question['question']}'").fetchone()
-        self.answer_text = tk.Text(self.window, height=2, width=45, font=text_font, cursor="arrow", wrap=WORD, bg=background, highlightbackground=background)
-        self.answer_text.place(x=30, y=400, anchor="w")
+        self.answer_text = tk.Text(self.window, height=3, width=45, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+        self.answer_text.place(x=30, y=420, anchor="w")
         self.answer_text.insert(tk.END, answer['answer'])
         self.answer_text.config(state=DISABLED)
         self.build_answer_confirmation_buttons()
@@ -105,23 +134,21 @@ class GameView:
     def build_answer_confirmation_buttons(self):
         self.btn_correct = tk.Button(
             self.window,
-            text="Player 1 answered correctly",
+            text=f"{PLAYERS[0]} answered correctly",
             width=25,
-            bg="green",
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=self.correct_answer,
         )
-        self.btn_correct.place(x=30, y=470, anchor="w")
+        self.btn_correct.place(x=30, y=490, anchor="w")
 
         self.btn_incorrect = tk.Button(
             self.window,
-            text="Player 1 answered incorrectly",
+            text=f"{PLAYERS[0]} answered incorrectly",
             width=25,
-            bg="red",
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=self.incorrect_answer,
         )
-        self.btn_incorrect.place(x=300, y=470, anchor="w")
+        self.btn_incorrect.place(x=300, y=490, anchor="w")
 
     def correct_answer(self):
         self.btn_correct.forget()
@@ -139,26 +166,26 @@ class GameView:
 
     def build_board(self):
         # Left-side stuff.
-        self.scores = tk.Canvas(self.window, bg=background, height=720, width=560, highlightbackground=background)
+        self.scores = tk.Canvas(self.window, bg=BACKGROUND, height=720, width=560, highlightbackground=BACKGROUND)
         self.scores.place(x=280, y=360, anchor="center")
         self.scores.create_line(30, 220, 530, 220)
-        self.scores.create_line(30, 500, 530, 500)
+        self.scores.create_line(30, 530, 530, 530)
 
         # Right-side stuff.
-        self.board = tk.Canvas(self.window, bg=background, height=720, width=720, highlightbackground=background)
+        self.board = tk.Canvas(self.window, bg=BACKGROUND, height=720, width=720, highlightbackground=BACKGROUND)
         self.board.place(x=920, y=360, anchor="center")
 
         # This calculates the segments where categories are.
         # Required to allow changing the amount of categories in Game Settings.
         i = 0
         all_category_segments = []
-        while i < len(categories):
+        while i < len(CATEGORIES):
             j = 0
             k = 1 + i
             category_segments = []
-            while j <= difficulty:
+            while j <= BOARD_SIZE:
                 category_segments.append(k)
-                k += len(categories)
+                k += len(CATEGORIES)
                 j += 1
             i += 1
             all_category_segments.append(category_segments)
@@ -167,48 +194,54 @@ class GameView:
         j = 0
         while j < segments:
             if j == 0:
-                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill="black", width=5)
+                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=SPECIAL_COLOR, width=5)
             if j in all_category_segments[0]:
-                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[0], width=5)
-            if len(categories) >= 2:
+                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[0], width=5)
+            if len(CATEGORIES) >= 2:
                 if j in all_category_segments[1]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[1], width=5)
-            if len(categories) >= 3:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[1], width=5)
+            if len(CATEGORIES) >= 3:
                 if j in all_category_segments[2]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[2], width=5)
-            if len(categories) >= 4:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[2], width=5)
+            if len(CATEGORIES) >= 4:
                 if j in all_category_segments[3]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[3], width=5)
-            if len(categories) >= 5:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[3], width=5)
+            if len(CATEGORIES) >= 5:
                 if j in all_category_segments[4]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[4], width=5)
-            if len(categories) >= 6:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[4], width=5)
+            if len(CATEGORIES) >= 6:
                 if j in all_category_segments[5]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[5], width=5)
-            if len(categories) >= 7:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[5], width=5)
+            if len(CATEGORIES) >= 7:
                 if j in all_category_segments[6]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[6], width=5)
-            if len(categories) >= 8:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[6], width=5)
+            if len(CATEGORIES) >= 8:
                 if j in all_category_segments[7]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=colors[7], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[7], width=5)
+            if len(CATEGORIES) >= 9:
+                if j in all_category_segments[8]:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[8], width=5)
+            if len(CATEGORIES) >= 10:
+                if j in all_category_segments[9]:
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[9], width=5)
             i += segment
             j += 1
 
         # Inner circle that helps form the shape of the gameboard.
-        self.board.create_oval(100, 100, 620, 620, fill=background, width=5)
+        self.board.create_oval(100, 100, 620, 620, fill=BACKGROUND, width=5)
 
         # Player tokens.
         i = 0
         j = 0
         self.tokens = []
-        while i < len(players):
-            token = self.board.create_arc(115+j, 115+j, 605-j, 605-j, start=starting_positions[i], extent=-segment, outline=colors[i], width=10, style=tk.ARC)
+        while i < len(PLAYERS):
+            token = self.board.create_arc(115+j, 115+j, 605-j, 605-j, start=starting_positions[i], extent=-segment, outline=PLAYER_COLORS[i], width=10, style=tk.ARC)
             self.tokens.append(token)
             i += 1
             j += 15
 
         # Die at the start of the game.
-        self.img = ImageTk.PhotoImage(Image.open(r'src/assets/die_6.png'))
+        self.img = ImageTk.PhotoImage(Image.open(DEFAULT_DIE_FACE))
         self.board.create_image(360, 340, anchor="center", image=self.img)
 
     def build_left_side_buttons(self):
@@ -216,7 +249,7 @@ class GameView:
             self.window,
             text="Remove Player",
             width=12,
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=self.remove_player,
         )
         btn_remove_player.place(x=1260, y=30, anchor="e")
@@ -225,7 +258,7 @@ class GameView:
             self.window,
             text="Quit",
             width=6,
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=self.quit_game,
         )
         btn_quit.place(x=1260, y=65, anchor="e")
@@ -234,8 +267,8 @@ class GameView:
             self.window,
             text="Rules",
             width=6,
-            highlightbackground=background,
-            command=None,
+            highlightbackground=BACKGROUND,
+            command=show_rules,
         )
         btn_rules.place(x=1260, y=655, anchor="e")
 
@@ -243,7 +276,7 @@ class GameView:
             self.window,
             text="Statistics",
             width=12,
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=None,
         )
         btn_stats.place(x=1260, y=690, anchor="e")
@@ -253,21 +286,13 @@ class GameView:
             self.window,
             text="Cast",
             width=8,
-            highlightbackground=background,
+            highlightbackground=BACKGROUND,
             command=self.cast_die,
         )
         self.btn_cast_die.place(x=917,y=420, anchor="center")
 
     def cast_die(self):
-        die_faces = [
-            (r'src/assets/die_1.png', 1),
-            (r'src/assets/die_2.png', 2),
-            (r'src/assets/die_3.png', 3),
-            (r'src/assets/die_4.png', 4),
-            (r'src/assets/die_5.png', 5),
-            (r'src/assets/die_6.png', 6),
-        ]
-        self.number = random.choice(die_faces)
+        self.number = random.choice(DIE_FACES)
         self.img = ImageTk.PhotoImage(Image.open(self.number[0]))
         self.board.create_image(360, 340, anchor="center", image=self.img)
         self.hide_cast_button()
@@ -278,7 +303,13 @@ class GameView:
         self.new_position = starting_positions[0]-segment*(self.number[1])
         self.board.delete(self.tokens[0])
         starting_positions[0] = self.new_position
-        token = self.board.create_arc(115, 115, 605, 605, start=self.new_position, extent=-segment, outline=colors[0], width=10, style=tk.ARC)
+        token = self.board.create_arc(115, 115, 605, 605, start=self.new_position, extent=-segment, outline=PLAYER_COLORS[0], width=10, style=tk.ARC)
+        # This helps keep track of the token's position in terms of the category segments.
+        # (Tokens and categories are matched by their 'start' arguments.)
+        if self.new_position >= 360:
+            self.new_position -= 360
+            # Statistiikkoja varten tähän voisi myös lisätä jonkun counterin,
+            # joka kasvaa aina yhdellä, kun 360 tulee täyteen.
         self.tokens[0] = token
 
     def quit_game(self):

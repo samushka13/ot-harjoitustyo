@@ -71,8 +71,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
   - kysymysten vaikeustason pelaajittain,
   - vaikeustason kategorioittain,
   - noppien lukumäärän (1-2),
-  - 'pikapelimoodin', joka on normaalia lyhyempi pelimuoto,
-  - 'maratonimoodin', joka on normaalia pidempi pelimuoto,
+  - kategoriapisteiden lukumäärän (1 = pikapeli, 5 = maraton)
   - kysymysten kategorioita vapaammin (esim. 1-12),
   - kysymysten kategorioille haluamansa värit,
   - mukaan vain esimerkiksi monivalintakysymyksiä,

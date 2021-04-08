@@ -1,22 +1,17 @@
 import tkinter as tk
-import sqlite3
 from tkinter import Frame
 from settings import SettingsView
-
-db = sqlite3.connect("test.db")
-db.isolation_level = None
-db.row_factory = sqlite3.Row
-
-X = 20
-Y = 0
+from ui.stylings import LOGIN_WINDOW_NAME, LOGIN_WINDOW_SIZE, BACKGROUND, TITLE_FONT, X, Y
+from services.database_connection import db
+from services.database_operations import add_user, get_credentials, get_users
 
 class LoginView:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title('Trivioboros')
-        self.window.minsize(360,360)
-        self.window.geometry('360x360')
+        self.window.title(LOGIN_WINDOW_NAME)
+        self.window.geometry(LOGIN_WINDOW_SIZE)
         self.window.resizable(False, False)
+        self.window.configure(bg=BACKGROUND)
         self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
         self.window.focus()
         
@@ -31,7 +26,7 @@ class LoginView:
         self.window.grid_rowconfigure(0, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
 
-        self.label = tk.Label(frame, text="Login or Create Username", font=('Helvetica', 16, 'bold'))
+        self.label = tk.Label(frame, text="Login or Create Username", font=TITLE_FONT)
         self.label.grid(column=0, row=0, columnspan=2, padx=X, pady=Y)
 
         label = tk.Label(frame, text="Username")
@@ -59,7 +54,7 @@ class LoginView:
             frame,
             text="Users",
             width=10,
-            command=self.list_all_users,
+            command=self.list_of_users,
         )
         self.btn_users.grid(column=1, row=5, padx=X, pady=Y)
 
@@ -70,9 +65,7 @@ class LoginView:
         SettingsView()
 
     def check_for_usernames(self):
-        credentials = []
-        for row in db.execute("SELECT username, password FROM Users").fetchall():
-            credentials.append((row['username'],row['password']))
+        credentials = get_credentials()
         if len(self.input_username.get()) < 3:
             tk.messagebox.showinfo('Invalid Username','Username should be 3 or more characters long.')
             self.window.focus()
@@ -86,17 +79,15 @@ class LoginView:
                 self.window.focus()
                 self.input_username.focus()
             else:
-                db.execute("INSERT INTO Users (username, password) VALUES (?,?)", (self.input_username.get(), self.input_password.get()))
+                add_user(self.input_username.get(), self.input_password.get())
                 tk.messagebox.showinfo('Username Created',f'Nice to meet you, {self.input_username.get()}!')
                 self.open_settings_view()
 
-    def list_all_users(self):
-        users = []
-        for user in db.execute("SELECT username FROM Users").fetchall():
-            users.append(f"{user['username']}")
+    def list_of_users(self):
+        users = get_users()
         if len(users) > 0:
-            userlist = '\n'.join(sorted(users))
-            info = tk.messagebox.showinfo('Users',f'List of users on this device: \n\n{userlist}')
+            users_list = '\n'.join(sorted(users))
+            info = tk.messagebox.showinfo('Users',f'List of users on this device: \n\n{users_list}')
         else:
             info = tk.messagebox.showinfo('Users','There are currently no users on this device.')
         if info == 'ok':

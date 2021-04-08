@@ -1,21 +1,34 @@
 import tkinter as tk
-import sqlite3
-from tkinter import messagebox, ttk
-
-db = sqlite3.connect("test.db")
-db.isolation_level = None
-db.row_factory = sqlite3.Row
-
-X = 20
-Y = (0,0)
+from tkinter import ttk
+from ui.stylings import (
+    CUSTOM_QUESTIONS_WINDOW_NAME,
+    CUSTOM_QUESTIONS_WINDOW_SIZE,
+    BACKGROUND,
+    X,
+    Y,
+    TITLE_FONT,
+)
+from ui.dialogs import (
+    show_save_error_dialog,
+    show_save_successful_dialog,
+    show_delete_confirmation_dialog,
+    show_delete_all_confirmation_dialog,
+)
+from services.database_connection import db
+from services.database_operations import (
+    save_item_to_database,
+    delete_item_from_database,
+    delete_all_users_items_from_database,
+)
+from entities.settings import DIFFICULTY_NAMES
 
 class CustomQuestionsView:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title('Trivioboros')
-        self.window.minsize(1280, 720)
-        self.window.geometry('1280x720')
+        self.window.title(CUSTOM_QUESTIONS_WINDOW_NAME)
+        self.window.geometry(CUSTOM_QUESTIONS_WINDOW_SIZE)
         self.window.resizable(False, False)
+        self.window.configure(bg=BACKGROUND)
         self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
         self.window.focus()
 
@@ -26,7 +39,7 @@ class CustomQuestionsView:
         # Left-side widgets start.
         # -------------------------------------------------------------------
 
-        title = tk.Label(self.window, text="Create", font=('Helvetica', 16, 'bold'))
+        title = tk.Label(self.window, text="Create", font=TITLE_FONT)
         title.grid(column=0, row=0, columnspan=2, padx=X, pady=Y)
 
         label = tk.Label(self.window, text="Category")
@@ -67,7 +80,7 @@ class CustomQuestionsView:
         # Right-side widgets start.
         # -------------------------------------------------------------------
 
-        title = tk.Label(self.window, text="Browse", font=('Helvetica', 16, 'bold'))
+        title = tk.Label(self.window, text="Browse", font=TITLE_FONT)
         title.grid(column=2, row=0, columnspan=3, padx=X, pady=Y)
 
         self.get_listbox()
@@ -94,7 +107,7 @@ class CustomQuestionsView:
         question = self.question_entry.get()
         answer = self.answer_entry.get()
         if "" in (category, difficulty, question, answer):
-            messagebox.showinfo("Save Error", "Ensure that all fields have text in them.")
+            show_save_error_dialog()
             self.window.focus()
             self.category_combobox.focus()
         else:
@@ -102,8 +115,8 @@ class CustomQuestionsView:
                 question = question + "?"
             if answer.endswith('.') is False:
                 answer = answer + "."
-            db.execute("INSERT INTO Questions (user_id, category, difficulty, question, answer) VALUES (?,?,?,?,?)", (user_id, category, difficulty, question, answer))
-            messagebox.showinfo("Hooray!", "Question saved successfully. \n\nCreate more questions to improve gaming experience.\n\n")
+            save_item_to_database(user_id, category, difficulty, question, answer)
+            show_save_successful_dialog()
             self.clear_item()
             self.get_listbox()
             self.get_category_combobox()
@@ -124,18 +137,18 @@ class CustomQuestionsView:
         pass
 
     def delete_item(self):
-        confirmation = messagebox.askquestion("Delete", "Are you sure you want to delete the selected question?")
+        confirmation = show_delete_confirmation_dialog()
         if confirmation == 'yes':
-            db.execute(f"DELETE FROM Questions WHERE id='{str(self.listbox.get(self.listbox.curselection())).split(' ', 1)[0]}'")
+            delete_item_from_database(str(self.listbox.get(self.listbox.curselection())).split(' ', 1)[0])
             self.get_listbox()
             self.get_category_combobox()
             self.window.focus()
             self.listbox.focus()
 
     def delete_all(self):
-        confirmation = messagebox.askquestion("Delete", "Are you sure you want to delete all your questions?")
+        confirmation = show_delete_all_confirmation_dialog()
         if confirmation == 'yes':
-            db.execute("DELETE FROM Questions")
+            delete_all_users_items_from_database()
             self.get_listbox()
             self.get_category_combobox()
             self.window.focus()
@@ -170,10 +183,9 @@ class CustomQuestionsView:
 
     def get_difficulty_combobox(self):
         self.difficulty_combobox = ttk.Combobox(self.window, width=50, textvariable=tk.StringVar())
-        values = ['Easy', 'Intermediate', 'Advanced Triviliast']
-        self.difficulty_combobox['values'] = values
+        self.difficulty_combobox['values'] = DIFFICULTY_NAMES
         self.difficulty_combobox.state(['readonly'])
-        self.difficulty_combobox.set('Intermediate')
+        self.difficulty_combobox.set(DIFFICULTY_NAMES[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X, pady=Y)
         return self.difficulty_combobox
 
@@ -181,5 +193,6 @@ class CustomQuestionsView:
         window.widget.invoke()
 
     def open_settings_view(self):
+        from settings import SettingsView
         self.window.destroy()
-        # SettingsView()
+        SettingsView()

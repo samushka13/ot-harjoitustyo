@@ -1,5 +1,5 @@
 from login import LoginView
-from services.database import initialize_database
+from services.database_connection import initialize_database
 
 def main():
     initialize_database()
@@ -11,16 +11,20 @@ def main():
     # joka menee databasehandlerin tms käsiteltäväksi.
     # Databasehandler hoitaa tiedon tallennuksen tietokantaan.
 
-    # CUSTOM: Implement edit.
-    # CUSTOM: Add filters and a search field above listbox.
+    # GENERAL: Ensure all widget backgrounds look the same.
+    # GAME: Remove bolding or decrease font size of some texts.
+    # GAME: Add small icons with an appropriate color in front of player and category names.
+    # GAME: Change font color of player and category names to black.
     # GAME: Add image of ouroboros.
     # GAME: Implement player turn and movement logic.
     # GAME: Ensure game sessions are based on game settings.
     # GAME: Ensure gameview works on 'laitoksen Linuxeilla'.
     # GAME: Add 'referee' mode where players' points can be manually altered in case of mistakes were made.
-    # LOGIN: Implement error texts instead of messageboxes (create label that shows text on button command, otherwise emptystring).
+    # CUSTOM: Implement edit.
+    # CUSTOM: Add filters and a search field above listbox.
     # SETTINGS: Ensure categories are updated when relevant changes are made in CustomQuestionsView.
     # SETTINGS: Enable giving names to players.
+    # SETTINGS: Add 'random' to category selection etc.
     # GENERAL: Try to make everything run in a single window that simply changes size and widgets based on current view.
     # GENERAL: Implement OpenTrivia Api stuff.
     # GENERAL: Implement a way to delete profile (and all questions, optionally).
@@ -30,6 +34,7 @@ def main():
     # GENERAL: Refactor everything into a sensible format (when prototyping is done).
     # GENERAL: Improve testing.
     # GENERAL: Remove unnecessary dependencies, files, etc. (Remember to save certain pieces of code elsewhere for possible later usage.)
+    # GENERAL: Ensure that the use of quotation marks '' and "" is uniform across the project.
     # ------------------------------------------------------------------
 
 if __name__ == "__main__":

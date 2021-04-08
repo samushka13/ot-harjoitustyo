@@ -13,5 +13,6 @@
 |  4.4. | 5   | Yleistä toimintojen ja käyttökokemuksen parantelua.                 |
 |  5.4. | 4   | Pelilaudan toimintojen ja käyttökokemuksen parantelua.              |
 |  6.4. | 3   | Pelilaudan toimintojen ja käyttökokemuksen parantelua.              |
-|  7.4. | 1   | Pelilaudan toimintojen parantelua.                                  |
-|  yht. | 41  |                                                                     |
+|  7.4. | 3   | Pelilaudan toimintojen parantelua.                                  |
+|  8.4. | 2   | Refaktorointia.                                                     |
+|  yht. | 45  |                                                                     |
