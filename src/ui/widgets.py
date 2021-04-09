@@ -4,6 +4,7 @@ from services.database_operations import get_categories
 from entities.settings import (
     NUMBER_OF_PLAYERS,
     BOARD_SIZE_NAMES,
+    SEGMENT,
 )
 from ui.stylings import (
     BACKGROUND,
@@ -57,7 +58,7 @@ def get_category_comboboxes(window):
 # Labels.
 # ------------------------------------------------------
 
-def get_title_label(window, text):
+def get_title_label(window, text: str):
     label = tk.Label(
         window,
         text=text,
@@ -67,7 +68,7 @@ def get_title_label(window, text):
     )
     return label
 
-def get_basic_label(window, text, font=TEXT_FONT):
+def get_basic_label(window, text: str, font=TEXT_FONT):
     label = tk.Label(
         window,
         text=text,
@@ -81,7 +82,7 @@ def get_basic_label(window, text, font=TEXT_FONT):
 # Buttons.
 # ------------------------------------------------------
 
-def get_basic_button(window, text, width, command):
+def get_basic_button(window, text: str, width: int, command):
     button = tk.Button(
         window,
         text=text,
@@ -96,7 +97,7 @@ def get_basic_button(window, text, width, command):
 # Entries.
 # ------------------------------------------------------
 
-def get_basic_entry(window, width, show=None):
+def get_basic_entry(window, width: int, show=None):
     entry = tk.Entry(
         window,
         width=width,
@@ -104,20 +105,43 @@ def get_basic_entry(window, width, show=None):
     )
     return entry
 
-
 # ------------------------------------------------------
 # Textboxes.
 # ------------------------------------------------------
 
-def get_player_textbox(window):
+def get_display_textbox(window, height: int, width: int, font=BOARD_TEXT_FONT):
     textbox = tk.Text(
         window,
-        height=1,
-        width=15,
-        font=BOARD_TEXT_FONT,
+        height=height,
+        width=width,
+        font=font,
         cursor=BASIC_CURSOR,
         wrap=WORD,
         bg=BACKGROUND,
         highlightbackground=BACKGROUND,
     )
     return textbox
+
+# ------------------------------------------------------
+# Board elements.
+# ------------------------------------------------------
+
+def get_canvas(window, height: int, width: int):
+    canvas = tk.Canvas(
+        window,
+        height=height,
+        width=width,
+        bg=BACKGROUND,
+        highlightbackground=BACKGROUND,
+    )
+    return canvas
+
+def get_board_segment(canvas, distance: float, fill):
+    segment = canvas.create_arc(
+        20, 20, 700, 700,
+        start=360-distance,
+        extent=-SEGMENT,
+        fill=fill,
+        width=5,
+    )
+    return segment

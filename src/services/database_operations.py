@@ -1,6 +1,9 @@
 from services.database_connection import db
+from entities.settings import SELECT
 
+# ------------------------------------------------
 # Login operations.
+# ------------------------------------------------
 
 def add_user(username: str, password: str):
     db.execute("INSERT INTO Users (username, password) VALUES (?,?)", (username, password))
@@ -20,7 +23,9 @@ def get_users():
 def get_sorted_users():
     return '\n'.join(sorted(get_users()))
 
+# ------------------------------------------------
 # Settings & Custom Questions operations.
+# ------------------------------------------------
 
 def get_categories():
     categories = []
@@ -30,8 +35,14 @@ def get_categories():
 
 def get_listbox_items():
     items = []
-    for row in db.execute("SELECT id, category, difficulty, question, answer FROM Questions").fetchall():
-        items.append(f"{row['id']}. | {row['category']} | {row['difficulty']} | {row['question']} | {row['answer']}")
+    for row in db.execute("SELECT id, category, difficulty, question, answer \
+        FROM Questions").fetchall():
+        row_id = row['id']
+        category = row['category']
+        difficulty = row['difficulty']
+        question = row['question']
+        answer = row['answer']
+        items.append(f"{row_id}. | {category} | {difficulty} | {question} | {answer}")
     return items
 
 def save_item_to_database(user_id: int, category: str, difficulty: str, question: str, answer: str):
@@ -50,4 +61,18 @@ def delete_all_users_items_from_database():
 # user_id = db.execute(f"SELECT id FROM Users WHERE username='{current_user}'").fetchone()
 # db.execute(f"DELETE FROM Questions WHERE user_id='{user_id['id']}'")
 
+# ------------------------------------------------
 # Game session operations.
+# ------------------------------------------------
+
+def get_category_for_player():
+    return db.execute(f"SELECT category FROM Questions \
+        WHERE category='{SELECT}'").fetchone()
+
+def get_question_for_player(category: str):
+    return db.execute(f"SELECT question FROM Questions \
+        WHERE category='{category['category']}' ORDER BY RANDOM()").fetchone()
+
+def get_answer_for_player(question: str):
+    return db.execute(f"SELECT answer FROM Questions \
+        WHERE question='{question['question']}'").fetchone()

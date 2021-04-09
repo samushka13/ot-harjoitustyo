@@ -1,10 +1,7 @@
 import sqlite3
 from textwrap import fill
 from math import sin,cos,radians
-import random
-import string
 import pygame as pg
-from pygame import gfxdraw
 
 
 db = sqlite3.connect("test.db")

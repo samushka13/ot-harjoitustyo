@@ -8,6 +8,7 @@ authors = ["samushka13 <56408918+samushka13@users.noreply.github.com>"]
 python = "^3.9"
 invoke = "^1.5.0"
 pygame = "^2.0.1"
+Pillow = "^8.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"

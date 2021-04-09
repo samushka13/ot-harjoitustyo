@@ -37,6 +37,7 @@ BOARD_SIZES = [1,3,5,7,9]
 BOARD_SIZE = BOARD_SIZES[2]
 
 CATEGORIES = [
+    "The Ouroboros Category",
     "Category 2",
     "Category 3",
     "Category 4",
@@ -49,6 +50,7 @@ CATEGORIES = [
 ]
 SPECIAL = "The Ouroboros Category"
 CATEGORY_COLORS = [
+    "black",
     "red",
     "gold",
     "green",
@@ -58,13 +60,15 @@ CATEGORY_COLORS = [
     "grey",
     "brown",
     "pink",
-    "lightgreen"
 ]
 SPECIAL_COLOR = "black"
 
-SEGMENTS = len(CATEGORIES)*BOARD_SIZE+1
+# These should be determined by the game settings.
+SEGMENTS = len(CATEGORIES[1:])*BOARD_SIZE+1
 SEGMENT = 360/SEGMENTS
-STARTING_POSITIONS = [360, 360, 360, 360, 360, 360]
+
+# This should actually be determined by the player's position on the game board.
+SELECT = 'Computer Science'
 
 # ----------------------------------------------
 # Difficulty settings:

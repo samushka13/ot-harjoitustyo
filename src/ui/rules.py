@@ -1,16 +1,13 @@
 import tkinter as tk
-from tkinter import (
-    DISABLED,
-    WORD,
-)
+from tkinter import DISABLED
+from services.ui_services import get_window_settings
 from ui.stylings import (
     RULES_WINDOW_NAME,
     RULES_WINDOW_SIZE,
-    BACKGROUND,
     TITLE_FONT,
-    BASIC_CURSOR,
     TEXT_FONT,
 )
+from ui.widgets import get_display_textbox
 from entities.settings import (
     GAME_RULES_TITLE,
     GAME_RULES_TEXT,
@@ -18,18 +15,14 @@ from entities.settings import (
 
 def show_rules():
     window = tk.Tk()
-    window.title(RULES_WINDOW_NAME)
-    window.geometry(RULES_WINDOW_SIZE)
-    window.resizable(False, False)
-    window.configure(bg=BACKGROUND)
-    window.focus()
+    get_window_settings(window, RULES_WINDOW_NAME, RULES_WINDOW_SIZE)
 
-    title = tk.Text(window, height=1, width=85, font=TITLE_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+    title = get_display_textbox(window, 1, 85, TITLE_FONT)
     title.place(x=30, y=30)
     title.insert(tk.END, GAME_RULES_TITLE)
     title.config(state=DISABLED)
 
-    rules = tk.Text(window, height=40, width=85, font=TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+    rules = get_display_textbox(window, 40, 85, TEXT_FONT)
     rules.place(x=30, y=80)
     rules.insert(tk.END, GAME_RULES_TEXT)
     rules.config(state=DISABLED)
