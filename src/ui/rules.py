@@ -1,7 +1,20 @@
 import tkinter as tk
-from tkinter import DISABLED, WORD
-from ui.stylings import RULES_WINDOW_NAME, RULES_WINDOW_SIZE, BACKGROUND, TITLE_FONT, BASIC_CURSOR, TEXT_FONT
-from entities.settings import GAME_RULES_TITLE, GAME_RULES_TEXT
+from tkinter import (
+    DISABLED,
+    WORD,
+)
+from ui.stylings import (
+    RULES_WINDOW_NAME,
+    RULES_WINDOW_SIZE,
+    BACKGROUND,
+    TITLE_FONT,
+    BASIC_CURSOR,
+    TEXT_FONT,
+)
+from entities.settings import (
+    GAME_RULES_TITLE,
+    GAME_RULES_TEXT,
+)
 
 def show_rules():
     window = tk.Tk()

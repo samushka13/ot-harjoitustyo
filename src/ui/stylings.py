@@ -23,8 +23,8 @@ TEXT_FONT = ('Helvetica', 14)
 BOARD_TEXT_FONT = ('Helvetica', 18, 'bold')
 
 # Paddings:
-X = (20,20)
-Y = (0,0)
+X = (30,30)
+Y = (20,10)
 
 # Cursors:
 BASIC_CURSOR = "arrow"

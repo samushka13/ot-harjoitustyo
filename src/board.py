@@ -2,7 +2,10 @@ import tkinter as tk
 import random
 from tkinter import DISABLED, WORD, messagebox
 from PIL import ImageTk, Image
+from services.database_connection import db
+from services.ui_services import get_window_settings
 from ui.rules import show_rules
+from ui.widgets import get_player_textbox
 from ui.stylings import (
     BOARD_WINDOW_NAME,
     BOARD_WINDOW_SIZE,
@@ -12,46 +15,41 @@ from ui.stylings import (
     DIE_FACES,
     DEFAULT_DIE_FACE,
 )
-from services.database_connection import db
 from entities.settings import (
+    PLAYERS,
+    PLAYER_COLORS,
+    BOARD_SIZE,
     CATEGORIES,
     CATEGORY_COLORS,
     SPECIAL,
     SPECIAL_COLOR,
-    PLAYERS,
-    PLAYER_COLORS,
-    BOARD_SIZES,
-    BOARD_SIZE,
+    SEGMENTS,
+    SEGMENT,
+    STARTING_POSITIONS,
 )
-
-segments = len(CATEGORIES)*BOARD_SIZE+1
-segment = 360/segments
-starting_positions = [360, 360, 360, 360, 360, 360]
 
 class GameView:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title(BOARD_WINDOW_NAME)
-        self.window.geometry(BOARD_WINDOW_SIZE)
-        self.window.resizable(False, False)
-        self.window.configure(bg=BACKGROUND)
-        self.window.bind_class("Button", "<Return>", self.bind_key_to_button)
-        self.window.focus()
-        self.build_everything()
-        self.window.mainloop()
+        get_window_settings(
+            self.window,
+            BOARD_WINDOW_NAME,
+            BOARD_WINDOW_SIZE,
+        )
 
-    def build_everything(self):
         self.build_board()
         self.build_cast_button()
         self.build_left_side_buttons()
         self.build_scoreboard()
         self.build_category_board()
 
+        self.window.mainloop()
+
     def build_scoreboard(self):
         i = 0
         j = 0
         while i < len(PLAYERS):
-            player = tk.Text(self.window, height=1, width=15, font=BOARD_TEXT_FONT, cursor=BASIC_CURSOR, wrap=WORD, bg=BACKGROUND, highlightbackground=BACKGROUND)
+            player = get_player_textbox(self.window)
             player.place(x=30, y=30+j, anchor="w")
             player.insert(tk.END, PLAYERS[i])
             player.config(state=DISABLED, fg=PLAYER_COLORS[i])
@@ -192,39 +190,39 @@ class GameView:
 
         i = 0
         j = 0
-        while j < segments:
+        while j < SEGMENTS:
             if j == 0:
-                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=SPECIAL_COLOR, width=5)
+                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=SPECIAL_COLOR, width=5)
             if j in all_category_segments[0]:
-                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[0], width=5)
+                self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[0], width=5)
             if len(CATEGORIES) >= 2:
                 if j in all_category_segments[1]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[1], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[1], width=5)
             if len(CATEGORIES) >= 3:
                 if j in all_category_segments[2]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[2], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[2], width=5)
             if len(CATEGORIES) >= 4:
                 if j in all_category_segments[3]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[3], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[3], width=5)
             if len(CATEGORIES) >= 5:
                 if j in all_category_segments[4]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[4], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[4], width=5)
             if len(CATEGORIES) >= 6:
                 if j in all_category_segments[5]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[5], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[5], width=5)
             if len(CATEGORIES) >= 7:
                 if j in all_category_segments[6]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[6], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[6], width=5)
             if len(CATEGORIES) >= 8:
                 if j in all_category_segments[7]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[7], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[7], width=5)
             if len(CATEGORIES) >= 9:
                 if j in all_category_segments[8]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[8], width=5)
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[8], width=5)
             if len(CATEGORIES) >= 10:
                 if j in all_category_segments[9]:
-                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-segment, fill=CATEGORY_COLORS[9], width=5)
-            i += segment
+                    self.board.create_arc(20, 20, 700, 700, start=360-i, extent=-SEGMENT, fill=CATEGORY_COLORS[9], width=5)
+            i += SEGMENT
             j += 1
 
         # Inner circle that helps form the shape of the gameboard.
@@ -235,7 +233,7 @@ class GameView:
         j = 0
         self.tokens = []
         while i < len(PLAYERS):
-            token = self.board.create_arc(115+j, 115+j, 605-j, 605-j, start=starting_positions[i], extent=-segment, outline=PLAYER_COLORS[i], width=10, style=tk.ARC)
+            token = self.board.create_arc(115+j, 115+j, 605-j, 605-j, start=STARTING_POSITIONS[i], extent=-SEGMENT, outline=PLAYER_COLORS[i], width=10, style=tk.ARC)
             self.tokens.append(token)
             i += 1
             j += 15
@@ -300,10 +298,10 @@ class GameView:
         self.move_token()
 
     def move_token(self):
-        self.new_position = starting_positions[0]-segment*(self.number[1])
+        self.new_position = STARTING_POSITIONS[0]-SEGMENT*(self.number[1])
         self.board.delete(self.tokens[0])
-        starting_positions[0] = self.new_position
-        token = self.board.create_arc(115, 115, 605, 605, start=self.new_position, extent=-segment, outline=PLAYER_COLORS[0], width=10, style=tk.ARC)
+        STARTING_POSITIONS[0] = self.new_position
+        token = self.board.create_arc(115, 115, 605, 605, start=self.new_position, extent=-SEGMENT, outline=PLAYER_COLORS[0], width=10, style=tk.ARC)
         # This helps keep track of the token's position in terms of the category segments.
         # (Tokens and categories are matched by their 'start' arguments.)
         if self.new_position >= 360:
@@ -313,7 +311,7 @@ class GameView:
         self.tokens[0] = token
 
     def quit_game(self):
-        from settings import SettingsView
+        from ui.settings import SettingsView
         confirmation = messagebox.askquestion("Quit Game", "Are you sure you want to quit this game?")
         if confirmation == 'yes':
             self.window.destroy()

@@ -1,23 +1,85 @@
-# Number of players:
-NUMBER_OF_PLAYERS = [2, 3, 4, 5, 6]
-PLAYERS = ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6"]
-PLAYER_COLORS = ["red", "gold", "green", "purple", "orange", "blue", "grey", "brown"]
+# ----------------------------------------------
+# Player settings:
+# ----------------------------------------------
 
-# Board sizes:
-BOARD_SIZE_NAMES = ["Tiny (least difficult)", "Small", "Medium", "Large", "Insane (most difficult)"]
+NUMBER_OF_PLAYERS = [2,3,4,5,6]
+PLAYERS = [
+    "Player 1",
+    "Player 2",
+    "Player 3",
+    "Player 4",
+    "Player 5",
+    "Player 6"
+]
+PLAYER_COLORS = [
+    "red",
+    "gold",
+    "green",
+    "purple",
+    "orange",
+    "blue",
+    "grey",
+    "brown"
+]
+
+# ----------------------------------------------
+# Board settings:
+# ----------------------------------------------
+
+BOARD_SIZE_NAMES = [
+    "Tiny (least difficult)",
+    "Small",
+    "Medium",
+    "Large",
+    "Insane (most difficult)"
+]
 BOARD_SIZES = [1,3,5,7,9]
 BOARD_SIZE = BOARD_SIZES[2]
 
-# Categories:
-CATEGORIES = ["Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8", "Category 9", "Category 10"]
+CATEGORIES = [
+    "Category 2",
+    "Category 3",
+    "Category 4",
+    "Category 5",
+    "Category 6",
+    "Category 7",
+    "Category 8",
+    "Category 9",
+    "Category 10"
+]
 SPECIAL = "The Ouroboros Category"
-CATEGORY_COLORS = ["red", "gold", "green", "purple", "orange", "blue", "grey", "brown", "pink", "lightgreen"]
+CATEGORY_COLORS = [
+    "red",
+    "gold",
+    "green",
+    "purple",
+    "orange",
+    "blue",
+    "grey",
+    "brown",
+    "pink",
+    "lightgreen"
+]
 SPECIAL_COLOR = "black"
 
-# Difficulties:
-DIFFICULTY_NAMES = ['Easy', 'Intermediate', 'Advanced Triviliast']
+SEGMENTS = len(CATEGORIES)*BOARD_SIZE+1
+SEGMENT = 360/SEGMENTS
+STARTING_POSITIONS = [360, 360, 360, 360, 360, 360]
 
-# Rules:
+# ----------------------------------------------
+# Difficulty settings:
+# ----------------------------------------------
+
+DIFFICULTY_NAMES = [
+    "Easy",
+    "Intermediate",
+    "Advanced Triviliast"
+]
+
+# ----------------------------------------------
+# Game rules:
+# ----------------------------------------------
+
 GAME_RULES_TITLE = "Trivioboros"
 GAME_RULES_TEXT = """ Yleistä:
 

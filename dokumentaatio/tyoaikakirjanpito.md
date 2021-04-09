@@ -15,4 +15,5 @@
 |  6.4. | 3   | Pelilaudan toimintojen ja käyttökokemuksen parantelua.              |
 |  7.4. | 3   | Pelilaudan toimintojen parantelua.                                  |
 |  8.4. | 2   | Refaktorointia.                                                     |
-|  yht. | 45  |                                                                     |
+|  9.4. | 2   | Refaktorointia.                                                     |
+|  yht. | 47  |                                                                     |

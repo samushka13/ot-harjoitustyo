@@ -1,4 +1,4 @@
-from login import LoginView
+from ui.login import LoginView
 from services.database_connection import initialize_database
 
 def main():
@@ -11,6 +11,9 @@ def main():
     # joka menee databasehandlerin tms käsiteltäväksi.
     # Databasehandler hoitaa tiedon tallennuksen tietokantaan.
 
+    # TESTS: MAKE AT LEAST ONE APPROPRIATE TEST!
+    # GENERAL: Extract dialogs from 'Login' etc.
+    # GENERAL: Consider replacing all grids with places.
     # GENERAL: Ensure all widget backgrounds look the same.
     # GAME: Remove bolding or decrease font size of some texts.
     # GAME: Add small icons with an appropriate color in front of player and category names.
@@ -19,9 +22,11 @@ def main():
     # GAME: Implement player turn and movement logic.
     # GAME: Ensure game sessions are based on game settings.
     # GAME: Ensure gameview works on 'laitoksen Linuxeilla'.
+    # GAME: Add close window button to 'Rules' window.
     # GAME: Add 'referee' mode where players' points can be manually altered in case of mistakes were made.
     # CUSTOM: Implement edit.
     # CUSTOM: Add filters and a search field above listbox.
+    # CUSTOM: Could it be possible to select many and delete them? (Edit should be disabled then.)
     # SETTINGS: Ensure categories are updated when relevant changes are made in CustomQuestionsView.
     # SETTINGS: Enable giving names to players.
     # SETTINGS: Add 'random' to category selection etc.
