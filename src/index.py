@@ -8,10 +8,10 @@ def main():
     # ------------------------------------------------------------------
     # TODOS
     # ------------------------------------------------------------------
-    # CRITICAL: IMPLEMENT AT LEAST ONE APPROPRIATE TEST!
+    # CRITICAL: IMPLEMENT APPROPRIATE TEST!
     # CRITICAL: Ensure stuff works on 'laitoksen Linuxeilla'!
     # CRITICAL: Include notes where things are still WIP!
-    # CRITICAL: Remove certain WIPs before next deadline!
+    # CRITICAL: Remove some WIPs before next deadline!
     # ------------------------------------------------------------------
     # GAME: Match token position with board categories and the category board.
     # GAME: Add image of ouroboros.

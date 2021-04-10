@@ -42,11 +42,9 @@ class GameView:
             BOARD_WINDOW_NAME,
             BOARD_WINDOW_SIZE,
         )
-
         self.players = players
         self.board_size = board_size
         self.categories = categories
-        self.segment = 360/(len(self.categories[1:])*self.board_size+1)
 
         # -------------------------------------------------
         # These build the game board in its default state:
@@ -79,13 +77,13 @@ class GameView:
             self.categories,
             CATEGORY_COLORS,
         )
-        self.gameboard._build()
+        self.gameboard.build()
 
         self.player_tokens = PlayerTokens(
             self.board,
             self.players,
             PLAYER_COLORS,
-            self.segment,
+            360/(len(self.categories[1:])*self.board_size+1),
         )
         self.player_tokens._build()
 
@@ -164,12 +162,6 @@ class GameView:
         self.answer_incorrect_btn.place(x=300, y=490, anchor="w")
 
         return self.answer_correct_btn, self.answer_incorrect_btn
-
-    # def hide_question(self):
-    #     placeholder = get_display_textbox(self.window, 14, 45)
-    #     placeholder.place(x=30, y=350, anchor="w")
-    #     placeholder.insert(tk.END, "")
-    #     placeholder.config(state=DISABLED)
 
     def end_player_turn(self):
         self.question_textbox.destroy()

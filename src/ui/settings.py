@@ -198,7 +198,6 @@ class SettingsView:
         players = self.collect_settings()[0]
         board_size = self.collect_settings()[1]
         categories = self.collect_settings()[2]
-        print(players)
         if len(players) == 0:
             show_player_number_error()
             self.window.focus()
