@@ -5,37 +5,39 @@ def main():
     initialize_database()
     LoginView()
 
+    # ------------------------------------------------------------------
     # TODOS
     # ------------------------------------------------------------------
-    # Service luo olion (esim. Question(user_id, category, difficulty, question, answer)),
-    # joka menee databasehandlerin tms käsiteltäväksi.
-    # Databasehandler hoitaa tiedon tallennuksen tietokantaan.
-
-    # TESTS: MAKE AT LEAST ONE APPROPRIATE TEST!
-    # GENERAL: Consider replacing all grids with places.
+    # CRITICAL: IMPLEMENT AT LEAST ONE APPROPRIATE TEST!
+    # CRITICAL: Ensure stuff works on 'laitoksen Linuxeilla'!
+    # CRITICAL: Include notes where things are still WIP!
+    # CRITICAL: Remove certain WIPs before next deadline!
+    # ------------------------------------------------------------------
+    # GAME: Ensure game sessions are based on game settings.
     # GAME: Match token position with board categories and the category board.
     # GAME: Add image of ouroboros.
-    # GAME: Ensure game sessions are based on game settings.
-    # GAME: Ensure gameview works on 'laitoksen Linuxeilla'.
-    # GAME: Add close window button to 'Rules' window.
+    # GAME: Implement points system.
     # GAME: Add 'referee' mode where players' points can be manually altered.
-    # CUSTOM: Implement edit.
+    # ------------------------------------------------------------------
     # CUSTOM: Add filters and a search field above listbox.
-    # CUSTOM: Could it be possible to select many and delete them? (Edit should be disabled then.)
-    # SETTINGS: Ensure categories are updated when relevant changes are made in CustomQuestionsView.
+    # ------------------------------------------------------------------
+    # SETTINGS: Enable choosing to include custom and/or OpenTrivia questions.
     # SETTINGS: Enable giving names to players.
     # SETTINGS: Add 'random' to category selection etc.
-    # GENERAL: Try to make everything run in a single window that simply changes size and stuff.
+    # SETTINGS: Fill categories with different ones until there is no more. Then repeat.
+    # ------------------------------------------------------------------
     # GENERAL: Implement OpenTrivia Api stuff.
+    # GENERAL: Try to make everything run in a single window that simply changes size and stuff.
+    # (If not, remove resize_window.py under services.)
     # GENERAL: Implement a way to delete profile (and all questions, optionally).
+    # GENERAL: Consider replacing all grids with places.
     # GENERAL: Implement admin login that allows to delete anyone's profile and/or questions.
-    # GENERAL: Add 'stylings.py' where all style-related stuff should be.
-    # GENERAL: Extract widgets and put them into 'widgets.py'.
     # GENERAL: Refactor everything into a sensible format (when prototyping is done).
     # GENERAL: Improve testing.
     # GENERAL: Remove unnecessary dependencies, files, etc.
     # (Remember to save certain pieces of code elsewhere for possible later usage.)
     # GENERAL: Ensure that the use of quotation marks '' and "" is uniform across the project.
+    # GENERAL: Enable configurations, such as .db file naming.
     # ------------------------------------------------------------------
 
 if __name__ == "__main__":

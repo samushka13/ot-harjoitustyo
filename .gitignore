@@ -4,4 +4,4 @@
 *.coverage
 **/htmlcov/
 *.db
-*/archive/
+**/archive/

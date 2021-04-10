@@ -17,4 +17,5 @@
 |  8.4. |  2  | Refaktorointia.                                                     |
 |  9.4. |  2  | Refaktorointia.                                                     |
 | 10.4. |  4  | Pelivuorologiikan protoilua.                                        |
-|  yht. | 51  |                                                                     |
+| 10.4. |  1  | Oman sisällön muokkaus toteutettu.                                  |
+|  yht. | 52  |                                                                     |

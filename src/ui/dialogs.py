@@ -57,16 +57,24 @@ def show_save_successful_dialog():
          \n\nCreate more to improve the gaming experience."
     )
 
-def show_delete_confirmation_dialog():
-    return messagebox.askquestion(
-        "Delete Item",
-        "Are you sure you want to delete the selected question?"
-    )
+def show_delete_confirmation_dialog(amount: int):
+    if amount == 1:
+        dialog = messagebox.askquestion(
+            "Delete Item",
+            "Are you sure you want to delete the selected question?"
+        )
+    else:
+        dialog = messagebox.askquestion(
+            "Delete Items",
+            f"Are you sure you want to delete these {amount} selected questions?"
+        )
+    return dialog
 
 def show_delete_all_confirmation_dialog():
     return messagebox.askquestion(
         "Delete All",
-        "Are you sure you want to delete all your questions?"
+        "Are you sure you want to delete all your questions? \
+        \n\nQuestions created by others will remain."
     )
 
 # Game session dialogs.
@@ -74,7 +82,8 @@ def show_delete_all_confirmation_dialog():
 def remove_player_dialog():
     return messagebox.askquestion(
         "Remove Player",
-        "Are you sure you want to remove this player?"
+        "Are you sure you want to remove this player? \
+        \n\n(This doesn't actually do anything yet, so no one is removed.)"
     )
 
 def quit_game_dialog():

@@ -8,8 +8,8 @@ from services.database_operations import (
     get_answer_for_player,
 )
 from services.ui_services import get_window_settings
-from ui.rules import show_rules
-from ui.statistics import show_statistics
+from ui.rules import RulesView
+from ui.statistics import StatisticsView
 from ui.widgets import (
     get_display_textbox,
     get_basic_button,
@@ -226,14 +226,14 @@ class GameView:
             self.window,
             "Rules",
             6,
-            command=show_rules,
+            command=RulesView,
         ).place(x=1260, y=655, anchor="e")
 
         get_basic_button(
             self.window,
             "Statistics",
             12,
-            command=show_statistics,
+            command=StatisticsView,
         ).place(x=1260, y=690, anchor="e")
 
     def quit_game(self):

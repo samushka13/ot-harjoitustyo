@@ -122,6 +122,17 @@ def get_display_textbox(window, height: int, width: int, font=BOARD_TEXT_FONT):
     )
     return textbox
 
+def get_edit_textbox(window, height: int, width: int, font=TEXT_FONT):
+    textbox = tk.Text(
+        window,
+        height=height,
+        width=width,
+        font=font,
+        wrap=WORD,
+        highlightbackground=BACKGROUND,
+    )
+    return textbox
+
 # ------------------------------------------------------
 # Board elements.
 # ------------------------------------------------------

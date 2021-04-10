@@ -1,10 +1,10 @@
 import tkinter as tk
-from ui.settings import SettingsView
 from services.database_operations import(
     add_user,
     get_credentials,
 )
 from services.ui_services import get_window_settings
+from ui.settings import SettingsView
 from ui.stylings import (
     LOGIN_WINDOW_NAME,
     LOGIN_WINDOW_SIZE,

@@ -52,8 +52,17 @@ def save_item_to_database(user_id: int, category: str, difficulty: str, question
 def delete_item_from_database(question_id: int):
     db.execute(f"DELETE FROM Questions WHERE id='{question_id}'")
 
-def delete_all_users_items_from_database():
+def delete_all_user_items_from_database():
     db.execute("DELETE FROM Questions")
+
+def get_item_for_editing(question_id: int):
+    item = db.execute(f"SELECT category, difficulty, question, answer FROM Questions \
+        WHERE id='{question_id}'").fetchone()
+    return item['category'], item['difficulty'], item['question'], item['answer']
+
+def update_item(question_id: int, category: str, difficulty: str, question: str, answer: str):
+    db.execute(f"UPDATE Questions SET category=?, difficulty=?, question=?, answer=? \
+        WHERE id='{question_id}'", (category, difficulty, question, answer))
 
 # These will be used to enable a feature,
 # where the current user can view every user's questions (in the same database),

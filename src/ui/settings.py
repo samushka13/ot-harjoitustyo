@@ -1,6 +1,6 @@
 import tkinter as tk
-from ui.board import GameView
 from services.ui_services import get_window_settings
+from ui.board import GameView
 from ui.custom_questions import CustomQuestionsView
 from ui.stylings import (
     SETTINGS_WINDOW_NAME,

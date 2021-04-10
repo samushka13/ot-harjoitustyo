@@ -1,14 +1,15 @@
 import tkinter as tk
-from tkinter import ttk, WORD
+from tkinter import ttk, WORD, EXTENDED, ACTIVE
 from services.database_operations import (
     save_item_to_database,
     delete_item_from_database,
-    delete_all_users_items_from_database,
+    delete_all_user_items_from_database,
     get_categories,
     get_listbox_items,
 )
 from services.ui_services import get_window_settings
 from entities.settings import DIFFICULTY_NAMES
+from ui.edit import EditView
 from ui.dialogs import (
     show_save_error_dialog,
     show_save_successful_dialog,
@@ -166,11 +167,11 @@ class CustomQuestionsView:
 
         delete = tk.Button(
             self.window,
-            text="Delete",
-            width=10,
+            text="Delete Selected",
+            width=15,
             bg=BACKGROUND,
             highlightbackground=BACKGROUND,
-            command=self.delete_item,
+            command=self.delete_items,
         )
         delete.grid(column=3, row=11)
 
@@ -200,6 +201,7 @@ class CustomQuestionsView:
             width=82,
             height=30,
             highlightbackground=BACKGROUND,
+            selectmode=EXTENDED,
         )
         for entry in get_listbox_items():
             self.listbox.insert(tk.END, entry)
@@ -222,7 +224,7 @@ class CustomQuestionsView:
         return self.difficulty_combobox
 
     # -------------------------------------------------------------------
-    # These functions process button command:
+    # These functions process button commands:
     # -------------------------------------------------------------------
 
     def save_item(self):
@@ -257,15 +259,15 @@ class CustomQuestionsView:
         self.category_combobox.focus()
 
     def edit_item(self):
+        selected = self.listbox.get(ACTIVE).split(' ', 1)[0]
+        self.window.destroy()
+        EditView(selected)
 
-        # UPDATE Questions SET ... = ... WHERE ... = ...
-        # That part should also be moved to database_operations.
-
-        pass
-
-    def delete_item(self):
-        if show_delete_confirmation_dialog() == "yes":
-            delete_item_from_database(str(self.listbox.get(self.listbox.curselection())).split(' ', 1)[0])
+    def delete_items(self):
+        selected = [self.listbox.get(i).split(' ', 1)[0] for i in self.listbox.curselection()]
+        if show_delete_confirmation_dialog(len(selected)) == "yes":
+            for item in selected:
+                delete_item_from_database(item)
             self.build_listbox()
             self.build_category_combobox()
             self.window.focus()
@@ -273,7 +275,7 @@ class CustomQuestionsView:
 
     def delete_all(self):
         if show_delete_all_confirmation_dialog() == "yes":
-            delete_all_users_items_from_database()
+            delete_all_user_items_from_database()
             self.build_listbox()
             self.build_category_combobox()
             self.window.focus()
