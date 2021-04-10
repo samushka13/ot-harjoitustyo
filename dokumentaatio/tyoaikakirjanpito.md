@@ -16,5 +16,5 @@
 |  7.4. |  3  | Pelilaudan toimintojen parantelua.                                  |
 |  8.4. |  2  | Refaktorointia.                                                     |
 |  9.4. |  2  | Refaktorointia.                                                     |
-| 10.4. |  2  | Pelivuorologiikan protoilua.                                        |
-|  yht. | 49  |                                                                     |
+| 10.4. |  4  | Pelivuorologiikan protoilua.                                        |
+|  yht. | 51  |                                                                     |

@@ -13,10 +13,7 @@ def main():
 
     # TESTS: MAKE AT LEAST ONE APPROPRIATE TEST!
     # GENERAL: Consider replacing all grids with places.
-    # GAME: Highlight player in turn and category in question.
-    # GAME: Remove bolding or decrease font size of some texts.
-    # GAME: Add small icons with an appropriate color in front of player and category names.
-    # GAME: Change font color of player and category names to black.
+    # GAME: Match token position with board categories and the category board.
     # GAME: Add image of ouroboros.
     # GAME: Ensure game sessions are based on game settings.
     # GAME: Ensure gameview works on 'laitoksen Linuxeilla'.

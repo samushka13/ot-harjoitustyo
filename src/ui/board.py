@@ -53,34 +53,49 @@ class GameView:
 
         self.build_background()
 
-        CategoryBoard(
+        self.category_board = CategoryBoard(
             self.window,
+            self.scores,
             CATEGORIES,
             CATEGORY_COLORS,
-        )._build()
+        )
+        self.category_board._build()
 
-        Scoreboard(
+        self.scoreboard = Scoreboard(
             self.window,
             self.scores,
             PLAYERS,
             PLAYER_COLORS,
             CATEGORIES,
             CATEGORY_COLORS,
-        )._build()
+        )
+        self.scoreboard._build()
 
-        GameBoard(
+        self.gameboard = GameBoard(
             self.window,
             self.board,
             BOARD_SIZE,
             CATEGORIES,
             CATEGORY_COLORS,
-        )._build()
-        self.player_tokens = PlayerTokens(self.board, PLAYERS, PLAYER_COLORS, SEGMENT)
+        )
+        self.gameboard._build()
+
+        self.player_tokens = PlayerTokens(
+            self.board,
+            PLAYERS,
+            PLAYER_COLORS,
+            SEGMENT,
+        )
         self.player_tokens._build()
 
         self.turn_counter = 0
-        self.question = ""
+        self.scoreboard.highlight_player(self.turn_counter)
 
+        self.current_category = ""
+        self.category_board.highlight_category(self.current_category)
+
+        self.category = ""
+        self.question = ""
         self.img = ImageTk.PhotoImage(Image.open(DEFAULT_DIE_FACE))
         self.board.create_image(360, 340, anchor="center", image=self.img)
 
@@ -96,9 +111,10 @@ class GameView:
     # -------------------------------------------------
 
     def get_question(self):
-        self.question = get_question_for_player(get_category_for_player())
-        textbox = get_display_textbox(self.window, 6, 45)
-        textbox.place(x=30, y=305, anchor="w")
+        self.category = get_category_for_player()
+        self.question = get_question_for_player(self.category)
+        textbox = get_display_textbox(self.window, 7, 45)
+        textbox.place(x=30, y=285, anchor="w")
         textbox.insert(tk.END, self.question['question'])
         textbox.config(state=DISABLED)
         get_basic_button(
@@ -107,6 +123,7 @@ class GameView:
             15,
             self.show_answer,
         ).place(x=280, y=420, anchor="center")
+        return self.category
 
     def show_answer(self):
         answer = get_answer_for_player(self.question)
@@ -132,23 +149,26 @@ class GameView:
         ).place(x=300, y=490, anchor="w")
 
     def hide_question(self):
-        placeholder = get_display_textbox(self.window, 13, 45)
-        placeholder.place(x=30, y=370, anchor="w")
+        placeholder = get_display_textbox(self.window, 14, 45)
+        placeholder.place(x=30, y=350, anchor="w")
         placeholder.insert(tk.END, "")
         placeholder.config(state=DISABLED)
 
     def hide_cast_button(self):
         placeholder = get_display_textbox(self.window, 1, 15)
-        placeholder.place(x=900, y=420, anchor="center")
+        placeholder.place(x=920, y=420, anchor="center")
         placeholder.insert(tk.END, "")
         placeholder.config(state=DISABLED)
 
     def end_player_turn(self):
         self.hide_question()
         self.build_cast_button()
+        self.scoreboard.remove_previous_highlight()
+        self.category_board.remove_previous_highlight()
         self.turn_counter += 1
         if self.turn_counter == len(PLAYERS):
             self.turn_counter = 0
+        self.scoreboard.highlight_player(self.turn_counter)
 
     def build_cast_button(self):
         get_basic_button(
@@ -164,7 +184,9 @@ class GameView:
         self.board.create_image(360, 340, anchor="center", image=self.img)
         self.hide_cast_button()
         self.get_question()
+        self.category_board.highlight_category(self.category['category'])
         self.player_tokens.move_token(self.turn_counter, number[1])
+
 
 # ------------------------------------------------
 # These belong to GameView:
@@ -176,7 +198,7 @@ class GameView:
         self.scores.place(x=280, y=360, anchor="center")
 
         # Line that separates the scoreboard from questions.
-        self.scores.create_line(30, 220, 530, 220)
+        self.scores.create_line(30, 190, 530, 190)
 
         # Line that separates the questions from categories.
         self.scores.create_line(30, 530, 530, 530)

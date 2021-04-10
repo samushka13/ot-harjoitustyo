@@ -1,5 +1,5 @@
 import tkinter as tk
-from board import GameView
+from ui.board import GameView
 from services.ui_services import get_window_settings
 from ui.custom_questions import CustomQuestionsView
 from ui.stylings import (

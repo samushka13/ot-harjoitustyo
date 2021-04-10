@@ -65,6 +65,9 @@ class GameBoard:
             if len(self.categories) >= 10:
                 if segment_counter in all_category_segments[9]:
                     get_board_segment(self.canvas, distance, self.category_colors[9])
+            if len(self.categories) >= 11:
+                if segment_counter in all_category_segments[10]:
+                    get_board_segment(self.canvas, distance, self.category_colors[10])
             distance += self.segment
             segment_counter += 1
 

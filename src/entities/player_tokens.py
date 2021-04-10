@@ -6,7 +6,7 @@ class PlayerTokens:
         self.players = players
         self.colors = colors
         self.size = size
-        self.starting_positions = [360, 360, 360, 360, 360, 360]
+        self.starting_positions = [360, 360, 360, 360, 360, 360, 360, 360]
         self.tokens = []
 
     def _build(self):

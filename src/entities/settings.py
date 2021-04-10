@@ -1,3 +1,5 @@
+import random
+
 # ----------------------------------------------
 # Player settings:
 # ----------------------------------------------
@@ -9,17 +11,15 @@ PLAYERS = [
     "Player 3",
     "Player 4",
     "Player 5",
-    "Player 6"
+    "Player 6",
 ]
 PLAYER_COLORS = [
     "red",
-    "gold",
+    "brown",
     "green",
     "purple",
     "orange",
     "blue",
-    "grey",
-    "brown"
 ]
 
 # ----------------------------------------------
@@ -37,16 +37,18 @@ BOARD_SIZES = [1,3,5,7,9]
 BOARD_SIZE = BOARD_SIZES[2]
 
 CATEGORIES = [
-    "The Ouroboros Category",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
-    "Category 6",
-    "Category 7",
-    "Category 8",
-    "Category 9",
-    "Category 10"
+    "The Ouroboros",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
+    "Computer Science",
 ]
 SPECIAL = "The Ouroboros Category"
 CATEGORY_COLORS = [
@@ -60,6 +62,8 @@ CATEGORY_COLORS = [
     "grey",
     "brown",
     "pink",
+    "magenta",
+    "turquoise",
 ]
 SPECIAL_COLOR = "black"
 
@@ -68,7 +72,7 @@ SEGMENTS = len(CATEGORIES[1:])*BOARD_SIZE+1
 SEGMENT = 360/SEGMENTS
 
 # This should actually be determined by the player's position on the game board.
-SELECT = 'Computer Science'
+SELECT = random.choice(CATEGORIES[0:1])
 
 # ----------------------------------------------
 # Difficulty settings:

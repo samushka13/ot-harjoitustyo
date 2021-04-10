@@ -20,6 +20,7 @@ BACKGROUND = "white smoke"
 # Fonts:
 TITLE_FONT = ('Helvetica', 16, 'bold')
 TEXT_FONT = ('Helvetica', 14)
+TEXT_FONT_BOLD = ('Helvetica', 14, 'bold')
 BOARD_TEXT_FONT = ('Helvetica', 18, 'bold')
 
 # Paddings:
