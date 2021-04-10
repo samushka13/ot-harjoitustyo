@@ -12,9 +12,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
 
 ## Käyttöliittymä ja toiminnallisuudet
 
-**TODO**: Luonnos käyttöliittymästä.
-
-### Kirjautuminen / Rekisteröityminen
+### Kirjautuminen / Rekisteröityminen (VALMIS)
 
   - Käyttäjä voi kirjautua sovellukseen (lokaalilla) käyttäjätunnuksella ja salasanalla.
     - Tiedot syötetään lomakkeelle.
@@ -24,17 +22,17 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
       - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
   - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
-### Pelin asetukset
+### Pelin asetukset (VALMIS)
 
   - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
   - Käyttäjä voi muokata pelin asetuksia valitsemalla
-    - pelaajien lukumäärän (2-6, oletusarvona 2),
-    - kysymysten kategoriat (yhteensä 5, useita vaihtoehtoja, oletusarvot annettu).
+    - pelaajien lukumäärän (1-6),
+    - kysymysten kategoriat (2-12, useita vaihtoehtoja).
   - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
 
 ### Omat kysymykset ja kategoriat
 
-  - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä kategorioittain.
+  - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
   - Käyttäjä voi muokata luomiaan kysymyksiä ja kategorioita.
   - Käyttäjä voi poistaa luomiaan kysymyksiä ja kategorioita.
     - Käyttäjältä pyydetään tällöin vahvistus. 
@@ -72,18 +70,21 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
   - vaikeustason kategorioittain,
   - noppien lukumäärän (1-2),
   - kategoriapisteiden lukumäärän (1 = pikapeli, 5 = maraton)
-  - kysymysten kategorioita vapaammin (esim. 1-12),
   - kysymysten kategorioille haluamansa värit,
   - mukaan vain esimerkiksi monivalintakysymyksiä,
-  - pelilaudan koon,
   - ruutujen järjestyksen.
   - laudalle 'jokeriruutuja', joista voi tulla kysymyksiä mistä tahansa kategoriasta,
   - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset.
-- Omien kysymysten selaamiseen hakutoiminto.
-- Omien kysymysten luokittelu avoimiin kysymyksiin, monivalintoihin ja kyllä-tai-ei-kysymyksiin.
+- Omien kysymysten selaamiseen
+  - hakukenttä,
+  - kategoriasuodattimet.
+- Omien kysymysten luokittelu
+  - avoimiin kysymyksiin,
+  - monivalintoihin,
+  - kyllä-tai-ei-kysymyksiin.
 - Pelilaudan kehittäminen näyttävämmäksi.
 - Voitosta ilmoittavan näkymän kustomointi voittaneen pelaajan mukaiseksi.
-- Pelisession tilastot (sekä kesken pelin että pelin päätyttyä), joista näkee mm. kysymysten, oikeiden vastausten ja väärien vastausten määrän per pelaaja.
+- Pelisession tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
 - Kysymysten ja kategorioiden tuonti muualta.
 - Pelaajan poistaminen kesken pelin.
 - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.

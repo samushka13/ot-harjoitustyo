@@ -13,7 +13,6 @@ def main():
     # CRITICAL: Include notes where things are still WIP!
     # CRITICAL: Remove certain WIPs before next deadline!
     # ------------------------------------------------------------------
-    # GAME: Ensure game sessions are based on game settings.
     # GAME: Match token position with board categories and the category board.
     # GAME: Add image of ouroboros.
     # GAME: Implement points system.
@@ -21,10 +20,9 @@ def main():
     # ------------------------------------------------------------------
     # CUSTOM: Add filters and a search field above listbox.
     # ------------------------------------------------------------------
-    # SETTINGS: Enable choosing to include custom and/or OpenTrivia questions.
-    # SETTINGS: Enable giving names to players.
+    # SETTINGS: Enable choosing to include custom and/or OpenTrivia questions only.
     # SETTINGS: Add 'random' to category selection etc.
-    # SETTINGS: Fill categories with different ones until there is no more. Then repeat.
+    # SETTINGS: Remember selected values when coming back from GameView or CustomQuestionsView.
     # ------------------------------------------------------------------
     # GENERAL: Implement OpenTrivia Api stuff.
     # GENERAL: Try to make everything run in a single window that simply changes size and stuff.

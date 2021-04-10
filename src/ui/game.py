@@ -26,12 +26,8 @@ from ui.stylings import (
     DEFAULT_DIE_FACE,
 )
 from entities.settings import (
-    PLAYERS,
     PLAYER_COLORS,
-    BOARD_SIZE,
-    CATEGORIES,
     CATEGORY_COLORS,
-    SEGMENT,
 )
 from entities.category_board import CategoryBoard
 from entities.scoreboard import Scoreboard
@@ -39,13 +35,18 @@ from entities.game_board import GameBoard
 from entities.player_tokens import PlayerTokens
 
 class GameView:
-    def __init__(self):
+    def __init__(self, players: list, board_size: str, categories: list):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
             BOARD_WINDOW_NAME,
             BOARD_WINDOW_SIZE,
         )
+
+        self.players = players
+        self.board_size = board_size
+        self.categories = categories
+        self.segment = 360/(len(self.categories[1:])*self.board_size+1)
 
         # -------------------------------------------------
         # These build the game board in its default state:
@@ -56,7 +57,7 @@ class GameView:
         self.category_board = CategoryBoard(
             self.window,
             self.scores,
-            CATEGORIES,
+            self.categories,
             CATEGORY_COLORS,
         )
         self.category_board._build()
@@ -64,9 +65,9 @@ class GameView:
         self.scoreboard = Scoreboard(
             self.window,
             self.scores,
-            PLAYERS,
+            self.players,
             PLAYER_COLORS,
-            CATEGORIES,
+            self.categories,
             CATEGORY_COLORS,
         )
         self.scoreboard._build()
@@ -74,17 +75,17 @@ class GameView:
         self.gameboard = GameBoard(
             self.window,
             self.board,
-            BOARD_SIZE,
-            CATEGORIES,
+            self.board_size,
+            self.categories,
             CATEGORY_COLORS,
         )
         self.gameboard._build()
 
         self.player_tokens = PlayerTokens(
             self.board,
-            PLAYERS,
+            self.players,
             PLAYER_COLORS,
-            SEGMENT,
+            self.segment,
         )
         self.player_tokens._build()
 
@@ -99,6 +100,12 @@ class GameView:
         self.img = ImageTk.PhotoImage(Image.open(DEFAULT_DIE_FACE))
         self.board.create_image(360, 340, anchor="center", image=self.img)
 
+        self.question_textbox = None
+        self.answer_textbox = None
+        self.show_answer_btn = None
+        self.answer_correct_btn = None
+        self.answer_incorrect_btn = None
+
         self.build_cast_button()
         self.build_left_side_buttons()
 
@@ -111,78 +118,88 @@ class GameView:
     # -------------------------------------------------
 
     def get_question(self):
-        self.category = get_category_for_player()
+
+        # This should actually be determined by the player's position on the game board.
+        # -------------------------------------------------
+        self.category = get_category_for_player(random.choice(self.categories))
+        # -------------------------------------------------
         self.question = get_question_for_player(self.category)
-        textbox = get_display_textbox(self.window, 7, 45)
-        textbox.place(x=30, y=285, anchor="w")
-        textbox.insert(tk.END, self.question['question'])
-        textbox.config(state=DISABLED)
-        get_basic_button(
+        self.question_textbox = get_display_textbox(self.window, 7, 45)
+        self.question_textbox.place(x=30, y=285, anchor="w")
+        self.question_textbox.insert(tk.END, self.question['question'])
+        self.question_textbox.config(state=DISABLED)
+        self.show_answer_btn = get_basic_button(
             self.window,
             "Show answer",
             15,
             self.show_answer,
-        ).place(x=280, y=420, anchor="center")
-        return self.category
+        )
+        self.show_answer_btn.place(x=280, y=420, anchor="center")
+        return self.category, self.question_textbox, self.show_answer_btn
 
     def show_answer(self):
         answer = get_answer_for_player(self.question)
-        textbox = get_display_textbox(self.window, 3, 45)
-        textbox.place(x=30, y=420, anchor="w")
-        textbox.insert(tk.END, answer['answer'])
-        textbox.config(state=DISABLED)
+        self.answer_textbox = get_display_textbox(self.window, 3, 45)
+        self.answer_textbox.place(x=30, y=420, anchor="w")
+        self.answer_textbox.insert(tk.END, answer['answer'])
+        self.answer_textbox.config(state=DISABLED)
         self.build_answer_confirmation_buttons()
+        return self.answer_textbox
 
     def build_answer_confirmation_buttons(self):
-        get_basic_button(
+        self.answer_correct_btn = get_basic_button(
             self.window,
-            f"{PLAYERS[0]} answered correctly",
+            f"{self.players[self.turn_counter]} answered correctly",
             25,
             self.end_player_turn,
-        ).place(x=30, y=490, anchor="w")
+        )
+        self.answer_correct_btn.place(x=30, y=490, anchor="w")
 
-        get_basic_button(
+        self.answer_incorrect_btn = get_basic_button(
             self.window,
-            f"{PLAYERS[0]} answered incorrectly",
+            f"{self.players[self.turn_counter]} answered incorrectly",
             25,
             self.end_player_turn,
-        ).place(x=300, y=490, anchor="w")
+        )
+        self.answer_incorrect_btn.place(x=300, y=490, anchor="w")
 
-    def hide_question(self):
-        placeholder = get_display_textbox(self.window, 14, 45)
-        placeholder.place(x=30, y=350, anchor="w")
-        placeholder.insert(tk.END, "")
-        placeholder.config(state=DISABLED)
+        return self.answer_correct_btn, self.answer_incorrect_btn
 
-    def hide_cast_button(self):
-        placeholder = get_display_textbox(self.window, 1, 15)
-        placeholder.place(x=920, y=420, anchor="center")
-        placeholder.insert(tk.END, "")
-        placeholder.config(state=DISABLED)
+    # def hide_question(self):
+    #     placeholder = get_display_textbox(self.window, 14, 45)
+    #     placeholder.place(x=30, y=350, anchor="w")
+    #     placeholder.insert(tk.END, "")
+    #     placeholder.config(state=DISABLED)
 
     def end_player_turn(self):
-        self.hide_question()
+        self.question_textbox.destroy()
+        self.answer_textbox.destroy()
+        self.show_answer_btn.destroy()
+        self.answer_correct_btn.destroy()
+        self.answer_incorrect_btn.destroy()
         self.build_cast_button()
         self.scoreboard.remove_previous_highlight()
         self.category_board.remove_previous_highlight()
         self.turn_counter += 1
-        if self.turn_counter == len(PLAYERS):
+        if self.turn_counter == len(self.players):
             self.turn_counter = 0
         self.scoreboard.highlight_player(self.turn_counter)
 
     def build_cast_button(self):
-        get_basic_button(
+        self.cast_btn = get_basic_button(
             self.window,
             "Cast",
             8,
             self.cast_die,
-        ).place(x=917,y=420, anchor="center")
+        )
+        self.cast_btn.place(x=917,y=420, anchor="center")
+        return self.cast_btn
 
     def cast_die(self):
         number = random.choice(DIE_FACES)
         self.img = ImageTk.PhotoImage(Image.open(number[0]))
         self.board.create_image(360, 340, anchor="center", image=self.img)
-        self.hide_cast_button()
+        self.cast_btn.destroy()
         self.get_question()
         self.category_board.highlight_category(self.category['category'])
         self.player_tokens.move_token(self.turn_counter, number[1])

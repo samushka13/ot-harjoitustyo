@@ -1,5 +1,4 @@
 from services.database_connection import db
-from entities.settings import SELECT
 
 # ------------------------------------------------
 # Login operations.
@@ -74,9 +73,9 @@ def update_item(question_id: int, category: str, difficulty: str, question: str,
 # Game session operations.
 # ------------------------------------------------
 
-def get_category_for_player():
+def get_category_for_player(category: str):
     return db.execute(f"SELECT category FROM Questions \
-        WHERE category='{SELECT}'").fetchone()
+        WHERE category='{category}'").fetchone()
 
 def get_question_for_player(category: str):
     return db.execute(f"SELECT question FROM Questions \

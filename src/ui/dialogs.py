@@ -40,7 +40,28 @@ def show_users_dialog():
         )
     return dialog
 
-# Settings dialogs. (Currently none.)
+# Settings dialogs.
+
+def show_player_number_error():
+    return messagebox.showinfo(
+        "No players added",
+        "At least one player must be added to start a new game.\
+        \n\nYou can type in a custom name or select one from predefined values.\n"
+    )
+
+def show_player_name_error():
+    return messagebox.showinfo(
+        "Player name error",
+        "Players must have unique names, but it seems that they are not."
+    )
+
+def show_category_number_error():
+    return messagebox.showinfo(
+        "Not enough categories",
+        "At least two categories must be added to start a new game.\
+        \n\nYou can select them using the category dropdown lists.\
+        \n\nIf the lists are empty, try creating some questions in the Custom Questions view.\n"
+    )
 
 # Custom Questions dialogs.
 
@@ -74,7 +95,7 @@ def show_delete_all_confirmation_dialog():
     return messagebox.askquestion(
         "Delete All",
         "Are you sure you want to delete all your questions? \
-        \n\nQuestions created by others will remain."
+        \n\nQuestions created by others will remain.\n"
     )
 
 # Game session dialogs.
@@ -83,7 +104,7 @@ def remove_player_dialog():
     return messagebox.askquestion(
         "Remove Player",
         "Are you sure you want to remove this player? \
-        \n\n(This doesn't actually do anything yet, so no one is removed.)"
+        \n\n(This doesn't actually do anything yet, so no one is removed.)\n"
     )
 
 def quit_game_dialog():

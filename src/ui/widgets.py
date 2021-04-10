@@ -1,11 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, WORD
-from services.database_operations import get_categories
-from entities.settings import (
-    NUMBER_OF_PLAYERS,
-    BOARD_SIZE_NAMES,
-    SEGMENT,
-)
+from tkinter import WORD
 from ui.stylings import (
     BACKGROUND,
     TITLE_FONT,
@@ -18,41 +12,6 @@ from ui.stylings import (
 # Comboboxes.
 # ------------------------------------------------------
 
-def get_players_combobox(window):
-    players_combobox = ttk.Combobox(window, width=30)
-    values = players_combobox['values'] = NUMBER_OF_PLAYERS
-    players_combobox.state(['readonly'])
-    players_combobox.set(values[0])
-    players_combobox.grid(column=0, row=2, columnspan=2)
-    return players_combobox, players_combobox.focus()
-
-def get_board_size_combobox(window):
-    board_size_combobox = ttk.Combobox(window, width=30)
-    board_size_combobox['values'] = BOARD_SIZE_NAMES
-    board_size_combobox.state(['readonly'])
-    board_size_combobox.set(BOARD_SIZE_NAMES[2])
-    board_size_combobox.grid(column=0, row=4, columnspan=2)
-    return board_size_combobox
-
-def get_category_comboboxes(window):
-    comboboxes = []
-    i = 0
-    for i in range(0,5):
-        category_combobox = ttk.Combobox(window, width=30)
-        categories = get_categories()
-        category_combobox['values'] = categories
-        category_combobox.state(['readonly'])
-        if len(categories) < 5:
-            if len(categories) == 0:
-                category_combobox.set("")
-            else:
-                category_combobox.set(categories[0])
-        else:
-            category_combobox.set(categories[i])
-        category_combobox.grid(column=0, row=6+i, columnspan=2)
-        comboboxes.append(category_combobox)
-        i += 1
-    return comboboxes
 
 # ------------------------------------------------------
 # Labels.
@@ -97,11 +56,12 @@ def get_basic_button(window, text: str, width: int, command):
 # Entries.
 # ------------------------------------------------------
 
-def get_basic_entry(window, width: int, show=None):
+def get_basic_entry(window, width: int, show=None, textvariable=None):
     entry = tk.Entry(
         window,
         width=width,
         show=show,
+        textvariable=textvariable,
     )
     return entry
 
@@ -147,11 +107,11 @@ def get_canvas(window, height: int, width: int):
     )
     return canvas
 
-def get_board_segment(canvas, distance: float, fill):
+def get_board_segment(canvas, distance: float, segment: float, fill):
     segment = canvas.create_arc(
         20, 20, 700, 700,
         start=360-distance,
-        extent=-SEGMENT,
+        extent=-segment,
         fill=fill,
         width=5,
     )
