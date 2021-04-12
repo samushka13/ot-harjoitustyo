@@ -71,7 +71,7 @@ class LoginServices():
             new_user: String value of the user's username.
         """
 
-        return bool(new_user.username in self.database.get_users())
+        return bool(new_user in self.database.get_users())
 
     def check_for_users(self):
         """Checks if there are any users in the database and
