@@ -13,14 +13,14 @@ class DatabaseServices():
         self.database.row_factory = sqlite3.Row
 
     def create_users_table(self):
-        self.database.cursor()
-        self.database.execute("CREATE TABLE IF NOT EXISTS Users \
+        cursor = self.database.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS Users \
             (id INTEGER PRIMARY KEY, username TEXT, password TEXT)")
         self.database.commit()
 
     def create_questions_table(self):
-        self.database.cursor()
-        self.database.execute("CREATE TABLE IF NOT EXISTS Questions \
+        cursor = self.database.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS Questions \
             (id INTEGER PRIMARY KEY, user_id INTEGER REFERENCES Users, \
             category TEXT, difficulty TEXT, question TEXT, answer TEXT)")
         self.database.commit()
@@ -36,13 +36,13 @@ class DatabaseServices():
     # ------------------------------------------------
 
     def drop_users_table(self):
-        self.database.cursor()
-        self.database.execute("DROP TABLE IF EXISTS Users")
+        cursor = self.database.cursor()
+        cursor.execute("DROP TABLE IF EXISTS Users")
         self.database.commit()
 
     def drop_questions_table(self):
-        self.database.cursor()
-        self.database.execute("DROP TABLE IF EXISTS Questions")
+        cursor = self.database.cursor()
+        cursor.execute("DROP TABLE IF EXISTS Questions")
         self.database.commit()
 
     # ------------------------------------------------
