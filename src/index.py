@@ -8,8 +8,6 @@ def main():
     # ------------------------------------------------------------------
     # TODOS
     # ------------------------------------------------------------------
-    # CRITICAL: Ensure stuff works on 'laitoksen Linuxeilla'! (check python version at least)
-    # ------------------------------------------------------------------
     # GAME: Match token position with board categories and the category board.
     # GAME: Add image of ouroboros.
     # GAME: Implement points system.
@@ -37,6 +35,10 @@ def main():
     # (Remember to save certain pieces of code elsewhere for possible later usage.)
     # GENERAL: Ensure that the use of quotation marks '' and "" is uniform across the project.
     # GENERAL: Enable configurations, such as .db file naming.
+    # ------------------------------------------------------------------
+    # DOCUMENTATION: Describe architecture and logic.
+    # DOCUMENTATION: Describe testing.
+    # DOCUMENTATION: Provide some kind of a manual.
     # ------------------------------------------------------------------
 
 if __name__ == "__main__":
