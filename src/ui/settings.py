@@ -1,7 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
 from services.ui_services import get_window_settings
-from services.database_operations import get_categories
 from ui.game import GameView
 from ui.custom_questions import CustomQuestionsView
 from ui.stylings import (
@@ -14,6 +12,7 @@ from ui.widgets import (
     get_title_label,
     get_basic_label,
     get_basic_button,
+    get_combobox,
 )
 from ui.dialogs import (
     show_player_number_error,
@@ -114,7 +113,7 @@ class SettingsView:
         entry_fields = []
         i = 0
         for i in range(0,6):
-            entry_field = ttk.Combobox(self.window, width=30)
+            entry_field = get_combobox(self.window)
             entry_field['values'] = self.service.get_default_players()
             if i == 0:
                 entry_field.set(f"{self.service.get_default_players()[0]}")
@@ -126,7 +125,7 @@ class SettingsView:
         return entry_fields, entry_fields[0].focus()
 
     def get_board_size_combobox(self):
-        board_size_combobox = ttk.Combobox(self.window, width=30)
+        board_size_combobox = get_combobox(self.window)
         board_size_combobox['values'] = [x[0] for x in self.board_sizes]
         board_size_combobox.state(['readonly'])
         board_size_combobox.set([x[0] for x in self.board_sizes][2])
@@ -137,13 +136,13 @@ class SettingsView:
         comboboxes = []
         i = 0
         for i in range(0,12):
-            category_combobox = ttk.Combobox(self.window, width=30)
-            categories = get_categories()
+            category_combobox = get_combobox(self.window)
+            categories = self.service.get_categories()
             category_combobox['values'] = categories
             category_combobox.state(['readonly'])
             category_combobox.set("Add category")
 
-            # This could be used to fill the categories automatically with existing values.
+            # This fills the categories automatically with existing values.
             #
             # if len(categories) < 12:
             #     if len(categories) == 0:
@@ -160,7 +159,7 @@ class SettingsView:
         return comboboxes
 
     # ------------------------------------------------------
-    # Function that returns all the settings:
+    # Function that collects settings for a game session:
     # ------------------------------------------------------
 
     def collect_settings(self):
@@ -190,8 +189,9 @@ class SettingsView:
     # ------------------------------------------------------
 
     def open_questions_view(self):
-        self.window.destroy()
-        CustomQuestionsView(self.service)
+        pass
+        # self.window.destroy()
+        # CustomQuestionsView(self.service)
 
     def open_game_view(self):
         players = self.collect_settings()[0]
@@ -207,5 +207,6 @@ class SettingsView:
             show_category_number_error()
             self.window.focus()
         else:
-            self.window.destroy()
-            GameView(self.service, players, board_size, categories)
+            pass
+            # self.window.destroy()
+            # GameView(self.service, players, board_size, categories)

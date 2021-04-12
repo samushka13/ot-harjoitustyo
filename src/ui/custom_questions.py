@@ -1,12 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, WORD, EXTENDED, ACTIVE
-from services.database_operations import (
-    save_item_to_database,
-    delete_item_from_database,
-    delete_all_user_items_from_database,
-    get_categories,
-    get_listbox_items,
-)
 from services.ui_services import get_window_settings
 from ui.edit import EditView
 from ui.dialogs import (

@@ -16,7 +16,10 @@ class StatisticsView():
     def __init__(self):
         self.stats_window = tk.Tk()
         get_window_settings(self.stats_window, STATISTICS_WINDOW_NAME, STATISTICS_WINDOW_SIZE)
+        self._build_widgets()
+        self.stats_window.mainloop()
 
+    def _build_widgets(self):
         title = get_display_textbox(self.stats_window, 1, 85, TITLE_FONT)
         title.place(x=30, y=30)
         title.insert(tk.END, "Statistics")
@@ -33,8 +36,6 @@ class StatisticsView():
             10,
             command=self._close_window,
         ).place(x=370, y=620, anchor="center")
-
-        self.stats_window.mainloop()
 
     def _close_window(self):
         self.stats_window.destroy()

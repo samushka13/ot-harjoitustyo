@@ -3,7 +3,7 @@
 | 18.3. |  1  | Taustatutkimusta aiheeseen liittyen.                                |
 | 22.3. |  2  | Alustava vaatimusmäärittely.                                        |
 | 26.3. |  2  | Pohjustusta (mm. Poetry, Coverage, Invoke).                         |
-| 30.3. |  1  | Päivitetty vaatimusmäärittelyä ja suunniteltu peliä.                |
+| 30.3. |  1  | Päivitetty vaatimusmäärittelyä ja suunniteltu pelin konseptia.      |
 | 30.3. |  2  | Pohjustusta (mm. Pygame, Tkinter).                                  |
 | 31.3. |  4  | Lisätty sqlite-tuki ja muutamia palveluja. Testailua.               |
 |  1.4. |  4  | Sisällön lisääminen ja poistaminen toteutettu (raakaversio).        |
@@ -21,4 +21,5 @@
 | 10.4. |  3  | Pelisession luontilogiikka toteutettu. Refaktorointia.              |
 | 11.4. |  2  | Refaktorointia.                                                     |
 | 12.4. |  2  | Login täysin valmis.                                                |
-|  yht. | 59  |                                                                     |
+| 12.4. |  2  | Loginin testit toteutettu.                                          |
+|  yht. | 61  |                                                                     |

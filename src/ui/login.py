@@ -1,6 +1,6 @@
 import tkinter as tk
 from services.ui_services import get_window_settings
-from services.login_service import LoginService
+from services.login_services import LoginServices
 from ui.stylings import (
     LOGIN_WINDOW_NAME,
     LOGIN_WINDOW_SIZE,
@@ -12,8 +12,9 @@ from ui.dialogs import (
     show_login_error_dialog,
     show_login_success_dialog,
     show_username_created_dialog,
-    show_users_dialog,
     show_registration_error_dialog,
+    show_users_dialog,
+    show_no_users_dialog,
 )
 from ui.widgets import (
     get_title_label,
@@ -23,9 +24,19 @@ from ui.widgets import (
 )
 
 class LoginView:
-    def __init__(self):
-        """Initializes the window with appropriate
-        settings, services and widgets."""
+    """Class that describes the UI of the login view.
+
+    Attributes:
+        database: Value of the current database.
+    """
+
+    def __init__(self, database):
+        """Class constructor that initializes the window
+        with appropriate settings, services and widgets.
+
+        Args:
+            database: Value of the current database.
+        """
 
         self.window = tk.Tk()
         get_window_settings(
@@ -33,7 +44,7 @@ class LoginView:
             LOGIN_WINDOW_NAME,
             LOGIN_WINDOW_SIZE,
         )
-        self.service = LoginService(self.window)
+        self.service = LoginServices(self.window, database)
         self._build_layout()
         self._build_title()
         self.username_input = self._build_username_widgets()
@@ -142,14 +153,22 @@ class LoginView:
 
     def _handle_successful_login(self, username):
         """Shows an appropriate dialog after which
-        closes the current window and opens a new one."""
+        closes the current window and opens a new one.
+
+        Args:
+            username: String value of the user's username.
+        """
 
         show_login_success_dialog(username)
         self.service.handle_view_change(self.window, username)
 
     def _handle_successful_registration(self, username):
         """Shows an appropriate dialog after which
-        closes the current window and opens a new one."""
+        closes the current window and opens a new one.
+
+        Args:
+            username: String value of the user's username.
+        """
 
         show_username_created_dialog(username)
         self.service.handle_view_change(self.window, username)
@@ -166,6 +185,10 @@ class LoginView:
         """Shows a dialog with a list of registered usernames.
         Closing the dialog provides focus on the username entry widget."""
 
-        if show_users_dialog() == 'ok':
+        if self.service.check_for_users() is True:
+            dialog = show_users_dialog(self.service.list_all_users())
+        else:
+            dialog = show_no_users_dialog()
+        if dialog == 'ok':
             self.window.focus()
             self.username_input.focus()

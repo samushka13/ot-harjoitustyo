@@ -1,10 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from services.database_operations import (
-    get_item_for_editing,
-    update_item,
-    get_categories,
-)
 from services.ui_services import get_window_settings
 from ui.stylings import (
     EDIT_QUESTION_WINDOW_NAME,
@@ -46,9 +41,9 @@ class EditView():
         ).grid(column=0, row=1, columnspan=2, padx=X, pady=Y)
 
         self.category_combobox = ttk.Combobox(self.edit_window, width=43)
-        self.category_combobox['values'] = get_categories()
+        self.category_combobox['values'] = self.service.get_categories()
         self.category_combobox.state(['readonly'])
-        self.category_combobox.set(get_item_for_editing(self.selected)[0])
+        self.category_combobox.set(self.service.get_item_for_editing(self.selected)[0])
         self.category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
 
         get_basic_label(
@@ -59,7 +54,7 @@ class EditView():
         self.difficulty_combobox = ttk.Combobox(self.edit_window, width=43)
         self.difficulty_combobox['values'] = self.service.get_default_difficulties()
         self.difficulty_combobox.state(['readonly'])
-        self.difficulty_combobox.set(get_item_for_editing(self.selected)[1])
+        self.difficulty_combobox.set(self.service.get_item_for_editing(self.selected)[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
 
         get_basic_label(
@@ -73,7 +68,7 @@ class EditView():
             width=50,
         )
         self.question_entry.grid(column=0, row=6, columnspan=2, padx=X)
-        self.question_entry.insert(tk.END, get_item_for_editing(self.selected)[2])
+        self.question_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[2])
 
         get_basic_label(
             self.edit_window,
@@ -86,7 +81,7 @@ class EditView():
             width=50,
         )
         self.answer_entry.grid(column=0, row=8, columnspan=2, padx=X)
-        self.answer_entry.insert(tk.END, get_item_for_editing(self.selected)[3])
+        self.answer_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[3])
 
         get_basic_button(
             self.edit_window,
@@ -120,7 +115,7 @@ class EditView():
             if answer.endswith('.') is False:
                 if answer.endswith('!') is False:
                     answer = answer + "."
-            update_item(question_id, category, difficulty, question, answer)
+            self.service.update_item(question_id, category, difficulty, question, answer)
             show_save_successful_dialog()
             self.open_questions_view()
 

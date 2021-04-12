@@ -18,7 +18,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
     - Tiedot syötetään lomakkeelle.
     - Mikäli käyttäjätunnusta ei ole, sovellus luo sellaisen.
     - Sovellus ilmoittaa käyttäjälle asianmukaisesti, mikäli
-      - tunnus ei täytyä ehtoja (uniikki ja pituudeltaan vähintään 3 merkkiä),
+      - tunnus ei täytyä ehtoja (pituudeltaan vähintään 3 merkkiä),
       - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
   - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
@@ -73,7 +73,6 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
   - kysymysten kategorioille haluamansa värit,
   - mukaan vain esimerkiksi monivalintakysymyksiä,
   - ruutujen järjestyksen.
-  - laudalle 'jokeriruutuja', joista voi tulla kysymyksiä mistä tahansa kategoriasta,
   - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset.
 - Omien kysymysten selaamiseen
   - hakukenttä,

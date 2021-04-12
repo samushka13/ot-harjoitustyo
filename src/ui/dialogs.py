@@ -1,7 +1,42 @@
 from tkinter import messagebox
-from services.database_operations import get_sorted_users
 
-# Login dialogs.
+# ------------------------------------------------------
+# "What's new in this version?"
+# ------------------------------------------------------
+
+def whats_new_dialog():
+    return messagebox.showinfo(
+        "What's new",
+
+"""These are currently working:
+
+- Creating new credentials.
+- Login with existing credentials.
+- Login error handling from a UX perspective.
+- LoginView.
+- SettingsView (draft only, buttons lead nowhere).
+- Testing the LoginServices class (97 %).
+
+A few other things are working as well, but they weren't included in this release \
+because a few things need to be resolved first.
+
+The project's codebase includes a lot of work in progress due to prototyping, \
+which is why parts of the repository and some of the code it contains are quite poorly made. \
+This is not optimal, of course, but it was deemed necessary \
+to quickly ensure the project is actually doable within the given time frame.
+
+What to expect next week?
+
+- CustomQuestionsView and its logic/services will be introduced.
+- Settings-related tests will be formulated.
+- Most of the code will be a whole lot 'cleaner' à la login-related code.
+
+""",
+    )
+
+# ------------------------------------------------------
+# LoginView dialogs.
+# ------------------------------------------------------
 
 def show_invalid_username_dialog():
     return messagebox.showinfo(
@@ -34,20 +69,21 @@ def show_registration_error_dialog():
         \n\nIf the problem persists, try reinstalling the software.",
     )
 
-def show_users_dialog():
-    if len(get_sorted_users()) > 0:
-        dialog = messagebox.showinfo(
+def show_users_dialog(users):
+    return messagebox.showinfo(
             "Users",
-            f"List of users on this device: \n\n{get_sorted_users()}",
+            f"List of users on this device: \n\n{users}",
         )
-    else:
-        dialog = messagebox.showinfo(
+
+def show_no_users_dialog():
+    return messagebox.showinfo(
             "Users",
             "There are currently no users on this device.",
         )
-    return dialog
 
-# Settings dialogs.
+# ------------------------------------------------------
+# SettingsView dialogs.
+# ------------------------------------------------------
 
 def show_player_number_error():
     return messagebox.showinfo(
@@ -70,8 +106,9 @@ def show_category_number_error():
         \n\nIf the lists are empty, try creating some questions in the Custom Questions view.\n"
     )
 
-# Custom Questions dialogs.
-
+# ------------------------------------------------------
+# CustomQuestionsView dialogs.
+# ------------------------------------------------------
 def show_save_error_dialog():
     return messagebox.showinfo(
         "Save Error",
@@ -105,7 +142,9 @@ def show_delete_all_confirmation_dialog():
         \n\nQuestions created by others will remain.\n"
     )
 
-# Game session dialogs.
+# ------------------------------------------------------
+# GameView dialogs.
+# ------------------------------------------------------
 
 def remove_player_dialog():
     return messagebox.askquestion(

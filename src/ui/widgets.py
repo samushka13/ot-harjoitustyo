@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import WORD
+from tkinter import WORD, ttk
 from ui.stylings import (
     BACKGROUND,
     TITLE_FONT,
@@ -12,6 +12,12 @@ from ui.stylings import (
 # Comboboxes.
 # ------------------------------------------------------
 
+def get_combobox(window, width=30):
+    combobox = ttk.Combobox(
+        window,
+        width=width,
+    )
+    return combobox
 
 # ------------------------------------------------------
 # Labels.
@@ -27,11 +33,11 @@ def get_title_label(window, text: str):
     )
     return label
 
-def get_basic_label(window, text: str, font=TEXT_FONT):
+def get_basic_label(window, text: str):
     label = tk.Label(
         window,
         text=text,
-        font=font,
+        font=TEXT_FONT,
         bg=BACKGROUND,
         highlightbackground=BACKGROUND,
     )

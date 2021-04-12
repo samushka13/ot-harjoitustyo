@@ -2,11 +2,6 @@ import tkinter as tk
 import random
 from tkinter import DISABLED
 from PIL import ImageTk, Image
-from services.database_operations import (
-    get_category_for_player,
-    get_question_for_player,
-    get_answer_for_player,
-)
 from services.ui_services import get_window_settings
 from ui.rules import RulesView
 from ui.statistics import StatisticsView
@@ -31,7 +26,7 @@ from entities.game_board import GameBoard
 from entities.player_tokens import PlayerTokens
 
 class GameView:
-    def __init__(self, service, players: list, board_size: str, categories: list):
+    def __init__(self, service, database, players: list, board_size: str, categories: list):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
@@ -39,6 +34,7 @@ class GameView:
             BOARD_WINDOW_SIZE,
         )
         self.service = service
+        self.database = database
         self.players = players
         self.board_size = board_size
         self.categories = categories
@@ -119,9 +115,9 @@ class GameView:
 
         # This should actually be determined by the player's position on the game board.
         # -------------------------------------------------
-        self.category = get_category_for_player(random.choice(self.categories))
+        self.category = self.database.get_category_for_player(random.choice(self.categories))
         # -------------------------------------------------
-        self.question = get_question_for_player(self.category)
+        self.question = self.database.get_question_for_player(self.category)
         self.question_textbox = get_display_textbox(self.window, 7, 45)
         self.question_textbox.place(x=30, y=285, anchor="w")
         self.question_textbox.insert(tk.END, self.question['question'])
@@ -136,7 +132,7 @@ class GameView:
         return self.category, self.question_textbox, self.show_answer_btn
 
     def show_answer(self):
-        answer = get_answer_for_player(self.question)
+        answer = self.database.get_answer_for_player(self.question)
         self.answer_textbox = get_display_textbox(self.window, 3, 45)
         self.answer_textbox.place(x=30, y=420, anchor="w")
         self.answer_textbox.insert(tk.END, answer['answer'])
