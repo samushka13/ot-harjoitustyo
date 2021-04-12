@@ -27,6 +27,13 @@ def show_username_created_dialog(username: str):
         f"Nice to meet you, {username}!",
     )
 
+def show_registration_error_dialog():
+    return messagebox.showinfo(
+        "Registration Error",
+        "There was a problem with registering your credentials. Please try again.\
+        \n\nIf the problem persists, try reinstalling the software.",
+    )
+
 def show_users_dialog():
     if len(get_sorted_users()) > 0:
         dialog = messagebox.showinfo(

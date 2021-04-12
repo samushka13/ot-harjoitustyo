@@ -8,10 +8,6 @@ from services.database_operations import (
     get_answer_for_player,
 )
 from services.ui_services import get_window_settings
-from services.settings_services import (
-    get_default_player_colors,
-    get_default_category_colors,
-)
 from ui.rules import RulesView
 from ui.statistics import StatisticsView
 from ui.widgets import (
@@ -35,18 +31,19 @@ from entities.game_board import GameBoard
 from entities.player_tokens import PlayerTokens
 
 class GameView:
-    def __init__(self, players: list, board_size: str, categories: list):
+    def __init__(self, service, players: list, board_size: str, categories: list):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
             BOARD_WINDOW_NAME,
             BOARD_WINDOW_SIZE,
         )
+        self.service = service
         self.players = players
         self.board_size = board_size
         self.categories = categories
-        self.player_colors = get_default_player_colors()
-        self.category_colors = get_default_category_colors()
+        self.player_colors = self.service.get_default_player_colors()
+        self.category_colors = self.service.get_default_category_colors()
         self.segment_size = 360/(len(self.categories[1:])*self.board_size+1)
 
         # -------------------------------------------------
@@ -251,7 +248,7 @@ class GameView:
         from ui.settings import SettingsView
         if quit_game_dialog() == 'yes':
             self.window.destroy()
-            SettingsView()
+            SettingsView(self.service)
 
     def remove_player(self):
         if remove_player_dialog() == 'yes':

@@ -2,10 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from services.ui_services import get_window_settings
 from services.database_operations import get_categories
-from services.settings_services import (
-    get_default_board_sizes,
-    get_default_players,
-)
 from ui.game import GameView
 from ui.custom_questions import CustomQuestionsView
 from ui.stylings import (
@@ -26,7 +22,7 @@ from ui.dialogs import (
 )
 
 class SettingsView:
-    def __init__(self):
+    def __init__(self, service):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
@@ -34,7 +30,9 @@ class SettingsView:
             SETTINGS_WINDOW_SIZE,
         )
 
-        self.board_sizes = get_default_board_sizes()
+        self.service = service
+
+        self.board_sizes = self.service.get_default_board_sizes()
 
         # ------------------------------------------------------
         # Row and column configurations:
@@ -117,8 +115,11 @@ class SettingsView:
         i = 0
         for i in range(0,6):
             entry_field = ttk.Combobox(self.window, width=30)
-            entry_field['values'] = get_default_players()
-            entry_field.set("Add player")
+            entry_field['values'] = self.service.get_default_players()
+            if i == 0:
+                entry_field.set(f"{self.service.get_default_players()[0]}")
+            else:
+                entry_field.set("Add player")
             entry_field.grid(column=0, row=2+i)
             entry_fields.append(entry_field)
             i += 1
@@ -190,7 +191,7 @@ class SettingsView:
 
     def open_questions_view(self):
         self.window.destroy()
-        CustomQuestionsView()
+        CustomQuestionsView(self.service)
 
     def open_game_view(self):
         players = self.collect_settings()[0]
@@ -207,4 +208,4 @@ class SettingsView:
             self.window.focus()
         else:
             self.window.destroy()
-            GameView(players, board_size, categories)
+            GameView(self.service, players, board_size, categories)

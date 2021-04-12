@@ -6,7 +6,6 @@ from services.database_operations import (
     get_categories,
 )
 from services.ui_services import get_window_settings
-from services.settings_services import get_default_difficulties
 from ui.stylings import (
     EDIT_QUESTION_WINDOW_NAME,
     EDIT_QUESTION_WINDOW_SIZE,
@@ -25,9 +24,11 @@ from ui.dialogs import (
 )
 
 class EditView():
-    def __init__(self, selected):
+    def __init__(self, service, selected):
         self.edit_window = tk.Tk()
         get_window_settings(self.edit_window, EDIT_QUESTION_WINDOW_NAME, EDIT_QUESTION_WINDOW_SIZE)
+
+        self.service = service
 
         self.selected = selected
 
@@ -56,7 +57,7 @@ class EditView():
         ).grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
 
         self.difficulty_combobox = ttk.Combobox(self.edit_window, width=43)
-        self.difficulty_combobox['values'] = get_default_difficulties()
+        self.difficulty_combobox['values'] = self.service.get_default_difficulties()
         self.difficulty_combobox.state(['readonly'])
         self.difficulty_combobox.set(get_item_for_editing(self.selected)[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
@@ -126,4 +127,4 @@ class EditView():
     def open_questions_view(self):
         from ui.custom_questions import CustomQuestionsView
         self.edit_window.destroy()
-        CustomQuestionsView()
+        CustomQuestionsView(self.service)

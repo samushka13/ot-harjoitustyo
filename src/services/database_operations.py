@@ -4,8 +4,9 @@ from services.database_connection import db
 # Login operations.
 # ------------------------------------------------
 
-def add_user(username: str, password: str):
-    db.execute("INSERT INTO Users (username, password) VALUES (?,?)", (username, password))
+def add_user(user):
+    db.execute("INSERT INTO Users (username, password) \
+        VALUES (?,?)", (user.username, user.password))
 
 def get_credentials():
     credentials = []

@@ -1,7 +1,6 @@
 import tkinter as tk
 from services.ui_services import get_window_settings
 from services.login_service import LoginService
-from services.view_manager import open_settings_view
 from ui.stylings import (
     LOGIN_WINDOW_NAME,
     LOGIN_WINDOW_SIZE,
@@ -14,6 +13,7 @@ from ui.dialogs import (
     show_login_success_dialog,
     show_username_created_dialog,
     show_users_dialog,
+    show_registration_error_dialog,
 )
 from ui.widgets import (
     get_title_label,
@@ -24,7 +24,8 @@ from ui.widgets import (
 
 class LoginView:
     def __init__(self):
-        """Initializes the window with appropriate settings, services and widgets."""
+        """Initializes the window with appropriate
+        settings, services and widgets."""
 
         self.window = tk.Tk()
         get_window_settings(
@@ -118,7 +119,10 @@ class LoginView:
                 self._handle_no_credentials_match()
             else:
                 self.service.register_new_user(username, password)
-                self._handle_successful_registration(username)
+                if self.service.check_registration_success(username) is True:
+                    self._handle_successful_registration(username)
+                else:
+                    self._handle_unsuccessful_registration()
 
     def _handle_invalid_username(self):
         """Shows an appropriate dialog after which
@@ -141,14 +145,22 @@ class LoginView:
         closes the current window and opens a new one."""
 
         show_login_success_dialog(username)
-        open_settings_view(self.window)
+        self.service.handle_view_change(self.window, username)
 
     def _handle_successful_registration(self, username):
         """Shows an appropriate dialog after which
         closes the current window and opens a new one."""
 
         show_username_created_dialog(username)
-        open_settings_view(self.window)
+        self.service.handle_view_change(self.window, username)
+
+    def _handle_unsuccessful_registration(self):
+        """Shows an appropriate dialog after which
+        provides focus on the username entry widget."""
+
+        show_registration_error_dialog()
+        self.window.focus()
+        self.username_input.focus()
 
     def _show_users(self):
         """Shows a dialog with a list of registered usernames.

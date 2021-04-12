@@ -20,4 +20,5 @@
 | 10.4. |  1  | Oman sisällön muokkaustoiminto toteutettu.                          |
 | 10.4. |  3  | Pelisession luontilogiikka toteutettu. Refaktorointia.              |
 | 11.4. |  2  | Refaktorointia.                                                     |
-|  yht. | 57  |                                                                     |
+| 12.4. |  2  | Login täysin valmis.                                                |
+|  yht. | 59  |                                                                     |

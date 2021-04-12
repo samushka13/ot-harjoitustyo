@@ -28,6 +28,7 @@ def main():
     # SETTINGS: Add 'random' to category selection etc.
     # SETTINGS: Remember selected values when coming back from GameView or CustomQuestionsView.
     # ------------------------------------------------------------------
+    # GENERAL: Implement a way to get the current user.
     # GENERAL: Implement logout in settings (and return to login screen afterwards).
     # GENERAL: Implement OpenTrivia Api stuff.
     # GENERAL: Consider replacing all grids with places.

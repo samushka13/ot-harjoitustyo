@@ -8,7 +8,6 @@ from services.database_operations import (
     get_listbox_items,
 )
 from services.ui_services import get_window_settings
-from services.settings_services import get_default_difficulties
 from ui.edit import EditView
 from ui.dialogs import (
     show_save_error_dialog,
@@ -27,13 +26,15 @@ from ui.stylings import (
 )
 
 class CustomQuestionsView:
-    def __init__(self):
+    def __init__(self, service):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
             CUSTOM_QUESTIONS_WINDOW_NAME,
             CUSTOM_QUESTIONS_WINDOW_SIZE,
         )
+
+        self.service = service
 
         for i in (0,11):
             self.window.grid_rowconfigure(i, weight=3)
@@ -217,9 +218,9 @@ class CustomQuestionsView:
 
     def build_difficulty_combobox(self):
         self.difficulty_combobox = ttk.Combobox(self.window, width=43)
-        self.difficulty_combobox['values'] = get_default_difficulties()
+        self.difficulty_combobox['values'] = self.service.get_default_difficulties()
         self.difficulty_combobox.state(['readonly'])
-        self.difficulty_combobox.set(get_default_difficulties()[1])
+        self.difficulty_combobox.set(self.service.get_default_difficulties()[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
         return self.difficulty_combobox
 
@@ -261,7 +262,7 @@ class CustomQuestionsView:
     def edit_item(self):
         selected = self.listbox.get(ACTIVE).split(' ', 1)[0]
         self.window.destroy()
-        EditView(selected)
+        EditView(self.service, selected)
 
     def delete_items(self):
         selected = [self.listbox.get(i).split(' ', 1)[0] for i in self.listbox.curselection()]
@@ -284,4 +285,4 @@ class CustomQuestionsView:
     def open_settings_view(self):
         from ui.settings import SettingsView
         self.window.destroy()
-        SettingsView()
+        SettingsView(self.service)
