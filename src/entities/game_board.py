@@ -81,4 +81,4 @@ class GameBoard:
         # ----------------------------------------------------------
         # A graphic hack that helps form the game board's shape:
         # ----------------------------------------------------------
-        self.canvas.create_oval(100, 100, 620, 620, fill=BACKGROUND, width=5)
+        self.canvas.create_oval(100, 100, 620, 620, fill=BACKGROUND, width=4)

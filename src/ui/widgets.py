@@ -113,6 +113,6 @@ def get_board_segment(canvas, distance: float, segment: float, fill):
         start=360-distance,
         extent=-segment,
         fill=fill,
-        width=5,
+        width=4,
     )
     return segment

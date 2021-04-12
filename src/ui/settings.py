@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from services.ui_services import get_window_settings
 from services.database_operations import get_categories
+from services.settings_services import (
+    get_default_board_sizes,
+    get_default_players,
+)
 from ui.game import GameView
 from ui.custom_questions import CustomQuestionsView
 from ui.stylings import (
@@ -20,7 +24,6 @@ from ui.dialogs import (
     show_player_name_error,
     show_category_number_error,
 )
-from entities.settings import BOARD_SIZES, DEFAULT_PLAYERS
 
 class SettingsView:
     def __init__(self):
@@ -30,6 +33,8 @@ class SettingsView:
             SETTINGS_WINDOW_NAME,
             SETTINGS_WINDOW_SIZE,
         )
+
+        self.board_sizes = get_default_board_sizes()
 
         # ------------------------------------------------------
         # Row and column configurations:
@@ -112,7 +117,7 @@ class SettingsView:
         i = 0
         for i in range(0,6):
             entry_field = ttk.Combobox(self.window, width=30)
-            entry_field['values'] = DEFAULT_PLAYERS
+            entry_field['values'] = get_default_players()
             entry_field.set("Add player")
             entry_field.grid(column=0, row=2+i)
             entry_fields.append(entry_field)
@@ -121,9 +126,9 @@ class SettingsView:
 
     def get_board_size_combobox(self):
         board_size_combobox = ttk.Combobox(self.window, width=30)
-        board_size_combobox['values'] = [x[0] for x in BOARD_SIZES]
+        board_size_combobox['values'] = [x[0] for x in self.board_sizes]
         board_size_combobox.state(['readonly'])
-        board_size_combobox.set([x[0] for x in BOARD_SIZES][2])
+        board_size_combobox.set([x[0] for x in self.board_sizes][2])
         board_size_combobox.grid(column=2, row=2)
         return board_size_combobox
 
@@ -166,16 +171,9 @@ class SettingsView:
                 players.append(entry.get())
 
         board_size = None
-        if self.board_size.get() == [x[0] for x in BOARD_SIZES][0]:
-            board_size = [x[1] for x in BOARD_SIZES][0]
-        if self.board_size.get() == [x[0] for x in BOARD_SIZES][1]:
-            board_size = [x[1] for x in BOARD_SIZES][1]
-        if self.board_size.get() == [x[0] for x in BOARD_SIZES][2]:
-            board_size = [x[1] for x in BOARD_SIZES][2]
-        if self.board_size.get() == [x[0] for x in BOARD_SIZES][3]:
-            board_size = [x[1] for x in BOARD_SIZES][3]
-        if self.board_size.get() == [x[0] for x in BOARD_SIZES][4]:
-            board_size = [x[1] for x in BOARD_SIZES][4]
+        for i in range(0, len(self.board_sizes)):
+            if self.board_size.get() == [x[0] for x in self.board_sizes][i]:
+                board_size = [x[1] for x in self.board_sizes][i]
 
         categories = []
         for category in self.categories:

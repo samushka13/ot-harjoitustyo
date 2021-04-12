@@ -1,67 +1,9 @@
-# ----------------------------------------------
-# Player settings:
-# ----------------------------------------------
+def get_game_rules_title():
+    title = "Trivioboros"
+    return title
 
-DEFAULT_PLAYERS = [
-    "Player 1",
-    "Player 2",
-    "Player 3",
-    "Player 4",
-    "Player 5",
-    "Player 6",
-]
-PLAYER_COLORS = [
-    "red",
-    "brown",
-    "green",
-    "purple",
-    "orange",
-    "blue",
-]
-
-# ----------------------------------------------
-# Board settings:
-# ----------------------------------------------
-
-BOARD_SIZES = [
-    ("Tiny (least difficult)", 1),
-    ("Small", 3),
-    ("Medium", 5),
-    ("Large", 7),
-    ("Insane (most difficult)", 9),
-]
-
-CATEGORY_COLORS = [
-    "black",
-    "red",
-    "gold",
-    "green",
-    "purple",
-    "orange",
-    "blue",
-    "grey",
-    "brown",
-    "pink",
-    "magenta",
-    "turquoise",
-]
-
-# ----------------------------------------------
-# Difficulty settings:
-# ----------------------------------------------
-
-DIFFICULTY_NAMES = [
-    "Easy",
-    "Intermediate",
-    "Advanced Triviliast"
-]
-
-# ----------------------------------------------
-# Game rules:
-# ----------------------------------------------
-
-GAME_RULES_TITLE = "Trivioboros"
-GAME_RULES_TEXT = """ Yleistä:
+def get_game_rules_text():
+    text = """ Yleistä:
 
 - Pelaajat aloittavat mustasta ruudusta ('aloitusruutu').
 - Pelin aloittaa Pelaaja 1, ja vuorot vaihtuvat järjestyksessä.
@@ -92,3 +34,5 @@ Vaikeustaso:
 - Pelin vaikeustasoon voi vaikuttaa monella tapaa, ja yhdistelmiä on useita. 
 - Pääsääntöisesti vaikeustaso kasvaa pelilaudan kokoa tai kysymyskategorioiden määrää kasvattamalla.
 - Erilaisia yhdistelmiä kannattaa rohkeasti kokeilla! """
+
+    return text

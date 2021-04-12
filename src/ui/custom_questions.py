@@ -8,7 +8,7 @@ from services.database_operations import (
     get_listbox_items,
 )
 from services.ui_services import get_window_settings
-from entities.settings import DIFFICULTY_NAMES
+from services.settings_services import get_default_difficulties
 from ui.edit import EditView
 from ui.dialogs import (
     show_save_error_dialog,
@@ -217,9 +217,9 @@ class CustomQuestionsView:
 
     def build_difficulty_combobox(self):
         self.difficulty_combobox = ttk.Combobox(self.window, width=43)
-        self.difficulty_combobox['values'] = DIFFICULTY_NAMES
+        self.difficulty_combobox['values'] = get_default_difficulties()
         self.difficulty_combobox.state(['readonly'])
-        self.difficulty_combobox.set(DIFFICULTY_NAMES[1])
+        self.difficulty_combobox.set(get_default_difficulties()[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
         return self.difficulty_combobox
 

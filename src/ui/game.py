@@ -8,6 +8,10 @@ from services.database_operations import (
     get_answer_for_player,
 )
 from services.ui_services import get_window_settings
+from services.settings_services import (
+    get_default_player_colors,
+    get_default_category_colors,
+)
 from ui.rules import RulesView
 from ui.statistics import StatisticsView
 from ui.widgets import (
@@ -25,10 +29,6 @@ from ui.stylings import (
     DIE_FACES,
     DEFAULT_DIE_FACE,
 )
-from entities.settings import (
-    PLAYER_COLORS,
-    CATEGORY_COLORS,
-)
 from entities.category_board import CategoryBoard
 from entities.scoreboard import Scoreboard
 from entities.game_board import GameBoard
@@ -45,6 +45,9 @@ class GameView:
         self.players = players
         self.board_size = board_size
         self.categories = categories
+        self.player_colors = get_default_player_colors()
+        self.category_colors = get_default_category_colors()
+        self.segment_size = 360/(len(self.categories[1:])*self.board_size+1)
 
         # -------------------------------------------------
         # These build the game board in its default state:
@@ -56,7 +59,7 @@ class GameView:
             self.window,
             self.scores,
             self.categories,
-            CATEGORY_COLORS,
+            self.category_colors,
         )
         self.category_board._build()
 
@@ -64,9 +67,9 @@ class GameView:
             self.window,
             self.scores,
             self.players,
-            PLAYER_COLORS,
+            self.player_colors,
             self.categories,
-            CATEGORY_COLORS,
+            self.category_colors,
         )
         self.scoreboard._build()
 
@@ -75,15 +78,15 @@ class GameView:
             self.board,
             self.board_size,
             self.categories,
-            CATEGORY_COLORS,
+            self.category_colors,
         )
         self.gameboard.build()
 
         self.player_tokens = PlayerTokens(
             self.board,
             self.players,
-            PLAYER_COLORS,
-            360/(len(self.categories[1:])*self.board_size+1),
+            self.player_colors,
+            self.segment_size,
         )
         self.player_tokens._build()
 
@@ -195,7 +198,6 @@ class GameView:
         self.get_question()
         self.category_board.highlight_category(self.category['category'])
         self.player_tokens.move_token(self.turn_counter, number[1])
-
 
 # ------------------------------------------------
 # These belong to GameView:

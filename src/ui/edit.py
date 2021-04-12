@@ -6,7 +6,7 @@ from services.database_operations import (
     get_categories,
 )
 from services.ui_services import get_window_settings
-from entities.settings import DIFFICULTY_NAMES
+from services.settings_services import get_default_difficulties
 from ui.stylings import (
     EDIT_QUESTION_WINDOW_NAME,
     EDIT_QUESTION_WINDOW_SIZE,
@@ -56,7 +56,7 @@ class EditView():
         ).grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
 
         self.difficulty_combobox = ttk.Combobox(self.edit_window, width=43)
-        self.difficulty_combobox['values'] = DIFFICULTY_NAMES
+        self.difficulty_combobox['values'] = get_default_difficulties()
         self.difficulty_combobox.state(['readonly'])
         self.difficulty_combobox.set(get_item_for_editing(self.selected)[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
