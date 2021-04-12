@@ -5,7 +5,7 @@ DATABASE_FILENAME = "trivioboros.db" # This will be moved to config later.
 class DatabaseServices():
     def __init__(self, name):
         self.name = name
-        self.database = sqlite3.connect(self.name)
+        self.database = sqlite3.connect(self.name, timeout=15)
         self.initialize_database()
 
     def get_database_connection(self):
@@ -13,13 +13,17 @@ class DatabaseServices():
         self.database.row_factory = sqlite3.Row
 
     def create_users_table(self):
+        self.database.execute("BEGIN")
         self.database.execute("CREATE TABLE IF NOT EXISTS Users \
             (id INTEGER PRIMARY KEY, username TEXT, password TEXT)")
+        self.database.execute("COMMIT")
 
     def create_questions_table(self):
+        self.database.execute("BEGIN")
         self.database.execute("CREATE TABLE IF NOT EXISTS Questions \
             (id INTEGER PRIMARY KEY, user_id INTEGER REFERENCES Users, \
             category TEXT, difficulty TEXT, question TEXT, answer TEXT)")
+        self.database.execute("COMMIT")
 
     def initialize_database(self):
         self.get_database_connection()
@@ -32,10 +36,14 @@ class DatabaseServices():
     # ------------------------------------------------
 
     def drop_users_table(self):
+        self.database.execute("BEGIN")
         self.database.execute("DROP TABLE IF EXISTS Users")
+        self.database.execute("COMMIT")
 
     def drop_questions_table(self):
+        self.database.execute("BEGIN")
         self.database.execute("DROP TABLE IF EXISTS Questions")
+        self.database.execute("COMMIT")
 
     # ------------------------------------------------
     # Login operations.
