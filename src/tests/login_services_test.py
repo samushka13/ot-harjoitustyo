@@ -43,8 +43,8 @@ class TestLoginServices(unittest.TestCase):
                 self.user.username, self.user.password), (self.user.username, self.user.password))
 
     def test_check_registration_success(self):
-        self.assertEqual(self.service.check_registration_success(self.user), True)
-        self.assertEqual(self.service.check_registration_success(self.user_invalid), False)
+        self.assertEqual(self.service.check_registration_success(self.user.username), True)
+        self.assertEqual(self.service.check_registration_success(self.user_invalid.username), False)
 
     def test_check_for_users(self):
         if self.all_users == 0:

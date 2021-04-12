@@ -15,7 +15,7 @@ def whats_new_dialog():
 - Login error handling from a UX perspective.
 - LoginView.
 - SettingsView (draft only, buttons lead nowhere).
-- Testing the LoginServices class (97 %).
+- Testing the LoginServices class (83 %).
 
 A few other things are working as well, but they weren't included in this release \
 because a few things need to be resolved first.
