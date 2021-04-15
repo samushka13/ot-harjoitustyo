@@ -51,7 +51,8 @@ Y = (20,10)
 BASIC_CURSOR = "arrow"
 
 # ------------------------------------------------------
-# Die faces:
+# Die faces.
+# Should be moved to Die class when such exists.
 # ------------------------------------------------------
 
 DIE_FACES = [

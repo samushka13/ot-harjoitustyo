@@ -22,4 +22,5 @@
 | 11.4. |  2  | Refaktorointia.                                                     |
 | 12.4. |  2  | Login täysin valmis.                                                |
 | 12.4. |  2  | Loginin testit toteutettu.                                          |
-|  yht. | 61  |                                                                     |
+| 14.4. |  4  | Settingsin testit toteutettu. Koodin parantelua.                    |
+|  yht. | 65  |                                                                     |

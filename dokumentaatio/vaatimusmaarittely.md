@@ -12,7 +12,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
 
 ## Käyttöliittymä ja toiminnallisuudet
 
-### Kirjautuminen / Rekisteröityminen (VALMIS)
+### Kirjautuminen / Rekisteröityminen (KAIKKI TEHTY)
 
   - Käyttäjä voi kirjautua sovellukseen (lokaalilla) käyttäjätunnuksella ja salasanalla.
     - Tiedot syötetään lomakkeelle.
@@ -22,7 +22,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
       - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
   - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
-### Pelin asetukset (VALMIS)
+### Pelin asetukset (KAIKKI TEHTY, pelin aloitus ei tosin vielä onnistu)
 
   - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
   - Käyttäjä voi muokata pelin asetuksia valitsemalla
@@ -30,7 +30,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
     - kysymysten kategoriat (2-12, useita vaihtoehtoja).
   - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
 
-### Omat kysymykset ja kategoriat
+### Omat kysymykset ja kategoriat (KAIKKI TEHTY)
 
   - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
   - Käyttäjä voi muokata luomiaan kysymyksiä ja kategorioita.

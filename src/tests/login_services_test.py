@@ -1,14 +1,13 @@
 import unittest
-from services.database_services import DatabaseServices
+from repositories.database_services import DatabaseServices
 from services.login_services import LoginServices
 from entities.user import User
-
-TEST_DATABASE_FILENAME = "trivioboros_tests.db"
+from config import TEST_DATABASE_FILENAME
 
 class TestLoginServices(unittest.TestCase):
     def setUp(self):
         self.window = None
-        DatabaseServices(TEST_DATABASE_FILENAME).drop_users_table()
+        DatabaseServices(TEST_DATABASE_FILENAME).database.execute("DROP TABLE IF EXISTS Users")
         self.database = DatabaseServices(TEST_DATABASE_FILENAME)
         self.service = LoginServices(self.window, self.database)
         self.user = User("samushka", "13")
@@ -61,5 +60,4 @@ class TestLoginServices(unittest.TestCase):
             self.assertEqual(self.service.list_all_users(), '\n'.join(sorted(self.all_users)))
 
     # def test_handle_view_change(self):
-    #     window = tk.Tk()
-    #     self.assertNotEqual(self.service.handle_view_change(window, self.user), None)
+    #     self.assertEqual(len(self.database.get_logged_in_users()), 0)

@@ -18,11 +18,12 @@ from ui.dialogs import (
     show_save_successful_dialog,
 )
 
-class EditView():
-    def __init__(self, service, selected):
+class EditView:
+    def __init__(self, database, service, selected):
         self.edit_window = tk.Tk()
         get_window_settings(self.edit_window, EDIT_QUESTION_WINDOW_NAME, EDIT_QUESTION_WINDOW_SIZE)
 
+        self.database = database
         self.service = service
 
         self.selected = selected
@@ -41,7 +42,7 @@ class EditView():
         ).grid(column=0, row=1, columnspan=2, padx=X, pady=Y)
 
         self.category_combobox = ttk.Combobox(self.edit_window, width=43)
-        self.category_combobox['values'] = self.service.get_categories()
+        self.category_combobox['values'] = self.database.get_categories()
         self.category_combobox.state(['readonly'])
         self.category_combobox.set(self.service.get_item_for_editing(self.selected)[0])
         self.category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
@@ -120,6 +121,6 @@ class EditView():
             self.open_questions_view()
 
     def open_questions_view(self):
-        from ui.custom_questions import CustomQuestionsView
+        from ui.custom_questions_view import CustomQuestionsView
         self.edit_window.destroy()
-        CustomQuestionsView(self.service)
+        CustomQuestionsView(self.database)

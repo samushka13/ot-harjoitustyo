@@ -3,8 +3,8 @@ import random
 from tkinter import DISABLED
 from PIL import ImageTk, Image
 from services.ui_services import get_window_settings
-from ui.rules import RulesView
-from ui.statistics import StatisticsView
+from ui.rules_view import RulesView
+from WIP.statistics_view import StatisticsView
 from ui.widgets import (
     get_display_textbox,
     get_basic_button,
@@ -26,24 +26,24 @@ from entities.game_board import GameBoard
 from entities.player_tokens import PlayerTokens
 
 class GameView:
-    def __init__(self, service, database, players: list, board_size: str, categories: list):
+    def __init__(self, database, players, p_colors, categories, c_colors, board_size):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
             BOARD_WINDOW_NAME,
             BOARD_WINDOW_SIZE,
         )
-        self.service = service
         self.database = database
         self.players = players
         self.board_size = board_size
         self.categories = categories
-        self.player_colors = self.service.get_default_player_colors()
-        self.category_colors = self.service.get_default_category_colors()
+        self.player_colors = p_colors
+        self.category_colors = c_colors
         self.segment_size = 360/(len(self.categories[1:])*self.board_size+1)
 
         # -------------------------------------------------
-        # These build the game board in its default state:
+        # These build the game board in its default state.
+        # Some of it should be handled by a services class.
         # -------------------------------------------------
 
         self.build_background()
@@ -66,14 +66,13 @@ class GameView:
         )
         self.scoreboard._build()
 
-        self.gameboard = GameBoard(
+        GameBoard(
             self.window,
             self.board,
             self.board_size,
             self.categories,
             self.category_colors,
-        )
-        self.gameboard.build()
+        ).build()
 
         self.player_tokens = PlayerTokens(
             self.board,
@@ -108,7 +107,8 @@ class GameView:
         self.window.mainloop()
 
     # -------------------------------------------------
-    # These functions build game board elements:
+    # These functions build game board elements.
+    # They should be moved to their own services class.
     # -------------------------------------------------
 
     def get_question(self):
@@ -241,10 +241,10 @@ class GameView:
         ).place(x=1260, y=690, anchor="e")
 
     def quit_game(self):
-        from ui.settings import SettingsView
+        from ui.settings_view import SettingsView
         if quit_game_dialog() == 'yes':
             self.window.destroy()
-            SettingsView(self.service)
+            SettingsView(self.database)
 
     def remove_player(self):
         if remove_player_dialog() == 'yes':

@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, WORD, EXTENDED, ACTIVE
+from services.custom_questions_services import CustomQuestionsServices
 from services.ui_services import get_window_settings
-from ui.edit import EditView
+from ui.edit_view import EditView
 from ui.dialogs import (
     show_save_error_dialog,
     show_save_successful_dialog,
@@ -19,7 +20,7 @@ from ui.stylings import (
 )
 
 class CustomQuestionsView:
-    def __init__(self, service):
+    def __init__(self, database):
         self.window = tk.Tk()
         get_window_settings(
             self.window,
@@ -27,7 +28,8 @@ class CustomQuestionsView:
             CUSTOM_QUESTIONS_WINDOW_SIZE,
         )
 
-        self.service = service
+        self.service = CustomQuestionsServices(self.window, database)
+        self.database = database
 
         for i in (0,11):
             self.window.grid_rowconfigure(i, weight=3)
@@ -197,7 +199,7 @@ class CustomQuestionsView:
             highlightbackground=BACKGROUND,
             selectmode=EXTENDED,
         )
-        for entry in get_listbox_items():
+        for entry in self.database.get_listbox_items():
             self.listbox.insert(tk.END, entry)
             self.listbox.select_set(0)
         self.listbox.grid(column=2, row=1, columnspan=3, rowspan=9, padx=X)
@@ -205,15 +207,17 @@ class CustomQuestionsView:
 
     def build_category_combobox(self):
         self.category_combobox = ttk.Combobox(self.window, width=43)
-        self.category_combobox['values'] = get_categories()
+        self.category_combobox['values'] = self.database.get_categories()
         self.category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
         return self.category_combobox
 
     def build_difficulty_combobox(self):
+        from services.settings_services import SettingsServices
+        values = SettingsServices(self.window, self.database).get_default_difficulties()
         self.difficulty_combobox = ttk.Combobox(self.window, width=43)
-        self.difficulty_combobox['values'] = self.service.get_default_difficulties()
+        self.difficulty_combobox['values'] = values
         self.difficulty_combobox.state(['readonly'])
-        self.difficulty_combobox.set(self.service.get_default_difficulties()[1])
+        self.difficulty_combobox.set(values[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
         return self.difficulty_combobox
 
@@ -222,6 +226,7 @@ class CustomQuestionsView:
     # -------------------------------------------------------------------
 
     def save_item(self):
+        # This needs to be modified to actually work with real user_id numbers.
         user_id = 1
         category = self.category_combobox.get()
         difficulty = self.difficulty_combobox.get()
@@ -237,7 +242,7 @@ class CustomQuestionsView:
             if answer.endswith('.') is False:
                 if answer.endswith('!') is False:
                     answer = answer + "."
-            save_item_to_database(user_id, category, difficulty, question, answer)
+            self.database.save_item_to_database(user_id, category, difficulty, question, answer)
             show_save_successful_dialog()
             self.clear_item()
             self.build_listbox()
@@ -255,13 +260,13 @@ class CustomQuestionsView:
     def edit_item(self):
         selected = self.listbox.get(ACTIVE).split(' ', 1)[0]
         self.window.destroy()
-        EditView(self.service, selected)
+        EditView(self.database, self.service, selected)
 
     def delete_items(self):
         selected = [self.listbox.get(i).split(' ', 1)[0] for i in self.listbox.curselection()]
         if show_delete_confirmation_dialog(len(selected)) == "yes":
             for item in selected:
-                delete_item_from_database(item)
+                self.database.delete_item_from_database(item)
             self.build_listbox()
             self.build_category_combobox()
             self.window.focus()
@@ -269,13 +274,13 @@ class CustomQuestionsView:
 
     def delete_all(self):
         if show_delete_all_confirmation_dialog() == "yes":
-            delete_all_user_items_from_database()
+            self.database.delete_all_user_items_from_database()
             self.build_listbox()
             self.build_category_combobox()
             self.window.focus()
             self.listbox.focus()
 
     def open_settings_view(self):
-        from ui.settings import SettingsView
+        from ui.settings_view import SettingsView
         self.window.destroy()
-        SettingsView(self.service)
+        SettingsView(self.database)

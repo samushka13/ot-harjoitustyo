@@ -25,9 +25,9 @@ from ui.widgets import (
 
 class LoginView:
     """Class that describes the UI of the login view.
-
+    
     Attributes:
-        database: Value of the current database.
+        database: Value of the initialized database.
     """
 
     def __init__(self, database):
@@ -35,15 +35,11 @@ class LoginView:
         with appropriate settings, services and widgets.
 
         Args:
-            database: Value of the current database.
+            database: Value of the initialized database.
         """
 
         self.window = tk.Tk()
-        get_window_settings(
-            self.window,
-            LOGIN_WINDOW_NAME,
-            LOGIN_WINDOW_SIZE,
-        )
+        get_window_settings(self.window, LOGIN_WINDOW_NAME, LOGIN_WINDOW_SIZE)
         self.service = LoginServices(self.window, database)
         self._build_layout()
         self._build_title()
@@ -53,11 +49,12 @@ class LoginView:
         self.window.mainloop()
 
     def _build_layout(self):
-        """Builds the layout of the parent view."""
+        """Builds the layout of the parent window.
+        Essentially just a bunch of row and column configurations."""
 
         for i in (0,5):
             self.window.grid_rowconfigure(i, weight=2)
-        for i in (1,2,3,4,6):
+        for i in range(1,5):
             self.window.grid_rowconfigure(i, weight=0)
         for i in (0,1):
             self.window.grid_columnconfigure(i, weight=1)
@@ -71,7 +68,11 @@ class LoginView:
         ).grid(column=0, row=0, columnspan=2, padx=X)
 
     def _build_username_widgets(self):
-        """Builds the username subtitle and entry field (with focus)."""
+        """Builds the username subtitle and entry field (with focus).
+
+        Returns:
+            The widget for username input.
+        """
 
         get_basic_label(
             self.window,
@@ -85,7 +86,11 @@ class LoginView:
         return username_entry
 
     def _build_password_widgets(self):
-        """Builds the password subtitle and entry field (with focus)."""
+        """Builds the password subtitle and entry field (with focus).
+
+        Returns:
+            The widget for password input.
+        """
 
         get_basic_label(
             self.window,
@@ -115,7 +120,7 @@ class LoginView:
         ).grid(column=1, row=5, padx=X, pady=Y, sticky="w")
 
     def _handle_login(self):
-        """Checks credentials with the help of LoginService
+        """Checks credentials with the help of LoginServices
         and accommodates the UI accordingly."""
 
         username = self.username_input.get()

@@ -4,13 +4,13 @@ from ui.widgets import get_display_textbox
 from ui.stylings import TEXT_FONT
 
 class Scoreboard:
-    def __init__(self, window, canvas, players: list, p_col: list, categories: list, c_col: list):
+    def __init__(self, window, canvas, players, player_colors, categories, category_colors):
         self.window = window
         self.canvas = canvas
         self.players = players
-        self.player_colors = p_col
+        self.player_colors = player_colors
         self.categories = categories
-        self.category_colors = c_col
+        self.category_colors = category_colors
         self.pointer = None
 
     def _build(self):

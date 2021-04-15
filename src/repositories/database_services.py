@@ -1,41 +1,22 @@
 import sqlite3
 
-DATABASE_FILENAME = "trivioboros.db" # This will be moved to config later.
-
-class DatabaseServices():
-    def __init__(self, name):
-        self.name = name
-        self.database = sqlite3.connect(self.name, timeout=15)
+class DatabaseServices:
+    def __init__(self, database_name):
+        self.database = sqlite3.connect(database_name, timeout=10)
         self.initialize_database()
 
-    def get_database_connection(self):
+    def initialize_database(self):
         self.database.isolation_level = None
         self.database.row_factory = sqlite3.Row
 
-    def create_users_table(self):
         self.database.execute("CREATE TABLE IF NOT EXISTS Users \
-            (id INTEGER PRIMARY KEY, username TEXT, password TEXT)")
+            (id INTEGER PRIMARY KEY, username TEXT, password TEXT, login_status INTEGER)")
 
-    def create_questions_table(self):
         self.database.execute("CREATE TABLE IF NOT EXISTS Questions \
             (id INTEGER PRIMARY KEY, user_id INTEGER REFERENCES Users, \
             category TEXT, difficulty TEXT, question TEXT, answer TEXT)")
 
-    def initialize_database(self):
-        self.get_database_connection()
-        self.create_users_table()
-        self.create_questions_table()
         return self.database
-
-    # ------------------------------------------------
-    # Drop tables (currently used only by tests).
-    # ------------------------------------------------
-
-    def drop_users_table(self):
-        self.database.execute("DROP TABLE IF EXISTS Users")
-
-    def drop_questions_table(self):
-        self.database.execute("DROP TABLE IF EXISTS Questions")
 
     # ------------------------------------------------
     # Login operations.
@@ -60,6 +41,24 @@ class DatabaseServices():
 
     def get_sorted_users(self):
         return '\n'.join(sorted(self.get_users()))
+
+    def add_logged_in_user(self, username):
+        self.database.execute(f"UPDATE Users SET login_status={1} \
+            WHERE username='{username}'")
+
+    def get_logged_in_users(self):
+        credentials = []
+        for row in self.database.execute(f"SELECT username, password FROM Users \
+            WHERE login_status={1}").fetchall():
+            credentials.append((row['username'],row['password']))
+        return credentials
+
+    # ------------------------------------------------
+    # Logout operations.
+    # ------------------------------------------------
+
+    def remove_logged_in_users(self):
+        self.database.execute(f"UPDATE Users SET login_status={0}")
 
     # ------------------------------------------------
     # Settings & Custom Questions operations.

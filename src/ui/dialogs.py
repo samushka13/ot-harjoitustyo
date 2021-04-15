@@ -10,28 +10,30 @@ def whats_new_dialog():
 
 """These are currently working:
 
-- Creating new credentials.
-- Login with existing credentials.
-- Login error handling from a UX perspective.
-- LoginView.
-- SettingsView (draft only, buttons lead nowhere).
-- Testing the LoginServices class (83 %).
+- All login-related stuff (tests 77 %).
+- All settings-related stuff (tests 95 %).
+- All stuff related to custom content (no tests yet).
 
-A few other things are working as well, but they weren't included in this release \
-because a few things need to be resolved first.
-
-The project's codebase includes a lot of work in progress due to prototyping, \
-which is why parts of the repository and some of the code it contains are quite poorly made. \
-This is not optimal, of course, but it was deemed necessary \
-to quickly ensure the project is actually doable within the given time frame.
+Also, the repository has been cleaned up from last week, \
+and all work in progress has been moved to the WIP folder. \
+The WIP files are basically prototypes of various functionalities, \
+and the code included is quite poor. Therefore, they should not be reviewed.
 
 What to expect next week?
 
-- CustomQuestionsView and its logic/services will be introduced.
-- Settings-related tests will be formulated.
-- Most of the code will be a whole lot 'cleaner' à la login-related code.
+- Tests for custom content services.
+- Game board view that is based on the selected settings. \
+(game progress functionalities will be introduced later)
 
 """,
+    )
+
+def show_game_not_ready_dialog():
+    return messagebox.showinfo(
+        "Not yet accessible",
+"The game view creation logic isn't quite ready yet, \
+so it has been excluded from this release. \
+It will be included in next week's release, in some form, at least.",
     )
 
 # ------------------------------------------------------
@@ -85,20 +87,20 @@ def show_no_users_dialog():
 # SettingsView dialogs.
 # ------------------------------------------------------
 
-def show_player_number_error():
+def show_player_number_error_dialog():
     return messagebox.showinfo(
         "No players added",
         "At least one player must be added to start a new game.\
         \n\nYou can type in a custom name or select one from predefined values.\n"
     )
 
-def show_player_name_error():
+def show_player_name_error_dialog():
     return messagebox.showinfo(
         "Player name error",
         "Players must have unique names, but it seems that they are not."
     )
 
-def show_category_number_error():
+def show_category_number_error_dialog():
     return messagebox.showinfo(
         "Not enough categories",
         "At least two categories must be added to start a new game.\
