@@ -1,13 +1,6 @@
 # ------------------------------------------------------------------
 # TODOS
 # ------------------------------------------------------------------
-# NEXT DL: Move all view changes to ui from services.
-# NEXT DL: Ohjelman alustava rakenne luokka- ja pakkauskaaviona:
-    # - https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/dokumentaatio/arkkitehtuuri.md
-    # - https://ohjelmistotekniikka-hy.github.io/python/materiaali#pakkauskaavio
-    # - sovelluslogiikan kannalta oleelliset luokat
-    # - sovelluksen pakkausrakenne
-    # - upota kaaviot kuvina tiedostoon (kirjoita myös juttuja auki)
 # NEXT DL: Ensure everything works on Linux via VDI.
 # ------------------------------------------------------------------
 # GAME: Match token position with board categories and the category board.
@@ -29,6 +22,7 @@
     #   Maybe a new db table for 'game_history', with columns for each setting
     #   + user_id + status (active INTEGER, takes only values 1 or 0.)
 # ------------------------------------------------------------------
+# GENERAL: Move all view changes to ui from services.
 # GENERAL: Implement another way for services to know what database they should be using.
 # GENERAL: Improve testing (when done, remove WIP from .coveragerc).
 # GENERAL: Implement config and environmental variables with .env etc.

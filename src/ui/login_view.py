@@ -52,11 +52,6 @@ class LoginView:
         self.username_input = self._build_username_widgets()
         self.password_input = self._build_password_widgets()
         self._build_action_buttons()
-
-        # This dialog will be removed eventually.
-        if whats_new_dialog() == 'ok':
-            self.window.focus()
-
         self.window.mainloop()
 
     def _build_layout(self):
@@ -214,6 +209,8 @@ class LoginView:
             current_user: String value of the user's username.
         """
 
-        self.service.handle_login(current_user)
-        self.window.destroy()
-        SettingsView(self.database)
+        # This dialog will be removed eventually.
+        if whats_new_dialog() == 'ok':
+            self.service.handle_login(current_user)
+            self.window.destroy()
+            SettingsView(self.database)

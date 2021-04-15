@@ -12,13 +12,14 @@ def whats_new_dialog():
 
 - All login-related stuff (tests 100 %).
 - All settings-related stuff (tests 100 %).
-- All stuff related to custom content (no tests yet).
-- All database-related stuff (no tests yet).
+- Most stuff related to custom content (no tests yet).
+- Most database-related stuff (no tests yet).
 
 Also, the repository has been cleaned up from last week, \
 and all work in progress has been moved to the WIP folder. \
-The WIP files are basically prototypes of various functionalities, \
-and the code included is quite poor. Therefore, they should not be reviewed.
+The WIP files are basically prototypes of various functionalities \
+which are not included in this release, and their code is quite poor. \
+Therefore, they should not be reviewed.
 
 What to expect next week?
 
@@ -32,6 +33,13 @@ def show_game_not_ready_dialog():
 "The game view creation logic isn't quite ready yet, \
 so it has been excluded from this release. \
 It will be included in next week's release, in some form, at least.")
+
+def show_edit_not_ready_dialog():
+    return messagebox.showinfo(
+        "Not yet accessible",
+"The edit logic isn't quite ready yet, \
+so it has been excluded from this release. \
+It will be included in next week's release.")
 
 # ------------------------------------------------------
 # LoginView dialogs.

@@ -7,6 +7,7 @@ from ui.dialogs import (
     show_delete_all_confirmation_dialog,
     show_delete_error_dialog,
     show_edit_error_dialog,
+    show_edit_not_ready_dialog,
 )
 from ui.stylings import (
     get_window_settings,
@@ -181,15 +182,17 @@ class CustomContentView:
         """Calls CustomContentServices class methods to determine the question id and owner,
         then accommodates the UI accordingly."""
 
-        from ui.edit_view import EditView
+        show_edit_not_ready_dialog()
 
-        selected = self.service.determine_question_ids(self.listbox)[0]
-        if self.service.check_owner(selected) is True:
-            self.window.destroy()
-            EditView(self.database, self.service, selected)
-        else:
-            show_edit_error_dialog()
-            self.window.focus()
+        # from ui.edit_view import EditView
+
+        # selected = self.service.determine_question_ids(self.listbox)[0]
+        # if self.service.check_owner(selected) is True:
+        #     self.window.destroy()
+        #     EditView(self.database, self.service, selected)
+        # else:
+        #     show_edit_error_dialog()
+        #     self.window.focus()
 
     def _handle_delete_item(self):
         """Shows a confirmation dialog, and, if the user confirms,
