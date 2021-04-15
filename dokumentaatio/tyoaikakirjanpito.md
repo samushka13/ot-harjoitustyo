@@ -24,4 +24,5 @@
 | 12.4. |  2  | Loginin testit toteutettu.                                          |
 | 14.4. |  4  | Settingsin testit toteutettu. Koodin parantelua.                    |
 | 15.4. |  2  | Testejä ja koodia paranneltu. Docstringejä lisätty.                 |
-|  yht. | 67  |                                                                     |
+| 15.4. |  1  | Paranneltu dokumentaatiota (mm. arkkitehtuurikuvaus lisätty)        |
+|  yht. | 68  |                                                                     |

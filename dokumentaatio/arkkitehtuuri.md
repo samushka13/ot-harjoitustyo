@@ -4,7 +4,7 @@
 
 Sovelluksen arkkitehtuuri on kolmitasoinen:
 
-![Arkkitehtuurikuvaus](dokumentaatio/arkkitehtuurikuvaus.png)
+![Arkkitehtuurikuvaus](arkkitehtuurikuvaus.png)
 
 - Pakkaus "ui" tarkoittaa käyttöliittymästä vastaavaa koodia.
 - Pakkaus "services" tarkoittaa sovelluslogiikasta vastaavaa koodia.
