@@ -1,10 +1,32 @@
+from ui.bind_keys import bind_keys_to_widgets
+
+# ------------------------------------------------------
+# General window settings:
+# ------------------------------------------------------
+
+def get_window_settings(window, name, size):
+    """Provides basic settings for windows of all views.
+
+    Args:
+        window: Value of the tkinter window widget.
+        name: String value of the window title.
+        size: String value of the window size.
+    """
+
+    window.title(name)
+    window.geometry(size)
+    window.resizable(False, False)
+    window.configure(bg=BACKGROUND)
+    bind_keys_to_widgets(window)
+    window.focus()
+
 # ------------------------------------------------------
 # Window names:
 # ------------------------------------------------------
 
 LOGIN_WINDOW_NAME = "Trivioboros"
 SETTINGS_WINDOW_NAME = "Trivioboros"
-CUSTOM_QUESTIONS_WINDOW_NAME = "Trivioboros"
+CUSTOM_CONTENT_WINDOW_NAME = "Trivioboros"
 EDIT_QUESTION_WINDOW_NAME = "Trivioboros"
 BOARD_WINDOW_NAME = "Trivioboros"
 RULES_WINDOW_NAME = "Rules of the Game"
@@ -16,7 +38,7 @@ STATISTICS_WINDOW_NAME = "Statistics"
 
 LOGIN_WINDOW_SIZE = "360x360"
 SETTINGS_WINDOW_SIZE = "920x720"
-CUSTOM_QUESTIONS_WINDOW_SIZE = "1280x720"
+CUSTOM_CONTENT_WINDOW_SIZE = "1280x720"
 EDIT_QUESTION_WINDOW_SIZE = "480x600"
 BOARD_WINDOW_SIZE = "1280x720"
 RULES_WINDOW_SIZE = "740x660"

@@ -7,7 +7,7 @@ class User:
     """
 
     def __init__(self, username: str, password: str):
-        """Class constructor that creates a new user.
+        """Class constructor that initiates a new user.
 
         Args:
             username: String value of the user's username.

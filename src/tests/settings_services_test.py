@@ -16,8 +16,7 @@ class TestSettingsServices(unittest.TestCase):
         self.user = User("samushka", "13")
         self.database.add_user(self.user)
         self.database.add_logged_in_user(self.user.username)
-
-        self.question = Question("Category", "Difficulty", "Question?", "Answer!")
+        self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
         self.database.save_item_to_database(
             1,
             self.question.category,
@@ -110,14 +109,7 @@ class TestSettingsServices(unittest.TestCase):
     def test_check_category_number_validity(self):
         self.assertEqual(self.service.check_category_number_validity(), False)
 
-    def test_open_questions_view(self):
-        self.assertEqual(self.window, None)
-        with self.assertRaises(AttributeError):
-            self.service.open_questions_view()
-
     def test_handle_logout(self):
         self.assertEqual(len(self.database.get_logged_in_users()), 1)
-        self.assertEqual(self.window, None)
-        with self.assertRaises(AttributeError):
-            self.service.handle_logout()
+        self.service.logout_users()
         self.assertEqual(len(self.database.get_logged_in_users()), 0)

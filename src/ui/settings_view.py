@@ -1,7 +1,9 @@
 import tkinter as tk
-from services.ui_services import get_window_settings
 from services.settings_services import SettingsServices
+from ui.custom_content_view import CustomContentView
+from ui.rules_view import RulesView
 from ui.stylings import (
+    get_window_settings,
     SETTINGS_WINDOW_NAME,
     SETTINGS_WINDOW_SIZE,
     X,
@@ -17,6 +19,7 @@ from ui.dialogs import (
     show_player_number_error_dialog,
     show_player_name_error_dialog,
     show_category_number_error_dialog,
+    show_game_not_ready_dialog,
 )
 
 class SettingsView:
@@ -28,13 +31,14 @@ class SettingsView:
 
         self.window = tk.Tk()
         get_window_settings(self.window, SETTINGS_WINDOW_NAME, SETTINGS_WINDOW_SIZE)
-        self.service = SettingsServices(self.window, database)
+        self.database = database
+        self.service = SettingsServices(self.window, self.database)
         self._build_layout()
         self._build_widgets()
         self.window.mainloop()
 
     def _build_layout(self):
-        """Builds the layout of the parent view.
+        """Builds the layout of the parent window.
         Essentially just a bunch of row and column configurations."""
 
         for i in (0,14):
@@ -73,29 +77,25 @@ class SettingsView:
         get_basic_button(
             self.window,
             "Game Rules",
-            15,
-            self.service.open_rules_view
+            self._open_rules_view
         ).grid(column=0, row=14, padx=X)
 
         get_basic_button(
             self.window,
             "Start Game",
-            15,
             self._handle_game_start
         ).grid(column=2, row=14, padx=X)
 
         get_basic_button(
             self.window,
-            "Logout",
-            15,
-            self.service.handle_logout
+            "  Logout  ",
+            self._handle_logout
         ).grid(column=0, row=0, padx=X)
 
         get_basic_button(
             self.window,
-            "Custom Questions",
-            15,
-            self.service.open_questions_view
+            "Custom Content",
+            self._open_questions_view
         ).grid(column=2, row=0, padx=X)
 
     def _build_player_entries(self):
@@ -181,5 +181,41 @@ class SettingsView:
         elif self.service.check_category_number_validity() is False:
             show_category_number_error_dialog()
         else:
-            self.service.open_game_view()
+            self._open_game_view()
         self.window.focus()
+
+    def _open_questions_view(self):
+        """Destroys the current view and initializes a new one."""
+
+        self.window.destroy()
+        CustomContentView(self.database)
+
+    def _open_rules_view(self):
+        """Initializes a new view on top of the current view."""
+
+        RulesView()
+
+    def _open_game_view(self):
+        """Destroys the current view and initializes a new one."""
+
+        show_game_not_ready_dialog()
+        # from WIP.game_view import GameView
+        #
+        # # These will later come from elsewhere, when it's possible
+        # # for the user to manually select colors in the settings.
+        # # -------------------------------------------------
+        # p_cols = self.collect_player_color_settings()
+        # c_cols = self.collect_category_color_settings()
+        # # -------------------------------------------------
+        #
+        # self.window.destroy()
+        # GameView(self.database, self.players, p_cols, self.categories, c_cols, self.board_size)
+
+    def _handle_logout(self):
+        """Calls SettingsServices class methods which logs out all users,
+        the ndestroys the current window and initialzies a new one."""
+
+        self.service.logout_users()
+        self.window.destroy()
+        from ui.login_view import LoginView
+        LoginView(self.database)

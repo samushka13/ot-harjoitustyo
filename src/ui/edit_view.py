@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from services.ui_services import get_window_settings
 from ui.stylings import (
+    get_window_settings,
     EDIT_QUESTION_WINDOW_NAME,
     EDIT_QUESTION_WINDOW_SIZE,
     X,
@@ -87,14 +87,12 @@ class EditView:
         get_basic_button(
             self.edit_window,
             "Save",
-            10,
             command=self._update_item,
         ).grid(column=0, row=10)
 
         get_basic_button(
             self.edit_window,
             "Cancel",
-            10,
             command=self.open_questions_view,
         ).grid(column=1, row=10)
 
@@ -121,6 +119,6 @@ class EditView:
             self.open_questions_view()
 
     def open_questions_view(self):
-        from ui.custom_questions_view import CustomQuestionsView
+        from ui.custom_content_view import CustomContentView
         self.edit_window.destroy()
-        CustomQuestionsView(self.database)
+        CustomContentView(self.database)

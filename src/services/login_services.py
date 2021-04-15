@@ -1,5 +1,3 @@
-from ui.settings_view import SettingsView
-from ui.dialogs import whats_new_dialog
 from entities.user import User
 
 class LoginServices:
@@ -79,7 +77,7 @@ class LoginServices:
 
     def check_for_users(self):
         """Checks if there are any users in the database.
-        
+
         Returns:
             True, if any exist, or False, if none exist.
         """
@@ -89,24 +87,19 @@ class LoginServices:
     def list_all_users(self):
         """Calls a database_services method that returns
         all users in a formatted list.
-        
+
         Returns:
             A sorted list of all users by calling a database operation.
         """
 
         return self.database.get_sorted_users()
 
-    def handle_view_change(self, window, current_user):
+    def handle_login(self, current_user):
         """Destroys the current view and initializes a new one.
 
         Args:
-            window: Value of the current view's window.
             current_user: String value of the user's username.
         """
 
-        # The dialog will be removed eventually.
-        if whats_new_dialog() == 'ok':
-            self.database.remove_logged_in_users()
-            self.database.add_logged_in_user(current_user)
-            window.destroy()
-            SettingsView(self.database)
+        self.database.remove_logged_in_users()
+        self.database.add_logged_in_user(current_user)

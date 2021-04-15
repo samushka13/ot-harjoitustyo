@@ -1,7 +1,8 @@
 import tkinter as tk
-from services.ui_services import get_window_settings
 from services.login_services import LoginServices
+from ui.settings_view import SettingsView
 from ui.stylings import (
+    get_window_settings,
     LOGIN_WINDOW_NAME,
     LOGIN_WINDOW_SIZE,
     X,
@@ -15,6 +16,7 @@ from ui.dialogs import (
     show_registration_error_dialog,
     show_users_dialog,
     show_no_users_dialog,
+    whats_new_dialog,
 )
 from ui.widgets import (
     get_title_label,
@@ -25,9 +27,12 @@ from ui.widgets import (
 
 class LoginView:
     """Class that describes the UI of the login view.
-    
+
     Attributes:
         database: Value of the initialized database.
+        Only passed on to LoginServices class.
+        This is not optimal, but will be changed when
+        a new way of starting the app is implemented.
     """
 
     def __init__(self, database):
@@ -40,12 +45,18 @@ class LoginView:
 
         self.window = tk.Tk()
         get_window_settings(self.window, LOGIN_WINDOW_NAME, LOGIN_WINDOW_SIZE)
-        self.service = LoginServices(self.window, database)
+        self.database = database
+        self.service = LoginServices(self.window, self.database)
         self._build_layout()
         self._build_title()
         self.username_input = self._build_username_widgets()
         self.password_input = self._build_password_widgets()
         self._build_action_buttons()
+
+        # This dialog will be removed eventually.
+        if whats_new_dialog() == 'ok':
+            self.window.focus()
+
         self.window.mainloop()
 
     def _build_layout(self):
@@ -108,14 +119,12 @@ class LoginView:
         get_basic_button(
             self.window,
             "Proceed",
-            10,
             self._handle_login,
         ).grid(column=0, row=5, padx=X, pady=Y, sticky="e")
 
         get_basic_button(
             self.window,
             "Users",
-            10,
             self._show_users,
         ).grid(column=1, row=5, padx=X, pady=Y, sticky="w")
 
@@ -165,7 +174,7 @@ class LoginView:
         """
 
         show_login_success_dialog(username)
-        self.service.handle_view_change(self.window, username)
+        self._handle_view_change(username)
 
     def _handle_successful_registration(self, username):
         """Shows an appropriate dialog after which
@@ -176,7 +185,7 @@ class LoginView:
         """
 
         show_username_created_dialog(username)
-        self.service.handle_view_change(self.window, username)
+        self._handle_view_change(username)
 
     def _handle_unsuccessful_registration(self):
         """Shows an appropriate dialog after which
@@ -197,3 +206,14 @@ class LoginView:
         if dialog == 'ok':
             self.window.focus()
             self.username_input.focus()
+
+    def _handle_view_change(self, current_user):
+        """Destroys the current view and initializes a new one.
+
+        Args:
+            current_user: String value of the user's username.
+        """
+
+        self.service.handle_login(current_user)
+        self.window.destroy()
+        SettingsView(self.database)

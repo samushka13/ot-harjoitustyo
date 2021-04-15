@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import DISABLED
-from services.ui_services import get_window_settings
 from ui.stylings import (
+    get_window_settings,
     RULES_WINDOW_NAME,
     RULES_WINDOW_SIZE,
     TITLE_FONT,
@@ -40,7 +40,6 @@ class RulesView:
         get_basic_button(
             self.rules_window,
             "Got it!",
-            10,
             command=self._close_window,
         ).place(x=370, y=620, anchor="center")
 

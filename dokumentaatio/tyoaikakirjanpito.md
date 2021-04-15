@@ -23,4 +23,5 @@
 | 12.4. |  2  | Login täysin valmis.                                                |
 | 12.4. |  2  | Loginin testit toteutettu.                                          |
 | 14.4. |  4  | Settingsin testit toteutettu. Koodin parantelua.                    |
-|  yht. | 65  |                                                                     |
+| 15.4. |  2  | Testejä ja koodia paranneltu. Docstringejä lisätty.                 |
+|  yht. | 67  |                                                                     |

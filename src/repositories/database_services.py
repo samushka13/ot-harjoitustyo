@@ -48,9 +48,9 @@ class DatabaseServices:
 
     def get_logged_in_users(self):
         credentials = []
-        for row in self.database.execute(f"SELECT username, password FROM Users \
+        for row in self.database.execute(f"SELECT id, username, password FROM Users \
             WHERE login_status={1}").fetchall():
-            credentials.append((row['username'],row['password']))
+            credentials.append((row['id'],row['username'],row['password']))
         return credentials
 
     # ------------------------------------------------
@@ -61,7 +61,7 @@ class DatabaseServices:
         self.database.execute(f"UPDATE Users SET login_status={0}")
 
     # ------------------------------------------------
-    # Settings & Custom Questions operations.
+    # Settings & Custom Content operations.
     # ------------------------------------------------
 
     def get_categories(self):
@@ -73,26 +73,36 @@ class DatabaseServices:
 
     def get_listbox_items(self):
         items = []
-        for row in self.database.execute("SELECT id, category, difficulty, question, answer \
-            FROM Questions").fetchall():
-            row_id = row['id']
+        for row in self.database.execute("SELECT * FROM Questions").fetchall():
+            qid = row['id']
             category = row['category']
             difficulty = row['difficulty']
             question = row['question']
             answer = row['answer']
-            items.append(f"{row_id}. | {category} | {difficulty} | {question} | {answer}")
+            user_id = row['user_id']
+            items.append(f"{qid}. | {category} | {difficulty} | {question} | {answer} | {user_id}")
         return items
+
+    def count_questions_in_the_database(self):
+        total = self.database.execute("SELECT COUNT(*) FROM Questions").fetchone()
+        return total['COUNT(*)']
+
+    def get_question(self, question_id: int, user_id: int):
+        total = self.database.execute(f"SELECT COUNT(*) FROM Questions \
+            WHERE id='{question_id}' AND user_id='{user_id}'").fetchone()
+        return total['COUNT(*)']
 
     def save_item_to_database(self, user_id, category, difficulty, question, answer):
         self.database.execute("INSERT INTO Questions \
             (user_id, category, difficulty, question, answer) \
             VALUES (?,?,?,?,?)", (user_id, category, difficulty, question, answer))
 
-    def delete_item_from_database(self, question_id: int):
-        self.database.execute(f"DELETE FROM Questions WHERE id='{question_id}'")
+    def delete_item_from_database(self, question_id: int, user_id: int):
+        self.database.execute(f"DELETE FROM Questions \
+            WHERE id='{question_id}' AND user_id='{user_id}'")
 
-    def delete_all_user_items_from_database(self):
-        self.database.execute("DELETE FROM Questions")
+    def delete_all_user_items_from_database(self, user_id: int):
+        self.database.execute(f"DELETE FROM Questions WHERE user_id='{user_id}'")
 
     def get_item_for_editing(self, question_id: int):
         item = self.database.execute(f"SELECT category, difficulty, question, answer \
@@ -103,12 +113,6 @@ class DatabaseServices:
         self.database.execute(f"UPDATE Questions \
             SET category=?, difficulty=?, question=?, answer=? \
             WHERE id='{question_id}'", (category, difficulty, question, answer))
-
-    # These will be used to enable a feature,
-    # where the current user can view every user's questions (in the same database),
-    # but only delete (or edit) their own.
-    # user_id = db.execute(f"SELECT id FROM Users WHERE username='{current_user}'").fetchone()
-    # db.execute(f"DELETE FROM Questions WHERE user_id='{user_id['id']}'")
 
     # ------------------------------------------------
     # Game session operations.

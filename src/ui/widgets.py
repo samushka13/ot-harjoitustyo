@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import WORD, ttk
+from tkinter import ttk, WORD, EXTENDED
 from ui.stylings import (
     BACKGROUND,
     TITLE_FONT,
@@ -47,7 +47,17 @@ def get_basic_label(window, text: str):
 # Buttons.
 # ------------------------------------------------------
 
-def get_basic_button(window, text: str, width: int, command):
+def get_basic_button(window, text: str, command):
+    if len(text) in range(0,10):
+        width = 10
+    elif len(text) in range(10,17):
+        width = 15
+    elif len(text) in range(17,23):
+        width = 20
+    elif len(text) in range(23,28):
+        width = 25
+    else:
+        width = 30
     button = tk.Button(
         window,
         text=text,
@@ -98,6 +108,20 @@ def get_edit_textbox(window, height: int, width: int, font=TEXT_FONT):
         highlightbackground=BACKGROUND,
     )
     return textbox
+
+# ------------------------------------------------------
+# Listboxes.
+# ------------------------------------------------------
+
+def get_listbox(window, height: int, width: int):
+    listbox = tk.Listbox(
+        window,
+        height=height,
+        width=width,
+        highlightbackground=BACKGROUND,
+        selectmode=EXTENDED,
+    )
+    return listbox
 
 # ------------------------------------------------------
 # Board elements.

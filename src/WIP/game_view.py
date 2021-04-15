@@ -2,7 +2,7 @@ import tkinter as tk
 import random
 from tkinter import DISABLED
 from PIL import ImageTk, Image
-from services.ui_services import get_window_settings
+from ui.stylings import get_window_settings
 from ui.rules_view import RulesView
 from WIP.statistics_view import StatisticsView
 from ui.widgets import (
@@ -20,10 +20,10 @@ from ui.stylings import (
     DIE_FACES,
     DEFAULT_DIE_FACE,
 )
-from entities.category_board import CategoryBoard
-from entities.scoreboard import Scoreboard
-from entities.game_board import GameBoard
-from entities.player_tokens import PlayerTokens
+from WIP.category_board import CategoryBoard
+from WIP.scoreboard import Scoreboard
+from WIP.game_board import GameBoard
+from WIP.player_tokens import PlayerTokens
 
 class GameView:
     def __init__(self, database, players, p_colors, categories, c_colors, board_size):
@@ -125,7 +125,6 @@ class GameView:
         self.show_answer_btn = get_basic_button(
             self.window,
             "Show answer",
-            15,
             self.show_answer,
         )
         self.show_answer_btn.place(x=280, y=420, anchor="center")
@@ -144,7 +143,6 @@ class GameView:
         self.answer_correct_btn = get_basic_button(
             self.window,
             f"{self.players[self.turn_counter]} answered correctly",
-            25,
             self.end_player_turn,
         )
         self.answer_correct_btn.place(x=30, y=490, anchor="w")
@@ -152,7 +150,6 @@ class GameView:
         self.answer_incorrect_btn = get_basic_button(
             self.window,
             f"{self.players[self.turn_counter]} answered incorrectly",
-            25,
             self.end_player_turn,
         )
         self.answer_incorrect_btn.place(x=300, y=490, anchor="w")
@@ -177,7 +174,6 @@ class GameView:
         self.cast_btn = get_basic_button(
             self.window,
             "Cast",
-            8,
             self.cast_die,
         )
         self.cast_btn.place(x=917,y=420, anchor="center")
@@ -215,28 +211,24 @@ class GameView:
         get_basic_button(
             self.window,
             "Remove Player",
-            12,
             command=self.remove_player,
         ).place(x=1260, y=30, anchor="e")
 
         get_basic_button(
             self.window,
             "Quit",
-            6,
             command=self.quit_game,
         ).place(x=1260, y=65, anchor="e")
 
         get_basic_button(
             self.window,
             "Rules",
-            6,
             command=RulesView,
         ).place(x=1260, y=655, anchor="e")
 
         get_basic_button(
             self.window,
             "Statistics",
-            12,
             command=StatisticsView,
         ).place(x=1260, y=690, anchor="e")
 

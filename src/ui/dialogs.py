@@ -10,9 +10,10 @@ def whats_new_dialog():
 
 """These are currently working:
 
-- All login-related stuff (tests 77 %).
-- All settings-related stuff (tests 95 %).
+- All login-related stuff (tests 100 %).
+- All settings-related stuff (tests 100 %).
 - All stuff related to custom content (no tests yet).
+- All database-related stuff (no tests yet).
 
 Also, the repository has been cleaned up from last week, \
 and all work in progress has been moved to the WIP folder. \
@@ -22,8 +23,8 @@ and the code included is quite poor. Therefore, they should not be reviewed.
 What to expect next week?
 
 - Tests for custom content services.
-- Game board view that is based on the selected settings. \
-(game progress functionalities will be introduced later)
+- A game board view that is based on the selected settings. \
+(game progression-related functionalities will be introduced later)
 
 """,
     )
@@ -97,7 +98,7 @@ def show_player_number_error_dialog():
 def show_player_name_error_dialog():
     return messagebox.showinfo(
         "Player name error",
-        "Players must have unique names, but it seems that they are not."
+        "Players must be given unique names."
     )
 
 def show_category_number_error_dialog():
@@ -105,12 +106,13 @@ def show_category_number_error_dialog():
         "Not enough categories",
         "At least two categories must be added to start a new game.\
         \n\nYou can select them using the category dropdown lists.\
-        \n\nIf the lists are empty, try creating some questions in the Custom Questions view.\n"
+        \n\nIf the lists are empty, try creating some questions in the Custom Content view.\n"
     )
 
 # ------------------------------------------------------
-# CustomQuestionsView dialogs.
+# CustomContentView dialogs.
 # ------------------------------------------------------
+
 def show_save_error_dialog():
     return messagebox.showinfo(
         "Save Error",
@@ -121,11 +123,18 @@ def show_save_successful_dialog():
     return messagebox.showinfo(
         "Hooray!",
         "Question saved successfully. \
-         \n\nCreate more to improve the gaming experience."
+         \n\nCreate more to improve the gaming experience.\n"
     )
 
-def show_delete_confirmation_dialog(amount: int):
-    if amount == 1:
+def show_edit_error_dialog():
+    return messagebox.showinfo(
+        "Edit Error",
+        "This question doesn't seem to belong to you. \
+         \n\nAsk another user or an admin user to edit this question.\n"
+    )
+
+def show_delete_confirmation_dialog(number: int):
+    if number == 1:
         dialog = messagebox.askquestion(
             "Delete Item",
             "Are you sure you want to delete the selected question?"
@@ -133,8 +142,23 @@ def show_delete_confirmation_dialog(amount: int):
     else:
         dialog = messagebox.askquestion(
             "Delete Items",
-            f"Are you sure you want to delete these {amount} selected questions?"
+            f"Are you sure you want to delete these {number} selected questions?"
         )
+    return dialog
+
+def show_delete_error_dialog(number: int):
+    if number == 1:
+        dialog = messagebox.showinfo(
+        "Delete Error",
+        f"{number} questions were not deleted, as they belong to a different username. \
+        \n\nAsk another user or an admin user to delete these questions.\n"
+    )
+    else:
+        dialog = messagebox.showinfo(
+        "Delete Error",
+        f"{number} questions were not deleted, as they belong to different usernames. \
+        \n\nAsk other users or an admin user to delete these questions.\n"
+    )
     return dialog
 
 def show_delete_all_confirmation_dialog():

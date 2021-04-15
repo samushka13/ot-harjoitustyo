@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import DISABLED
-from services.ui_services import get_window_settings
 from ui.widgets import (
     get_display_textbox,
     get_basic_button,
 )
 from ui.stylings import (
+    get_window_settings,
     STATISTICS_WINDOW_NAME,
     STATISTICS_WINDOW_SIZE,
     TITLE_FONT,
@@ -33,7 +33,6 @@ class StatisticsView():
         get_basic_button(
             self.stats_window,
             "Got it!",
-            10,
             command=self._close_window,
         ).place(x=370, y=620, anchor="center")
 

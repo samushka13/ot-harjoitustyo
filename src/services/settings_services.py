@@ -1,7 +1,3 @@
-from ui.custom_questions_view import CustomQuestionsView
-from ui.rules_view import RulesView
-from ui.dialogs import show_game_not_ready_dialog
-
 class SettingsServices:
     """Class that describes all services related to game settings."""
 
@@ -38,7 +34,7 @@ class SettingsServices:
         """
 
         default_players = [
-            f"{self.database.get_logged_in_users()[0][0]}",
+            f"{self.database.get_logged_in_users()[0][1]}",
             "Player 2",
             "Player 3",
             "Player 4",
@@ -255,44 +251,8 @@ class SettingsServices:
 
         return bool(len(self.categories) >= 2)
 
-    # ------------------------------------------------------
-    # Methods that handle view changes:
-    # ------------------------------------------------------
-
-    def open_questions_view(self):
-        """Destroys the current view and initializes a new one."""
-
-        self.window.destroy()
-        CustomQuestionsView(self.database)
-
-    def open_rules_view(self):
-        """Initializes a new view on top of the current view."""
-
-        RulesView()
-
-    def open_game_view(self):
-        """Destroys the current view and initializes a new one."""
-        
-        show_game_not_ready_dialog()
-        # from WIP.game_view import GameView
-        #
-        # # These will later come from elsewhere, when it's possible
-        # # for the user to manually select colors in the settings.
-        # # -------------------------------------------------
-        # p_cols = self.collect_player_color_settings()
-        # c_cols = self.collect_category_color_settings()
-        # # -------------------------------------------------
-        #
-        # self.window.destroy()
-        # GameView(self.database, self.players, p_cols, self.categories, c_cols, self.board_size)
-
-    def handle_logout(self):
+    def logout_users(self):
         """Calls a DatabaseServices class method to remove all logged in users
-        (currently only one simultaneous login is allowed, but this method can handle more),
-        then destroys the current view and initializes a new one."""
+        (currently only one simultaneous login is allowed, but this method can handle more)."""
 
-        from ui.login_view import LoginView
-
-        self.database.remove_logged_in_users()
-        self.window.destroy()
-        LoginView(self.database)
+        return self.database.remove_logged_in_users()
