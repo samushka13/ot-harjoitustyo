@@ -23,7 +23,11 @@ from ui.dialogs import (
 )
 
 class SettingsView:
-    """Class that describes the UI of the settings view."""
+    """Class that describes the UI of the settings view.
+    
+    Attributes:
+        database: A value of the current database.
+    """
 
     def __init__(self, database):
         """Class constructor that initializes the window

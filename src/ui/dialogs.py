@@ -1,7 +1,7 @@
 from tkinter import messagebox
 
 # ------------------------------------------------------
-# "What's new in this version?"
+# "What's new?"
 # ------------------------------------------------------
 
 def whats_new_dialog():
@@ -23,19 +23,15 @@ and the code included is quite poor. Therefore, they should not be reviewed.
 What to expect next week?
 
 - Tests for custom content services.
-- A game board view that is based on the selected settings. \
-(game progression-related functionalities will be introduced later)
-
-""",
-    )
+- A game board view that is based on the selected settings \
+(game progression-related functionalities will be introduced later).""")
 
 def show_game_not_ready_dialog():
     return messagebox.showinfo(
         "Not yet accessible",
 "The game view creation logic isn't quite ready yet, \
 so it has been excluded from this release. \
-It will be included in next week's release, in some form, at least.",
-    )
+It will be included in next week's release, in some form, at least.")
 
 # ------------------------------------------------------
 # LoginView dialogs.

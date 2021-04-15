@@ -10,6 +10,8 @@ Sovellus on kehitetty Python-versiolla 3.9.2 ja sen toiminta on testattu Python-
 
 [Vaatimusmäärittely](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
+[Arkkitehtuurikuvaus](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
 [Työaikakirjanpito](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
 ### Asennus

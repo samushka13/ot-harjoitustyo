@@ -46,7 +46,7 @@ class CustomContentServices:
         """
 
         from services.settings_services import SettingsServices
-        
+
         return SettingsServices(self.window, self.database).get_default_difficulties()
 
     def get_current_user_id(self):

@@ -34,7 +34,7 @@ class RulesView:
 
         rules = get_display_textbox(self.rules_window, 40, 85, TEXT_FONT)
         rules.place(x=30, y=80)
-        rules.insert(tk.END, self.get_game_rules_text())
+        rules.insert(tk.END, self._game_rules_text())
         rules.config(state=DISABLED)
 
         get_basic_button(
@@ -44,7 +44,7 @@ class RulesView:
         ).place(x=370, y=620, anchor="center")
 
 
-    def get_game_rules_text(self):
+    def _game_rules_text(self):
         """Provides the text content for the game rules view.
 
         Returns:

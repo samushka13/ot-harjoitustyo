@@ -30,7 +30,7 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
     - kysymysten kategoriat (2-12, useita vaihtoehtoja).
   - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
 
-### Omat kysymykset ja kategoriat (KAIKKI TEHTY)
+### Omat kysymykset ja kategoriat (KAIKKI TEHTY, paitsi editointi)
 
   - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
   - Käyttäjä voi muokata luomiaan kysymyksiä ja kategorioita.

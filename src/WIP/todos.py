@@ -2,16 +2,12 @@
 # TODOS
 # ------------------------------------------------------------------
 # NEXT DL: Move all view changes to ui from services.
-# NEXT DL: Refactor all code that is included in the release.
-# NEXT DL: Isolate/mark all WIP stuff and crappy code clearly.
 # NEXT DL: Ohjelman alustava rakenne luokka- ja pakkauskaaviona:
     # - https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/dokumentaatio/arkkitehtuuri.md
     # - https://ohjelmistotekniikka-hy.github.io/python/materiaali#pakkauskaavio
     # - sovelluslogiikan kannalta oleelliset luokat
     # - sovelluksen pakkausrakenne
-    # - lisää repoon dokumentaatio/arkkitehtuuri.md:
-    #   -> upota kaaviot kuvina tiedostoon (kirjoita myös juttuja auki)
-    #   -> linkki tiedostoon README:stä
+    # - upota kaaviot kuvina tiedostoon (kirjoita myös juttuja auki)
 # NEXT DL: Ensure everything works on Linux via VDI.
 # ------------------------------------------------------------------
 # GAME: Match token position with board categories and the category board.
@@ -37,7 +33,7 @@
 # GENERAL: Improve testing (when done, remove WIP from .coveragerc).
 # GENERAL: Implement config and environmental variables with .env etc.
 # GENERAL: Add more classes, such as Player, Category etc.
-# GENERAL: Add docstrings (and double-check existing ones).
+# GENERAL: Add docstrings (and redo/double-check existing ones).
     # https://ohjelmistotekniikka-hy.github.io/python/docstring
 # GENERAL: Try to make the windows and stuff a bit more responsive.
     # https://stackoverflow.com/questions/7591294/how-to-create-a-self-resizing-grid-of-buttons-in-tkinter/38809894

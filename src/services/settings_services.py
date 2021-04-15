@@ -1,5 +1,10 @@
 class SettingsServices:
-    """Class that describes all services related to game settings."""
+    """Class that describes all services related to game settings.
+    
+    Attributes:
+        window: Value of the current view's window.
+        database: Value of the current database.
+    """
 
     def __init__(self, window, database):
         """Class constructor that creates a new settings service
@@ -7,6 +12,7 @@ class SettingsServices:
 
         Args:
             window: Value of the current view's window.
+            database: Value of the current database.
         """
 
         self.window = window

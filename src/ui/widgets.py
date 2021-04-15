@@ -13,6 +13,15 @@ from ui.stylings import (
 # ------------------------------------------------------
 
 def get_combobox(window, width=30):
+    """Builds a tkinter combobox widget.
+
+    Args:
+        window (widget): The parent window of the widget.
+        width (int, optional): The width of the widget. Defaults to 30.
+
+    Returns:
+        widget: A combobox.
+    """
     combobox = ttk.Combobox(
         window,
         width=width,
@@ -24,6 +33,15 @@ def get_combobox(window, width=30):
 # ------------------------------------------------------
 
 def get_title_label(window, text: str):
+    """Builds a tkinter label widget.
+
+    Args:
+        window (widget): The parent window of the widget.
+        text (str): The text shown on the label.
+
+    Returns:
+        widget: A label.
+    """
     label = tk.Label(
         window,
         text=text,
@@ -34,6 +52,15 @@ def get_title_label(window, text: str):
     return label
 
 def get_basic_label(window, text: str):
+    """Builds a tkinter label widget.
+
+    Args:
+        window (widget): The parent window of the widget.
+        text (str): The text shown on the label.
+
+    Returns:
+        widget: A label.
+    """
     label = tk.Label(
         window,
         text=text,
@@ -48,6 +75,17 @@ def get_basic_label(window, text: str):
 # ------------------------------------------------------
 
 def get_basic_button(window, text: str, command):
+    """Builds a tkinter button widget.
+    The width of the button is determined dynamically based on the text length.
+
+    Args:
+        window (widget): The parent window of the widget.
+        text (str): The text shown on the button.
+        command (command): Describes what the button does when pressed.
+
+    Returns:
+        widget: A button.
+    """
     if len(text) in range(0,10):
         width = 10
     elif len(text) in range(10,17):
@@ -73,6 +111,17 @@ def get_basic_button(window, text: str, command):
 # ------------------------------------------------------
 
 def get_basic_entry(window, width: int, show=None, textvariable=None):
+    """Builds a tkinter entry widget.
+
+    Args:
+        window (widget): The parent window of the widget.
+        width (int): The width of the widget.
+        show (str, optional): Masks the user input. Defaults to None.
+        textvariable (StringVar, optional): Required for getting the user input. Defaults to None.
+
+    Returns:
+        widget: An entry.
+    """
     entry = tk.Entry(
         window,
         width=width,
@@ -86,6 +135,17 @@ def get_basic_entry(window, width: int, show=None, textvariable=None):
 # ------------------------------------------------------
 
 def get_display_textbox(window, height: int, width: int, font=BOARD_TEXT_FONT):
+    """Builds a tkinter textbox widget for display purposes only.
+
+    Args:
+        window (widget): The parent window of the widget.
+        height (int): The height of the widget.
+        width (int): The width of the widget.
+        font (font, optional): The font of the text. Defaults to BOARD_TEXT_FONT.
+
+    Returns:
+        widget: A disabled textbox.
+    """
     textbox = tk.Text(
         window,
         height=height,
@@ -99,6 +159,17 @@ def get_display_textbox(window, height: int, width: int, font=BOARD_TEXT_FONT):
     return textbox
 
 def get_edit_textbox(window, height: int, width: int, font=TEXT_FONT):
+    """Builds a tkinter textbox widget.
+
+    Args:
+        window (widget): The parent window of the widget.
+        height (int): The height of the widget.
+        width (int): The width of the widget.
+        font (font, optional): The font of the text. Defaults to TEXT_FONT.
+
+    Returns:
+        widget: A textbox.
+    """
     textbox = tk.Text(
         window,
         height=height,
@@ -114,6 +185,16 @@ def get_edit_textbox(window, height: int, width: int, font=TEXT_FONT):
 # ------------------------------------------------------
 
 def get_listbox(window, height: int, width: int):
+    """Builds a tkinter listbox widget.
+
+    Args:
+        window (widget): The parent window of the widget.
+        height (int): The height of the widget.
+        width (int): The width of the widget.
+
+    Returns:
+        widget: A listbox.
+    """
     listbox = tk.Listbox(
         window,
         height=height,
@@ -128,6 +209,16 @@ def get_listbox(window, height: int, width: int):
 # ------------------------------------------------------
 
 def get_canvas(window, height: int, width: int):
+    """Builds a tkinter canvas widget for drawing.
+
+    Args:
+        window (widget): The parent window of the widget.
+        height (int): The height of the widget.
+        width (int): The width of the widget.
+
+    Returns:
+        widget: A canvas.
+    """
     canvas = tk.Canvas(
         window,
         height=height,
@@ -138,6 +229,17 @@ def get_canvas(window, height: int, width: int):
     return canvas
 
 def get_board_segment(canvas, distance: float, segment: float, fill):
+    """Builds a tkinter arc element on a canvas.
+
+    Args:
+        canvas (widget): The canvas on which the arc will be drawn.
+        distance (float): The starting angle of the arc.
+        segment (float): The length of the arc.
+        fill ([type]): The color of the arc.
+
+    Returns:
+        element: An arc.
+    """
     segment = canvas.create_arc(
         20, 20, 700, 700,
         start=360-distance,
