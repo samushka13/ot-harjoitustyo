@@ -9,11 +9,12 @@ from config import TEST_DATABASE_FILENAME
 class TestSettingsServices(unittest.TestCase):
     def setUp(self):
         self.window = None
-        DatabaseServices(TEST_DATABASE_FILENAME).database.execute("DROP TABLE IF EXISTS Users")
-        DatabaseServices(TEST_DATABASE_FILENAME).database.execute("DROP TABLE IF EXISTS Questions")
-        self.database = DatabaseServices(TEST_DATABASE_FILENAME)
+        datafile = TEST_DATABASE_FILENAME
+        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Users")
+        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Questions")
+        self.database = DatabaseServices(datafile)
         self.service = SettingsServices(self.window, self.database)
-        self.user = User("samushka", "13")
+        self.user = User("samushka", "13", 1)
         self.database.add_user(self.user)
         self.database.add_logged_in_user(self.user.username)
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")

@@ -7,8 +7,9 @@ from config import TEST_DATABASE_FILENAME
 class TestLoginServices(unittest.TestCase):
     def setUp(self):
         self.window = None
-        DatabaseServices(TEST_DATABASE_FILENAME).database.execute("DROP TABLE IF EXISTS Users")
-        self.database = DatabaseServices(TEST_DATABASE_FILENAME)
+        datafile = TEST_DATABASE_FILENAME
+        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Users")
+        self.database = DatabaseServices(datafile)
         self.service = LoginServices(self.window, self.database)
         self.user = User("samushka", "13")
         self.database.add_user(self.user)

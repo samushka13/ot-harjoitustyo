@@ -17,8 +17,6 @@ class CustomContentServices:
 
         self.window = window
         self.database = database
-        self.current_user_id = self.get_current_user_id()
-        self.current_username = self.get_current_username()
 
     def get_listbox_items(self):
         """Calls DatabaseServices class method to get items.
@@ -57,15 +55,6 @@ class CustomContentServices:
         """
 
         return self.database.get_logged_in_users()[0][0]
-
-    def get_current_username(self):
-        """Calls DatabaseServices class method to get the currently logged in user's username.
-
-        Returns:
-            A string value describing the user's username.
-        """
-
-        return self.database.get_logged_in_users()[0][1]
 
     def check_input_validity(self, category, difficulty, question, answer):
         """Checks that the user input contains no empty values.
@@ -121,8 +110,8 @@ class CustomContentServices:
             answer: A string value describing an answer.
         """
 
-        self.database.save_item_to_database(
-            self.current_user_id,
+        return self.database.save_item_to_database(
+            self.get_current_user_id(),
             category,
             difficulty,
             self.format_question(question),
@@ -141,7 +130,7 @@ class CustomContentServices:
             True, if the user is the owner, False, if not.
         """
 
-        return bool(self.database.get_question(question_id, self.current_user_id) == 1)
+        return bool(self.database.get_question(question_id, self.get_current_user_id()) == 1)
 
     def determine_question_ids(self, listbox):
         """Processes the string values of all listbox selections for question ids.
@@ -181,7 +170,7 @@ class CustomContentServices:
 
         before = self.count_questions()
         for item in items:
-            self.database.delete_item_from_database(item, self.current_user_id)
+            self.database.delete_item_from_database(item, self.get_current_user_id())
         after = self.count_questions()
         return before-after
 
@@ -189,7 +178,7 @@ class CustomContentServices:
         """Calls a DatabaseServices class method which deletes
         all questions created by the current user."""
 
-        self.database.delete_all_user_items_from_database(self.current_user_id)
+        self.database.delete_all_user_items_from_database(self.get_current_user_id())
 
     def get_item_for_editing(self, item):
         """Calls a DatabaseServices class method that fetches the item for editing.
@@ -215,22 +204,10 @@ class CustomContentServices:
             answer: A string value describing an answer.
         """
 
-        self.database.update_item(question_id, category, difficulty, question, answer)
-
-    def get_default_difficulties(self):
-        """Provides a list of default difficulty names.
-
-        The app logic can handle adding more options,
-        but the game has been designed to have only three difficulty levels.
-        Therefore, changing this is not recommended.
-
-        Returns:
-            A list of the default difficulty names.
-        """
-
-        difficulty_names = [
-            "Easy",
-            "Intermediate",
-            "Advanced Triviliast"
-        ]
-        return difficulty_names
+        self.database.update_item(
+            question_id,
+            category,
+            difficulty,
+            self.format_question(question),
+            self.format_answer(answer),
+        )

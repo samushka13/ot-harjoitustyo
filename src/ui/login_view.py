@@ -29,7 +29,7 @@ class LoginView:
     """Class that describes the UI of the login view.
 
     Attributes:
-        database: Value of the initialized database.
+        database: The initialized database class entity.
         Only passed on to LoginServices class.
         This is not optimal, but will be changed when
         a new way of starting the app is implemented.

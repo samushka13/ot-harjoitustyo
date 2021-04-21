@@ -10,22 +10,22 @@ def whats_new_dialog():
 
 """These are currently working:
 
-- All login-related stuff (tests 100 %).
-- All settings-related stuff (tests 100 %).
-- Most stuff related to custom content (no tests yet).
-- Most database-related stuff (no tests yet).
+- All login-related stuff.
+- All settings-related stuff.
+- All stuff related to custom content.
+- Most database-related stuff.
 
-Also, the repository has been cleaned up from last week, \
-and all work in progress has been moved to the WIP folder. \
-The WIP files are basically prototypes of various functionalities \
+Total test coverage: 99 %.
+
+Files in the WIP folder are prototypes of various functionalities \
 which are not included in this release, and their code is quite poor. \
 Therefore, they should not be reviewed.
 
 What to expect next week?
 
-- Tests for custom content services.
 - A game board view that is based on the selected settings \
-(game progression-related functionalities will be introduced later).""")
+(functionalities related to proper game progression \
+will be implemented in the final release).""")
 
 def show_game_not_ready_dialog():
     return messagebox.showinfo(
@@ -33,13 +33,6 @@ def show_game_not_ready_dialog():
 "The game view creation logic isn't quite ready yet, \
 so it has been excluded from this release. \
 It will be included in next week's release, in some form, at least.")
-
-def show_edit_not_ready_dialog():
-    return messagebox.showinfo(
-        "Not yet accessible",
-"The edit logic isn't quite ready yet, \
-so it has been excluded from this release. \
-It will be included in next week's release.")
 
 # ------------------------------------------------------
 # LoginView dialogs.
@@ -133,8 +126,8 @@ def show_save_successful_dialog():
 def show_edit_error_dialog():
     return messagebox.showinfo(
         "Edit Error",
-        "This question doesn't seem to belong to you. \
-         \n\nAsk another user or an admin user to edit this question.\n"
+        "A question can only be edited by the user who has created it.\
+         \n\nYou can check the username at the end of the question.\n"
     )
 
 def show_delete_confirmation_dialog(number: int):
@@ -154,14 +147,12 @@ def show_delete_error_dialog(number: int):
     if number == 1:
         dialog = messagebox.showinfo(
         "Delete Error",
-        f"{number} questions were not deleted, as they belong to a different username. \
-        \n\nAsk another user or an admin user to delete these questions.\n"
+        f"{number} questions were not deleted, as they belong to a different username."
     )
     else:
         dialog = messagebox.showinfo(
         "Delete Error",
-        f"{number} questions were not deleted, as they belong to different usernames. \
-        \n\nAsk other users or an admin user to delete these questions.\n"
+        f"{number} questions were not deleted, as they belong to different usernames."
     )
     return dialog
 

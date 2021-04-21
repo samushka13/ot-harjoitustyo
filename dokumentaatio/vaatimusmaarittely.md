@@ -8,7 +8,7 @@ Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustom
 
 ## Käyttäjät
 
-Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli että admin-rooli, joka voi poistaa muiden käyttäjätilejä ja niiden luomia sisältöjä.
+Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 
 ## Käyttöliittymä ja toiminnallisuudet
 
@@ -20,28 +20,37 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
     - Sovellus ilmoittaa käyttäjälle asianmukaisesti, mikäli
       - tunnus ei täytyä ehtoja (pituudeltaan vähintään 3 merkkiä),
       - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
+  - Käyttäjä voi nähdä listan rekisteröityneistä käyttäjistä asianmukaisen painikkeen avulla.
   - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
-### Pelin asetukset (KAIKKI TEHTY, pelin aloitus ei tosin vielä onnistu)
+### Pelin asetukset (KAIKKI TEHTY)
 
+  - Käyttäjä voi kirjautua ulos asianmukaisen painikkeen avulla, jolloin sovellus siirtyy näkymään "Kirjautuminen / Rekisteröityminen".
   - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
+  - Käyttäjä voi nähdä säännöt asianmukaisen painikkeen avulla.
   - Käyttäjä voi muokata pelin asetuksia valitsemalla
-    - pelaajien lukumäärän (1-6),
-    - kysymysten kategoriat (2-12, useita vaihtoehtoja).
+    - pelaajien lukumäärän ja nimet (1-6, kirjautunut käyttäjä ensimmäisenä),
+    - kysymysten kategoriat (2-12, useita vaihtoehtoja),
+    - pelilaudan koon (6 vaihtoehtoa, keskikoko valittuna valmiiksi)
   - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
+    - Mikäli pelin asetukset eivät täytä ehtoja (vähintään yksi pelaaja ja kaksi kategoriaa), sovellus ilmoittaa siitä käyttäjälle.
 
-### Omat kysymykset ja kategoriat (KAIKKI TEHTY, paitsi editointi)
+### Omat kysymykset ja kategoriat (KAIKKI TEHTY)
 
-  - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
-  - Käyttäjä voi muokata luomiaan kysymyksiä ja kategorioita.
-  - Käyttäjä voi poistaa luomiaan kysymyksiä ja kategorioita.
-    - Käyttäjältä pyydetään tällöin vahvistus. 
   - Käyttäjä voi luoda uuden kysymyksen syöttämällä asianmukaisiin tekstikenttiin
     - kategorian (joko olemassa oleva tai uusi),
-    - vaikeustason,
-    - kysymyksen (käyttäjälle ilmoitetaan, mikäli täsmälleen sama kysymys on olemassa),
+    - vaikeustason (kolme vaihtoehtoa),
+    - kysymyksen,
     - vastauksen.
       - HUOM: Uusi kategoria luodaan siis luomalla kysymys kyseiseen kategoriaan.
+      - Mikäli käyttäjä unohtaa kysymysmerkin kysymyksen perästä tai pisteen vastauksen perästä, sovellus lisää ne automaattisesti.
+      - Käyttäjä voi tyhjentää täyttämänsä kentät asianmukaisen painikkeen avulla.
+  - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
+  - Käyttäjä voi muokata luomiaan kysymyksiä.
+    - Mikäli käyttäjä yrittää muokata jonkun muun luomaa kysymystä, sovellus ilmoittaa siitä käyttäjälle.
+  - Käyttäjä voi poistaa luomiaan kysymyksiä.
+    - Käyttäjältä pyydetään tällöin vahvistus. 
+    - Mikäli käyttäjä valitsee useamman kysymyksen poistettavaksi, sovellus poistaa vain ne, jotka kuuluvat käyttäjälle, ja ilmoittaa, montako kysymystä jäi poistamatta.
   - Käyttäjä voi milloin tahansa palata takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
 
 ### Pelisessio
@@ -68,22 +77,36 @@ Sovelluksella on sekä normaali, rekisteröitymistä vaativa käyttäjärooli et
   - vaikeustason (Easy / Intermediate / Advanced Trivialist / Hardcore Madness),
   - kysymysten vaikeustason pelaajittain,
   - vaikeustason kategorioittain,
+  - kategoriaksi "random", jolloin kategoria arvotaan pelisession aikana jokaista kysymystä varten,
   - noppien lukumäärän (1-2),
   - kategoriapisteiden lukumäärän (1 = pikapeli, 5 = maraton)
   - kysymysten kategorioille haluamansa värit,
   - mukaan vain esimerkiksi monivalintakysymyksiä,
-  - ruutujen järjestyksen.
-  - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset.
-- Omien kysymysten selaamiseen
-  - hakukenttä,
-  - kategoriasuodattimet.
-- Omien kysymysten luokittelu
-  - avoimiin kysymyksiin,
-  - monivalintoihin,
-  - kyllä-tai-ei-kysymyksiin.
-- Pelilaudan kehittäminen näyttävämmäksi.
-- Voitosta ilmoittavan näkymän kustomointi voittaneen pelaajan mukaiseksi.
-- Pelisession tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
-- Kysymysten ja kategorioiden tuonti muualta.
-- Pelaajan poistaminen kesken pelin.
-- Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
+  - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset,
+  - kysymyksiä vain joko omista tai OpenTriviaDatabasen kysymyksistä, tai molemmista,
+  - pelin asetukset valmiista pohjista (valmiiksi annetut ja/tai käyttäjän luomat).
+
+- Omien kysymysten
+  - selaamiseen hakukenttä ja kategoriasuodattimet,
+  - kategorioiden muokkaus ja poistaminen,
+  - luokittelu avoimiin kysymyksiin, monivalintoihin ja kyllä-tai-ei-kysymyksiin,
+  - lisäämiseen huomautus, mikäli täsmälleen sama kysymys on jo kategoriassa olemassa.
+  - poistamisilmoitukseen listaus käyttäjistä, joiden kysymyksiä ei voitu poistaa,
+  - oheen tietoa kysymyksistä, kuten kuinka monta kysymystä käyttäjät ovat yhteensä luoneet.
+
+- Pelisessioon
+  - mekanismi, joka välttää kysymästä samaa kysymystä uudelleen, ellei ole aivan pakko,
+  - tuomarimoodi, joka mahdollistaa esimerkiksi virheellisesti annettujen pisteiden muokkamisen,
+  - näyttävämpi pelilauta,
+  - voitosta ilmoittava näkymä voittaneen pelaajan väreillä jne.,
+  - tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
+
+Muita ideoita
+  - Kysymysten ja kategorioiden tuonti muualta.
+  - Pelaajan poistaminen kesken pelin.
+  - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
+  - Pääkäyttäjäroolin lisääminen, jotta kenen tahansa profiileja ja kysymyksiä voi tarvittaessa poistaa.
+  - Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
+  - Pelien tallennus tilastointia ja "Resume game" -toimintoa varten (uusi tietokantataulu "games", jonka sarakkeita ovat mm. käyttäjän id, pelin asetukset ja pelin status).
+  - Näkymien kehittäminen näyttävämmiksi.
+  - Näkymien ja widgettien kehittäminen kooltaan responsiivisiksi.

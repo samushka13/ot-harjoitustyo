@@ -50,7 +50,7 @@ class DatabaseServices:
         credentials = []
         for row in self.database.execute(f"SELECT id, username, password FROM Users \
             WHERE login_status={1}").fetchall():
-            credentials.append((row['id'],row['username'],row['password']))
+            credentials.append((row['id'], row['username'], row['password']))
         return credentials
 
     # ------------------------------------------------
@@ -79,8 +79,8 @@ class DatabaseServices:
             difficulty = row['difficulty']
             question = row['question']
             answer = row['answer']
-            user_id = row['user_id']
-            items.append(f"{qid}. | {category} | {difficulty} | {question} | {answer} | {user_id}")
+            username = self.database.execute(f"SELECT username FROM Users WHERE id='{row['user_id']}'").fetchone()
+            items.append(f"{qid}. | {category} | {difficulty} | {question} | {answer} ||| {username['username']}")
         return items
 
     def count_questions_in_the_database(self):
