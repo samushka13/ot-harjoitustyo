@@ -14,57 +14,65 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 
 ### Kirjautuminen / Rekisteröityminen (KAIKKI TEHTY)
 
-  - Käyttäjä voi kirjautua sovellukseen (lokaalilla) käyttäjätunnuksella ja salasanalla.
-    - Tiedot syötetään lomakkeelle.
-    - Mikäli käyttäjätunnusta ei ole, sovellus luo sellaisen.
-    - Sovellus ilmoittaa käyttäjälle asianmukaisesti, mikäli
-      - tunnus ei täytyä ehtoja (pituudeltaan vähintään 3 merkkiä),
-      - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
-  - Käyttäjä voi nähdä listan rekisteröityneistä käyttäjistä asianmukaisen painikkeen avulla.
-  - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
+- Käyttäjä voi kirjautua sovellukseen (lokaalilla) käyttäjätunnuksella ja salasanalla.
+  - Tiedot syötetään lomakkeelle.
+  - Mikäli käyttäjätunnusta ei ole, sovellus luo sellaisen.
+  - Sovellus ilmoittaa käyttäjälle asianmukaisesti, mikäli
+    - tunnus ei täytyä ehtoja (pituudeltaan vähintään 3 merkkiä),
+    - olemassa oleva käyttäjätunnus ja salasana eivät täsmää. 
+- Käyttäjä voi nähdä listan rekisteröityneistä käyttäjistä asianmukaisen painikkeen avulla.
+- Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
 ### Pelin asetukset (KAIKKI TEHTY)
 
-  - Käyttäjä voi kirjautua ulos asianmukaisen painikkeen avulla, jolloin sovellus siirtyy näkymään "Kirjautuminen / Rekisteröityminen".
-  - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
-  - Käyttäjä voi nähdä säännöt asianmukaisen painikkeen avulla.
-  - Käyttäjä voi muokata pelin asetuksia valitsemalla
-    - pelaajien lukumäärän ja nimet (1-6, kirjautunut käyttäjä ensimmäisenä),
-    - kysymysten kategoriat (2-12, useita vaihtoehtoja),
-    - pelilaudan koon (6 vaihtoehtoa, keskikoko valittuna valmiiksi)
-  - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
-    - Mikäli pelin asetukset eivät täytä ehtoja (vähintään yksi pelaaja ja kaksi kategoriaa), sovellus ilmoittaa siitä käyttäjälle.
+- Käyttäjä voi kirjautua ulos asianmukaisen painikkeen avulla, jolloin sovellus siirtyy näkymään "Kirjautuminen / Rekisteröityminen".
+- Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
+- Käyttäjä voi nähdä säännöt asianmukaisen painikkeen avulla.
+- Käyttäjä voi muokata pelin asetuksia valitsemalla
+  - pelaajien lukumäärän ja nimet (1-6, kirjautunut käyttäjä ensimmäisenä),
+  - kysymysten kategoriat (2-12, useita vaihtoehtoja),
+  - pelilaudan koon (6 vaihtoehtoa, keskikoko valittuna valmiiksi)
+- Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
+  - Mikäli pelin asetukset eivät täytä ehtoja (vähintään yksi pelaaja ja kaksi kategoriaa), sovellus ilmoittaa siitä käyttäjälle.
 
 ### Omat kysymykset ja kategoriat (KAIKKI TEHTY)
 
-  - Käyttäjä voi luoda uuden kysymyksen syöttämällä asianmukaisiin tekstikenttiin
-    - kategorian (joko olemassa oleva tai uusi),
-    - vaikeustason (kolme vaihtoehtoa),
-    - kysymyksen,
-    - vastauksen.
-      - HUOM: Uusi kategoria luodaan siis luomalla kysymys kyseiseen kategoriaan.
-      - Mikäli käyttäjä unohtaa kysymysmerkin kysymyksen perästä tai pisteen vastauksen perästä, sovellus lisää ne automaattisesti.
-      - Käyttäjä voi tyhjentää täyttämänsä kentät asianmukaisen painikkeen avulla.
-  - Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
-  - Käyttäjä voi muokata luomiaan kysymyksiä.
-    - Mikäli käyttäjä yrittää muokata jonkun muun luomaa kysymystä, sovellus ilmoittaa siitä käyttäjälle.
-  - Käyttäjä voi poistaa luomiaan kysymyksiä.
-    - Käyttäjältä pyydetään tällöin vahvistus. 
-    - Mikäli käyttäjä valitsee useamman kysymyksen poistettavaksi, sovellus poistaa vain ne, jotka kuuluvat käyttäjälle, ja ilmoittaa, montako kysymystä jäi poistamatta.
-  - Käyttäjä voi milloin tahansa palata takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
+- Käyttäjä voi luoda uuden kysymyksen syöttämällä asianmukaisiin tekstikenttiin
+  - kategorian (joko olemassa oleva tai uusi),
+  - vaikeustason (kolme vaihtoehtoa),
+  - kysymyksen,
+  - vastauksen.
+    - HUOM: Uusi kategoria luodaan siis luomalla kysymys kyseiseen kategoriaan.
+    - Mikäli käyttäjä unohtaa kysymysmerkin kysymyksen perästä tai pisteen vastauksen perästä, sovellus lisää ne automaattisesti.
+    - Käyttäjä voi tyhjentää täyttämänsä kentät asianmukaisen painikkeen avulla.
+- Käyttäjä voi selata kaikkien käyttäjien luomia kysymyksiä.
+- Käyttäjä voi muokata luomiaan kysymyksiä.
+  - Mikäli käyttäjä yrittää muokata jonkun muun luomaa kysymystä, sovellus ilmoittaa siitä käyttäjälle.
+- Käyttäjä voi poistaa luomiaan kysymyksiä.
+  - Käyttäjältä pyydetään tällöin vahvistus. 
+  - Mikäli käyttäjä valitsee useamman kysymyksen poistettavaksi, sovellus poistaa vain ne, jotka kuuluvat käyttäjälle, ja ilmoittaa, montako kysymystä jäi poistamatta.
+- Käyttäjä voi milloin tahansa palata takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
 
-### Pelisessio
+### Pelisessio (OSITTAIN TEHTY)
 
-  - Käyttäjän on pystyttävä seuraamaan peliä ja sen edistymistä jonkinlaiselta (alkeelliselta) pelilaudalta.
-    - Lisäksi kunkin pelaajan on pystyttävä 'heittämään' noppaa pelivuoronsa aikana.
+- Pelinäkymän tulee sisältää (KAIKKI TEHTY)
+  - pelilauta,
+  - noppa ja painike sen heittämiseen,
+  - pistetaulu, josta näkee pelaajien pisteet ja vuorossa olevan pelaajan,
+  - kategoriataulu, josta näkee pelisession kategoriat ja vuorossa olevan kategorian,
+  - tila kysymykselle ja vastauksille,
+  - painikkeen, jolla voi näyttää vastauksen,
+  - painikkeet, joilla voi valita, vastasiko pelaaja oikein vai väärin.
+- Kysymys esitetään kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
   - Kysymykset haetaan lokaalista tietokannasta ja/tai [Open Trivia Databasesta](https://opentdb.com/api_config.php) riippuen pelin asetuksista.
-  - Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla.
-  - Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla.
-  - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
-    - Käyttäjältä pyydetään tällöin vahvistus.
-  - Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
-    - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
-    - Käyttäjä voi poistua pelistä asianmukaisella painikkeella, jolloin siirrytään takaisin näkymään "Pelin asetukset".
+- Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti.
+- Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla. (TEHTY)
+- Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla. (TEHTY)
+- Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla. (TEHTY)
+  - Käyttäjältä pyydetään tällöin vahvistus. (TEHTY)
+- Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
+  - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
+  - Käyttäjä voi poistua pelistä asianmukaisella painikkeella, jolloin siirrytään takaisin näkymään "Pelin asetukset". (TEHTY)
 
 ## Toimintaympäristön rajoitteet
 
@@ -107,7 +115,7 @@ Muita ideoita
   - Kysymysten ja kategorioiden tuonti muualta.
   - Pelaajan poistaminen kesken pelin.
   - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
-  - Pääkäyttäjäroolin lisääminen, jotta kenen tahansa profiileja ja kysymyksiä voi tarvittaessa poistaa.
+  - Pääkäyttäjäroolin (admin) lisääminen, jotta kenen tahansa profiileja ja kysymyksiä voi tarvittaessa poistaa.
   - Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
   - Pelin asetuksissa näkyy kategorioiden perässä niiden sisältämät kysymysmäärät.
   - Pelin asetuksissa näkyy peliin valittujen kategorioiden sisältämät kysymykset yhteensä.

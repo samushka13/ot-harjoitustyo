@@ -16,7 +16,7 @@ Sovellus on kehitetty Python-versiolla 3.9.2 ja sen toiminta on testattu Python-
 
 ### Asennus
 
-1. Lataa uusin [release](https://github.com/samushka13/ot-harjoitustyo/releases)
+1. Lataa uusin [release](https://github.com/samushka13/ot-harjoitustyo/releases).
 
 2. Varmista, että koneellasi on asianmukainen Python-versio (^3.6).
 
