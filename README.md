@@ -16,15 +16,17 @@ Sovellus on kehitetty Python-versiolla 3.9.2 ja sen toiminta on testattu Python-
 
 ### Asennus
 
-1. Varmista, että koneellasi on asianmukainen Python-versio (^3.6).
+1. Lataa uusin [release](https://github.com/samushka13/ot-harjoitustyo/releases)
 
-2. Varmista, että koneellasi on asianmukainen Poetry-versio (^1.1.5 suositeltu).
+2. Varmista, että koneellasi on asianmukainen Python-versio (^3.6).
 
-3. Asenna projektin riippuvuudet komennolla:
+3. Varmista, että koneellasi on asianmukainen Poetry-versio (^1.1.5 suositeltu).
+
+4. Asenna projektin riippuvuudet komennolla:
 
        poetry install
 
-4. Käynnistä projekti komennolla:
+5. Käynnistä projekti komennolla:
 
        poetry run invoke start
 
