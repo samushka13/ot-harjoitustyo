@@ -4,10 +4,6 @@ from invoke import task
 def start(ctx):
     ctx.run("python3 src/index.py")
 
-# @task
-# def test(ctx):
-#     ctx.run("pytest src")
-
 @task
 def test(ctx):
     ctx.run("coverage run --branch -m pytest src")
@@ -23,7 +19,3 @@ def coverage_report_html(ctx):
 @task
 def lint(ctx):
     ctx.run("pylint src")
-
-@task
-def formatting(ctx):
-    ctx.run("poetry run invoke format")

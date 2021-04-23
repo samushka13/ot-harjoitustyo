@@ -109,6 +109,8 @@ Muita ideoita
   - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
   - Pääkäyttäjäroolin lisääminen, jotta kenen tahansa profiileja ja kysymyksiä voi tarvittaessa poistaa.
   - Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
+  - Pelin asetuksissa näkyy kategorioiden perässä niiden sisältämät kysymysmäärät.
+  - Pelin asetuksissa näkyy peliin valittujen kategorioiden sisältämät kysymykset yhteensä.
   - "Resume game" -toiminnon lisääminen.
   - Näkymien kehittäminen näyttävämmiksi.
   - Näkymien ja widgettien kehittäminen kooltaan responsiivisiksi.

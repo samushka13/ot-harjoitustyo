@@ -25,13 +25,10 @@
 # WEEK 7 - 16.5.
 # --------------------------------------------------------------------------------------
 # LOGIN: Implement a way to delete profile (and all questions, optionally).
-# SETTINGS: Add the number of questions for each category.
-# SETTINGS: Add the total number of questions selected for game session.
 # CUSTOM: Notify, if nothing to delete when multiple or all selected.
 # GAME: Match token position with board categories and the category board.
 # GAME: Add image of ouroboros onto the game board (and maybe elsewhere?).
-# TESTS: Double-check existing tests for improvements.
-# TESTS: Include integration tests that combine various classes etc.
+# TESTS: Improve tests and include integration tests that combine various classes etc.
 # DOCUMENTATION: Add docstrings (and redo/double-check existing ones).
 # DOCUMENTATION: Finalize the app's manual and other documentation.
 # DOCUMENTATION: Ensure everything is up-to-date with the final product.
@@ -39,9 +36,7 @@
 # GENERAL: Implement another way for services to know what database they should be using.
 # GENERAL: Try to make everything run in a single window that simply changes size and stuff.
 # GENERAL: Implement config and environmental variables with .env etc.
-# GENERAL: Remove WIP from .coveragerc, when folder becomes empty.
-# GENERAL: Remove unnecessary dependencies, files, etc.
-# GENERAL: Remove commented code.
+# GENERAL: Remove commented code and unnecessary files.
 # GENERAL: Ensure everything works on Linux via VDI.
 # GENERAL: Check that everything conforms to the grading requirements.
 # GENERAL: Do a new GitHub release and add a link to it to README.

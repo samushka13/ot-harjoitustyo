@@ -12,6 +12,7 @@ class TestSettingsServices(unittest.TestCase):
         datafile = TEST_DATABASE_FILENAME
         DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Users")
         DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Questions")
+        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Games")
         self.database = DatabaseServices(datafile)
         self.service = SettingsServices(self.window, self.database)
         self.user = User("samushka", "13", 1)
@@ -102,7 +103,11 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.collect_board_size_settings(selected_board_size), 5)
 
     def test_handle_session_save(self):
-        pass
+        self.assertEqual(
+            self.service.handle_session_save(
+                [self.user], [self.question.category, self.question.category], 5),
+            None,
+        )
 
     def test_check_player_number_validity(self):
         self.assertEqual(self.service.check_player_number_validity(), False)

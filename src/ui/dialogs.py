@@ -16,7 +16,7 @@ def whats_new_dialog():
 - Most stuff related to game session.
 - Most database-related stuff.
 
-Total test coverage: 65 %.
+Total test coverage: 71 %.
 
 Files in the WIP folder are prototypes of various functionalities \
 which are not included in this release, and their code is quite poor. \
@@ -26,13 +26,6 @@ What to expect next week?
 
 - More tests.
 - A game board view with improved functionalities.""")
-
-def show_game_not_ready_dialog():
-    return messagebox.showinfo(
-        "Not yet accessible",
-"The game view creation logic isn't quite ready yet, \
-so it has been excluded from this release. \
-It will be included in next week's release, in some form, at least.")
 
 # ------------------------------------------------------
 # LoginView dialogs.
