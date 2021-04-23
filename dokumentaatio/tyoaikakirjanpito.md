@@ -26,4 +26,5 @@
 | 15.4. |  2  | Testejä ja koodia paranneltu. Docstringejä lisätty.                 |
 | 21.4. |  3  | Testikattavuutta parannettu. Joitakin toimintoja lisätty.           |
 | 22.4. |  3  | Pelisession koodin parantelua.                                      |
-|  yht. | 73  |                                                                     |
+| 23.4. |  1  | Dokumentaation parantelua.                                          |
+|  yht. | 74  |                                                                     |

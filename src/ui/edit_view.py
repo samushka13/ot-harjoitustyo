@@ -76,7 +76,7 @@ class EditView:
         ).grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
 
         self.difficulty_combobox = get_combobox(self.edit_window, 43)
-        self.difficulty_combobox['values'] = self.service.get_default_difficulties()
+        self.difficulty_combobox['values'] = self.service.get_difficulties()
         self.difficulty_combobox.state(['readonly'])
         self.difficulty_combobox.set(self.service.get_item_for_editing(self.selected)[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)

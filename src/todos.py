@@ -2,7 +2,6 @@
 # WEEK 5 - 27.4.
 # --------------------------------------------------------------------------------------
 # GENERAL: Do a GitHub release and add a link to it to README.
-# GENERAL: Ensure everything works on Linux via VDI.
 # --------------------------------------------------------------------------------------
 # Code review - 28.4. ->
 # --------------------------------------------------------------------------------------
@@ -18,7 +17,7 @@
 # DOCUMENTATION: Include a draft of the app's manual.
 # DOCUMENTATION: Describe testing.
 # GENERAL: Ensure classes etc. follow the single-responsibility principle.
-# GENERAL: Ensure everything works on Linux via VDI.
+# GENERAL: Ensure everything works on Linux via VDI (+ fix the UI).
 # GENERAL: Do a new GitHub release and add a link to it to README.
 # --------------------------------------------------------------------------------------
 # WEEK 7 - 16.5.

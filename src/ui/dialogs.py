@@ -22,7 +22,8 @@ Total test coverage: 71 %.
 What to expect next week?
 
 - More tests.
-- A game board view with improved functionalities.""")
+- A game board view with improved functionalities.
+- Possibly a nicer-looking UI.""")
 
 # ------------------------------------------------------
 # LoginView dialogs.
