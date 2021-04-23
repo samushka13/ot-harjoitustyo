@@ -13,14 +13,10 @@ def whats_new_dialog():
 - All login-related stuff.
 - All settings-related stuff.
 - All stuff related to custom content.
-- Most stuff related to game session.
+- Most stuff related to game sessions.
 - Most database-related stuff.
 
 Total test coverage: 71 %.
-
-Files in the WIP folder are prototypes of various functionalities \
-which are not included in this release, and their code is quite poor. \
-Therefore, they should not be reviewed.
 
 What to expect next week?
 
