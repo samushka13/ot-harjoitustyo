@@ -56,7 +56,6 @@ BACKGROUND = "white smoke"
 
 TITLE_FONT = ('Helvetica', 16, 'bold')
 TEXT_FONT = ('Helvetica', 14)
-TEXT_FONT_BOLD = ('Helvetica', 14, 'bold')
 BOARD_TEXT_FONT = ('Helvetica', 18, 'bold')
 
 # ------------------------------------------------------
@@ -71,18 +70,3 @@ Y = (20,10)
 # ------------------------------------------------------
 
 BASIC_CURSOR = "arrow"
-
-# ------------------------------------------------------
-# Die faces.
-# Should be moved to Die class when such exists.
-# ------------------------------------------------------
-
-DIE_FACES = [
-    (r'src/assets/die_1.png', 1),
-    (r'src/assets/die_2.png', 2),
-    (r'src/assets/die_3.png', 3),
-    (r'src/assets/die_4.png', 4),
-    (r'src/assets/die_5.png', 5),
-    (r'src/assets/die_6.png', 6),
-]
-DEFAULT_DIE_FACE = r'src/assets/die_6.png'

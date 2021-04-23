@@ -25,4 +25,5 @@
 | 14.4. |  4  | Settingsin testit toteutettu. Koodin parantelua.                    |
 | 15.4. |  2  | Testejä ja koodia paranneltu. Docstringejä lisätty.                 |
 | 21.4. |  3  | Testikattavuutta parannettu. Joitakin toimintoja lisätty.           |
-|  yht. | 70  |                                                                     |
+| 22.4. |  3  | Pelisession koodin parantelua.                                      |
+|  yht. | 73  |                                                                     |

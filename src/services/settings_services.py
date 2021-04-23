@@ -1,20 +1,17 @@
 class SettingsServices:
     """Class that describes all services related to game settings.
-    
+
     Attributes:
         window: Value of the current view's window.
         database: Value of the current database.
     """
-
     def __init__(self, window, database):
-        """Class constructor that creates a new settings service
-        and calls the database service.
+        """Class constructor that creates a new settings service.
 
         Args:
             window: Value of the current view's window.
             database: Value of the current database.
         """
-
         self.window = window
         self.database = database
         self.players = []
@@ -40,7 +37,7 @@ class SettingsServices:
         """
 
         default_players = [
-            f"{self.database.get_logged_in_users()[0][1]}",
+            f"{self.database.get_logged_in_user()[0][1]}",
             "Player 2",
             "Player 3",
             "Player 4",
@@ -225,6 +222,24 @@ class SettingsServices:
                 self.board_size = [x[1] for x in self.get_default_board_sizes()][i]
 
         return self.board_size
+
+    def handle_session_save(self, players, categories, board_size):
+        """Calls database class methods which ensure that no other game session is active
+        and save the current game session variables to the database.
+
+        Args:
+            players (list): The selected players.
+            categories (list): The selected categories.
+            board_size (int): The selected board size.
+        """
+        self.database.remove_game_active_status()
+        difficulty = ""
+        self.database.save_session_variables(
+            difficulty,
+            board_size,
+            players,
+            categories,
+        )
 
     # ------------------------------------------------------
     # Methods that check the validity of the game settings:

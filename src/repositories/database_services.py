@@ -3,9 +3,9 @@ import sqlite3
 class DatabaseServices:
     def __init__(self, database_name):
         self.database = sqlite3.connect(database_name, timeout=10)
-        self.initialize_database()
+        self._initialize_database()
 
-    def initialize_database(self):
+    def _initialize_database(self):
         self.database.isolation_level = None
         self.database.row_factory = sqlite3.Row
 
@@ -15,6 +15,13 @@ class DatabaseServices:
         self.database.execute("CREATE TABLE IF NOT EXISTS Questions \
             (id INTEGER PRIMARY KEY, user_id INTEGER REFERENCES Users, \
             category TEXT, difficulty TEXT, question TEXT, answer TEXT)")
+
+        self.database.execute("CREATE TABLE IF NOT EXISTS Games \
+            (id INTEGER PRIMARY KEY, active INTEGER, user_id INTEGER REFERENCES Users, \
+            difficulty TEXT, board_size INTEGER, \
+            p1 TEXT, p2 TEXT, p3 TEXT, p4 TEXT, p5 TEXT, p6 TEXT, \
+            c1 TEXT, c2 TEXT, c3 TEXT, c4 TEXT, c5 TEXT, c6 TEXT, \
+            c7 TEXT, c8 TEXT, c9 TEXT, c10 TEXT, c11 TEXT, c12 TEXT)")
 
         return self.database
 
@@ -39,19 +46,16 @@ class DatabaseServices:
             users.append(f"{user['username']}")
         return users
 
-    def get_sorted_users(self):
-        return '\n'.join(sorted(self.get_users()))
-
     def add_logged_in_user(self, username):
         self.database.execute(f"UPDATE Users SET login_status={1} \
             WHERE username='{username}'")
 
-    def get_logged_in_users(self):
-        credentials = []
+    def get_logged_in_user(self):
+        user = []
         for row in self.database.execute(f"SELECT id, username, password FROM Users \
             WHERE login_status={1}").fetchall():
-            credentials.append((row['id'], row['username'], row['password']))
-        return credentials
+            user.append((row['id'], row['username'], row['password']))
+        return user
 
     # ------------------------------------------------
     # Logout operations.
@@ -75,12 +79,13 @@ class DatabaseServices:
         items = []
         for row in self.database.execute("SELECT * FROM Questions").fetchall():
             qid = row['id']
-            category = row['category']
-            difficulty = row['difficulty']
+            cat = row['category']
+            diff = row['difficulty']
             question = row['question']
             answer = row['answer']
-            username = self.database.execute(f"SELECT username FROM Users WHERE id='{row['user_id']}'").fetchone()
-            items.append(f"{qid}. | {category} | {difficulty} | {question} | {answer} ||| {username['username']}")
+            user = self.database.execute(f"SELECT username FROM Users \
+                WHERE id='{row['user_id']}'").fetchone()
+            items.append(f"{qid}. | {cat} | {diff} | {question} | {answer} ||| {user['username']}")
         return items
 
     def count_questions_in_the_database(self):
@@ -114,18 +119,45 @@ class DatabaseServices:
             SET category=?, difficulty=?, question=?, answer=? \
             WHERE id='{question_id}'", (category, difficulty, question, answer))
 
+    def save_session_variables(self, difficulty, size, players, categories):
+        user_id = self.get_logged_in_user()[0][0]
+        self.database.execute("INSERT INTO Games (user_id, active) VALUES (?,?)", (user_id, 1))
+        self.database.execute(f"UPDATE Games SET difficulty='{difficulty}' WHERE active={1}")
+        self.database.execute(f"UPDATE Games SET board_size='{size}' WHERE active={1}")
+        for i in range(1,len(players)+1):
+            self.database.execute(f"UPDATE Games SET p{i}='{players[i-1]}' WHERE active={1}")
+        for i in range(1,len(categories)+1):
+            self.database.execute(f"UPDATE Games SET c{i}='{categories[i-1]}' WHERE active={1}")
+
     # ------------------------------------------------
     # Game session operations.
     # ------------------------------------------------
 
-    def get_category_for_player(self, category: str):
-        return self.database.execute(f"SELECT category FROM Questions \
-            WHERE category='{category}'").fetchone()
+    def get_session_variables(self):
+        variables = self.database.execute(f"SELECT * FROM Games WHERE active={1}").fetchone()
+        difficulty = variables['difficulty']
+        board_size = variables['board_size']
+        players = []
+        for i in range(1,7):
+            player = variables[f'p{i}']
+            if player is not None:
+                players.append(player)
+        categories = []
+        for i in range(1,13):
+            category = variables[f'c{i}']
+            if category is not None:
+                categories.append(category)
+
+        return difficulty, board_size, players, categories
 
     def get_question_for_player(self, category: str):
         return self.database.execute(f"SELECT question FROM Questions \
-            WHERE category='{category['category']}' ORDER BY RANDOM()").fetchone()
+            WHERE category='{category}' ORDER BY RANDOM()").fetchone()
 
     def get_answer_for_player(self, question: str):
-        return self.database.execute(f"SELECT answer FROM Questions \
-            WHERE question='{question['question']}'").fetchone()
+        answer = self.database.execute(f"SELECT answer FROM Questions \
+            WHERE question='{question}'").fetchone()
+        return answer
+
+    def remove_game_active_status(self):
+        self.database.execute(f"UPDATE Games SET active={0} WHERE active={1}")

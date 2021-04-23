@@ -90,9 +90,9 @@ def get_basic_button(window, text: str, command):
         width = 10
     elif len(text) in range(10,17):
         width = 15
-    elif len(text) in range(17,23):
+    elif len(text) in range(17,25):
         width = 20
-    elif len(text) in range(23,28):
+    elif len(text) in range(25,30):
         width = 25
     else:
         width = 30

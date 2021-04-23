@@ -81,8 +81,7 @@ class LoginServices:
         Returns:
             True, if any exist, or False, if none exist.
         """
-
-        return bool(len(self.database.get_sorted_users()) > 0)
+        return bool(len('\n'.join(sorted(self.database.get_users()))) > 0)
 
     def list_all_users(self):
         """Calls a database_services method that returns
@@ -91,8 +90,7 @@ class LoginServices:
         Returns:
             A sorted list of all users by calling a database operation.
         """
-
-        return self.database.get_sorted_users()
+        return '\n'.join(sorted(self.database.get_users()))
 
     def handle_login(self, current_user):
         """Destroys the current view and initializes a new one.

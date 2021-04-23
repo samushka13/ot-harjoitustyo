@@ -101,6 +101,9 @@ class TestSettingsServices(unittest.TestCase):
         selected_board_size.set("Medium")
         self.assertEqual(self.service.collect_board_size_settings(selected_board_size), 5)
 
+    def test_handle_session_save(self):
+        pass
+
     def test_check_player_number_validity(self):
         self.assertEqual(self.service.check_player_number_validity(), False)
 
@@ -111,6 +114,6 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.check_category_number_validity(), False)
 
     def test_handle_logout(self):
-        self.assertEqual(len(self.database.get_logged_in_users()), 1)
+        self.assertEqual(len(self.database.get_logged_in_user()), 1)
         self.service.logout_users()
-        self.assertEqual(len(self.database.get_logged_in_users()), 0)
+        self.assertEqual(len(self.database.get_logged_in_user()), 0)

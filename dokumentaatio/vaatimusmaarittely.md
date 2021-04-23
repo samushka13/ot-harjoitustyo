@@ -58,6 +58,8 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - Käyttäjän on pystyttävä seuraamaan peliä ja sen edistymistä jonkinlaiselta (alkeelliselta) pelilaudalta.
     - Lisäksi kunkin pelaajan on pystyttävä 'heittämään' noppaa pelivuoronsa aikana.
   - Kysymykset haetaan lokaalista tietokannasta ja/tai [Open Trivia Databasesta](https://opentdb.com/api_config.php) riippuen pelin asetuksista.
+  - Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla.
+  - Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla.
   - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
     - Käyttäjältä pyydetään tällöin vahvistus.
   - Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
@@ -99,7 +101,7 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - tuomarimoodi, joka mahdollistaa esimerkiksi virheellisesti annettujen pisteiden muokkamisen,
   - näyttävämpi pelilauta,
   - voitosta ilmoittava näkymä voittaneen pelaajan väreillä jne.,
-  - tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
+  - kattavammat tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
 
 Muita ideoita
   - Kysymysten ja kategorioiden tuonti muualta.
@@ -107,6 +109,6 @@ Muita ideoita
   - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
   - Pääkäyttäjäroolin lisääminen, jotta kenen tahansa profiileja ja kysymyksiä voi tarvittaessa poistaa.
   - Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
-  - Pelien tallennus tilastointia ja "Resume game" -toimintoa varten (uusi tietokantataulu "games", jonka sarakkeita ovat mm. käyttäjän id, pelin asetukset ja pelin status).
+  - "Resume game" -toiminnon lisääminen.
   - Näkymien kehittäminen näyttävämmiksi.
   - Näkymien ja widgettien kehittäminen kooltaan responsiivisiksi.

@@ -13,9 +13,10 @@ def whats_new_dialog():
 - All login-related stuff.
 - All settings-related stuff.
 - All stuff related to custom content.
+- Most stuff related to game session.
 - Most database-related stuff.
 
-Total test coverage: 99 %.
+Total test coverage: 65 %.
 
 Files in the WIP folder are prototypes of various functionalities \
 which are not included in this release, and their code is quite poor. \
@@ -23,9 +24,8 @@ Therefore, they should not be reviewed.
 
 What to expect next week?
 
-- A game board view that is based on the selected settings \
-(functionalities related to proper game progression \
-will be implemented in the final release).""")
+- More tests.
+- A game board view with improved functionalities.""")
 
 def show_game_not_ready_dialog():
     return messagebox.showinfo(
@@ -166,13 +166,6 @@ def show_delete_all_confirmation_dialog():
 # ------------------------------------------------------
 # GameView dialogs.
 # ------------------------------------------------------
-
-def remove_player_dialog():
-    return messagebox.askquestion(
-        "Remove Player",
-        "Are you sure you want to remove this player? \
-        \n\n(This doesn't actually do anything yet, so no one is removed.)\n"
-    )
 
 def quit_game_dialog():
     return messagebox.askquestion(

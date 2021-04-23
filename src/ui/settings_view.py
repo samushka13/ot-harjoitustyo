@@ -19,12 +19,11 @@ from ui.dialogs import (
     show_player_number_error_dialog,
     show_player_name_error_dialog,
     show_category_number_error_dialog,
-    show_game_not_ready_dialog,
 )
 
 class SettingsView:
     """Class that describes the UI of the settings view.
-    
+
     Attributes:
         database: A value of the current database.
     """
@@ -174,46 +173,42 @@ class SettingsView:
         """Calls SettingsServices class methods which collect and
         validate the selected settings and accommodates the UI accordingly."""
 
-        self.service.collect_player_settings(self.players)
-        self.service.collect_category_settings(self.categories)
-        self.service.collect_board_size_settings(self.board_size)
+        players = self.service.collect_player_settings(self.players)
+        player_colors = self.service.collect_player_color_settings()
+        categories = self.service.collect_category_settings(self.categories)
+        category_colors = self.service.collect_category_color_settings()
+        board_size = self.service.collect_board_size_settings(self.board_size)
 
         if self.service.check_player_number_validity() is False:
             show_player_number_error_dialog()
+            self.window.focus()
         elif self.service.check_player_names_validity() is False:
             show_player_name_error_dialog()
+            self.window.focus()
         elif self.service.check_category_number_validity() is False:
             show_category_number_error_dialog()
+            self.window.focus()
         else:
-            self._open_game_view()
-        self.window.focus()
+            self.service.handle_session_save(players, categories, board_size)
+            self._open_game_view(player_colors, category_colors)
 
     def _open_questions_view(self):
-        """Destroys the current view and initializes a new one."""
+        """Destroys the current window and initializes a new one."""
 
         self.window.destroy()
         CustomContentView(self.database)
 
     def _open_rules_view(self):
-        """Initializes a new view on top of the current view."""
+        """Initializes a new window on top of the current one."""
 
         RulesView()
 
-    def _open_game_view(self):
-        """Destroys the current view and initializes a new one."""
+    def _open_game_view(self, player_colors, category_colors):
+        """Destroys the current window and initializes a new one."""
 
-        show_game_not_ready_dialog()
-        # from WIP.game_view import GameView
-        #
-        # # These will later come from elsewhere, when it's possible
-        # # for the user to manually select colors in the settings.
-        # # -------------------------------------------------
-        # p_cols = self.collect_player_color_settings()
-        # c_cols = self.collect_category_color_settings()
-        # # -------------------------------------------------
-        #
-        # self.window.destroy()
-        # GameView(self.database, self.players, p_cols, self.categories, c_cols, self.board_size)
+        self.window.destroy()
+        from ui.game_view import GameView
+        GameView(self.database, player_colors, category_colors)
 
     def _handle_logout(self):
         """Calls SettingsServices class methods which logs out all users,

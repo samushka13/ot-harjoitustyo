@@ -54,7 +54,7 @@ class CustomContentServices:
             An integer value describing the user's id.
         """
 
-        return self.database.get_logged_in_users()[0][0]
+        return self.database.get_logged_in_user()[0][0]
 
     def check_input_validity(self, category, difficulty, question, answer):
         """Checks that the user input contains no empty values.

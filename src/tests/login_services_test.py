@@ -61,6 +61,6 @@ class TestLoginServices(unittest.TestCase):
             self.assertEqual(self.service.list_all_users(), '\n'.join(sorted(self.all_users)))
 
     def test_handle_login(self):
-        self.assertEqual(len(self.database.get_logged_in_users()), 0)
+        self.assertEqual(len(self.database.get_logged_in_user()), 0)
         self.service.handle_login(self.user.username)
-        self.assertEqual(len(self.database.get_logged_in_users()), 1)
+        self.assertEqual(len(self.database.get_logged_in_user()), 1)

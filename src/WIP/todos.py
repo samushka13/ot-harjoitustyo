@@ -11,8 +11,8 @@
 # --------------------------------------------------------------------------------------
 # WEEK 6 - 4.5.
 # --------------------------------------------------------------------------------------
-# GAME: Implement first version of GameView (add more entity classes, e.g. Player).
-# GAME: Remove buttons for "Remove player" and "Statistics".
+# GAME: Implement points system.
+# GAME: Add more entity classes, e.g. Player.
 # TESTS: Implement tests for GameServices etc.
 # DOCUMENTATION: Add docstrings (and redo/double-check existing ones).
 # DOCUMENTATION: Describe architecture, logic, sequences etc. (1-2 pages with diagrams).
@@ -29,7 +29,6 @@
 # SETTINGS: Add the total number of questions selected for game session.
 # CUSTOM: Notify, if nothing to delete when multiple or all selected.
 # GAME: Match token position with board categories and the category board.
-# GAME: Implement points system.
 # GAME: Add image of ouroboros onto the game board (and maybe elsewhere?).
 # TESTS: Double-check existing tests for improvements.
 # TESTS: Include integration tests that combine various classes etc.
@@ -45,4 +44,5 @@
 # GENERAL: Remove commented code.
 # GENERAL: Ensure everything works on Linux via VDI.
 # GENERAL: Check that everything conforms to the grading requirements.
+# GENERAL: Do a new GitHub release and add a link to it to README.
 # --------------------------------------------------------------------------------------
