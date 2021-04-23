@@ -1,7 +1,6 @@
 # --------------------------------------------------------------------------------------
 # WEEK 5 - 27.4.
 # --------------------------------------------------------------------------------------
-# DOCUMENTATION: Add a sequence diagram.
 # GENERAL: Do a GitHub release and add a link to it to README.
 # GENERAL: Ensure everything works on Linux via VDI.
 # --------------------------------------------------------------------------------------
@@ -12,10 +11,10 @@
 # WEEK 6 - 4.5.
 # --------------------------------------------------------------------------------------
 # GAME: Implement points system.
-# GAME: Add more entity classes, e.g. Player.
+# GAME: Add more entity classes, e.g. Player, GameSession etc.
 # TESTS: Implement tests for GameServices etc.
 # DOCUMENTATION: Add docstrings (and redo/double-check existing ones).
-# DOCUMENTATION: Describe architecture, logic, sequences etc. (1-2 pages with diagrams).
+# DOCUMENTATION: Finalize architecture, logic, sequences etc.
 # DOCUMENTATION: Include a draft of the app's manual.
 # DOCUMENTATION: Describe testing.
 # GENERAL: Ensure classes etc. follow the single-responsibility principle.

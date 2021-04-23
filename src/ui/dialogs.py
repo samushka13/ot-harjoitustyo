@@ -13,7 +13,8 @@ def whats_new_dialog():
 - All login-related stuff.
 - All settings-related stuff.
 - All stuff related to custom content.
-- Most stuff related to game sessions.
+- Most stuff related to game sessions (excluding points system \
+and matching categories with player position).
 - Most database-related stuff.
 
 Total test coverage: 71 %.
