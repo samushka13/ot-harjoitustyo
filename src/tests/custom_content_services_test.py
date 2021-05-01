@@ -4,20 +4,27 @@ from repositories.database_services import DatabaseServices
 from services.custom_content_services import CustomContentServices
 from entities.user import User
 from entities.question import Question
-from config import TEST_DATABASE_FILENAME
+from config import TEST_DATABASE_FILENAME as test_database
 from ui.widgets import get_listbox
 
 class TestCustomContentServices(unittest.TestCase):
     def setUp(self):
-        self.window = None
-        datafile = TEST_DATABASE_FILENAME
-        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Users")
-        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Questions")
-        self.database = DatabaseServices(datafile)
+        # ---------------------------------------------------------------------
+        # First the test database is cleared just to be sure it's empty.
+        # ---------------------------------------------------------------------
+        DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Users")
+        DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Questions")
+        # ---------------------------------------------------------------------
+        # Then the services and test database are initialized.
+        # ---------------------------------------------------------------------
+        self.database = DatabaseServices(test_database)
+        self.service = CustomContentServices(self.database)
+        # ---------------------------------------------------------------------
+        # Finally some stuff is added to the database to ease test formulation.
+        # ---------------------------------------------------------------------
         self.user = User("samushka", "13")
-        self.database.add_user(self.user)
+        self.database.add_user(self.user.username, self.user.password)
         self.database.add_logged_in_user(self.user.username)
-        self.service = CustomContentServices(self.window, self.database)
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
         self.question_invalid = Question(2, "", "", "", "")
         self.database.save_item_to_database(
@@ -95,7 +102,7 @@ class TestCustomContentServices(unittest.TestCase):
         self.assertEqual(self.service.check_owner(2), False)
 
     def test_determine_question_ids(self):
-        listbox = get_listbox(self.window, 10, 10)
+        listbox = get_listbox()
         for entry in self.service.get_listbox_items():
             listbox.insert(tk.END, entry)
             listbox.select_set(0)

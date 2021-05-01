@@ -1,6 +1,6 @@
 import tkinter as tk
-from services.login_services import LoginServices
-from ui.settings_view import SettingsView
+from services.login_services import login_services
+from ui.settings_view import settings_view
 from ui.stylings import (
     get_window_settings,
     LOGIN_WINDOW_NAME,
@@ -29,24 +29,26 @@ class LoginView:
     """Class that describes the UI of the login view.
 
     Attributes:
-        database: The initialized database class entity.
-        Only passed on to LoginServices class.
-        This is not optimal, but will be changed when
-        a new way of starting the app is implemented.
+        service: The current services class entity.
     """
 
-    def __init__(self, database):
-        """Class constructor that initializes the window
-        with appropriate settings, services and widgets.
+    def __init__(self, service=login_services):
+        """Class constructor that initializes the class with appropriate services.
 
         Args:
-            database: Value of the initialized database.
+            service: The current services class entity.
         """
+
+        self.window = None
+        self.service = service
+        self.username_input = None
+        self.password_input = None
+
+    def initialize_window(self):
+        """Initializes the window with appropriate settings and widgets."""
 
         self.window = tk.Tk()
         get_window_settings(self.window, LOGIN_WINDOW_NAME, LOGIN_WINDOW_SIZE)
-        self.database = database
-        self.service = LoginServices(self.window, self.database)
         self._build_layout()
         self._build_title()
         self.username_input = self._build_username_widgets()
@@ -173,7 +175,7 @@ class LoginView:
 
     def _handle_successful_registration(self, username):
         """Shows an appropriate dialog after which
-        closes the current window and opens a new one.
+        calls another method that handles the view change.
 
         Args:
             username: String value of the user's username.
@@ -203,14 +205,17 @@ class LoginView:
             self.username_input.focus()
 
     def _handle_view_change(self, current_user):
-        """Destroys the current view and initializes a new one.
+        """Destroys the current window and initializes a new one.
 
         Args:
-            current_user: String value of the user's username.
+            current_user (str): The current user's username.
         """
 
-        # This dialog will be removed eventually.
+        # This dialog will be removed in the final release.
         if whats_new_dialog() == 'ok':
             self.service.handle_login(current_user)
             self.window.destroy()
-            SettingsView(self.database)
+            settings_view.initialize_window()
+
+
+login_view = LoginView()

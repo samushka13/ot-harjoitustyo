@@ -4,19 +4,26 @@ from services.settings_services import SettingsServices
 from entities.user import User
 from entities.question import Question
 from ui.widgets import get_combobox
-from config import TEST_DATABASE_FILENAME
+from config import TEST_DATABASE_FILENAME as test_database
 
 class TestSettingsServices(unittest.TestCase):
     def setUp(self):
-        self.window = None
-        datafile = TEST_DATABASE_FILENAME
-        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Users")
-        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Questions")
-        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Games")
-        self.database = DatabaseServices(datafile)
-        self.service = SettingsServices(self.window, self.database)
+        # ---------------------------------------------------------------------
+        # First the test database is cleared just to be sure it's empty.
+        # ---------------------------------------------------------------------
+        DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Users")
+        DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Questions")
+        DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Games")
+        # ---------------------------------------------------------------------
+        # Then the services and test database are initialized.
+        # ---------------------------------------------------------------------
+        self.database = DatabaseServices(test_database)
+        self.service = SettingsServices(self.database)
+        # ---------------------------------------------------------------------
+        # Finally some stuff is added to the database to ease test formulation.
+        # ---------------------------------------------------------------------
         self.user = User("samushka", "13", 1)
-        self.database.add_user(self.user)
+        self.database.add_user(self.user.username, self.user.password)
         self.database.add_logged_in_user(self.user.username)
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
         self.database.save_item_to_database(
@@ -41,6 +48,7 @@ class TestSettingsServices(unittest.TestCase):
     def test_get_default_board_sizes(self):
         self.assertEqual(len(self.service.get_default_board_sizes()), 6)
         self.assertEqual(self.service.get_default_board_sizes()[5][0], "The Ultimate Challenge")
+        self.assertEqual(self.service.get_default_board_sizes()[5][1], 30)
 
     def test_get_categories(self):
         self.assertEqual(len(self.service.get_categories()), 1)
@@ -55,10 +63,10 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.get_default_difficulties()[0], "Easy")
 
     def test_collect_player_settings(self):
-        entry_field_1 = get_combobox(self.window)
-        entry_field_2 = get_combobox(self.window)
-        entry_field_3 = get_combobox(self.window)
-        entry_field_4 = get_combobox(self.window)
+        entry_field_1 = get_combobox()
+        entry_field_2 = get_combobox()
+        entry_field_3 = get_combobox()
+        entry_field_4 = get_combobox()
         entry_field_1.set("samushka")
         entry_field_2.set("Add player")
         entry_field_3.set("")
@@ -78,9 +86,9 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.collect_player_color_settings()[0], "red")
 
     def test_collect_category_settings(self):
-        entry_field_1 = get_combobox(self.window)
-        entry_field_2 = get_combobox(self.window)
-        entry_field_3 = get_combobox(self.window)
+        entry_field_1 = get_combobox()
+        entry_field_2 = get_combobox()
+        entry_field_3 = get_combobox()
         entry_field_1.set("Movies")
         entry_field_2.set("Add category")
         entry_field_3.set("TV")
@@ -98,7 +106,7 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.collect_category_color_settings()[0], "black")
 
     def test_collect_board_size_settings(self):
-        selected_board_size = get_combobox(self.window)
+        selected_board_size = get_combobox()
         selected_board_size.set("Medium")
         self.assertEqual(self.service.collect_board_size_settings(selected_board_size), 5)
 

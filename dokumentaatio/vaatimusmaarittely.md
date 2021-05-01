@@ -4,7 +4,7 @@ Tämä on sovelluksen alustava vaatimusmäärittely, joka saattaa joiltain osin 
 
 ## Sovelluksen tarkoitus
 
-Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa (kuvaus tarkentuu myöhemmin). Käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita. Sovelluksen kieli on englanti.
+Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa. Käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita. Sovelluksen kieli on englanti.
 
 ## Käyttäjät
 
@@ -64,7 +64,6 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - painikkeen, jolla voi näyttää vastauksen,
   - painikkeet, joilla voi valita, vastasiko pelaaja oikein vai väärin.
 - Kysymys esitetään kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
-  - Kysymykset haetaan lokaalista tietokannasta ja/tai [Open Trivia Databasesta](https://opentdb.com/api_config.php) riippuen pelin asetuksista.
 - Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti.
 - Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla. (TEHTY)
 - Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla. (TEHTY)
@@ -72,13 +71,13 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - Käyttäjältä pyydetään tällöin vahvistus. (TEHTY)
 - Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
   - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
-  - Käyttäjä voi poistua pelistä asianmukaisella painikkeella, jolloin siirrytään takaisin näkymään "Pelin asetukset". (TEHTY)
+  - Käyttäjä voi siirtyä asianmukaisella painikkeella näkymään "Pelin asetukset".
 
 ## Toimintaympäristön rajoitteet
 
 - Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
   - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä Tietojenkäsittelytieteen laitoksen Linux-koneilla asianmukaisia ohjeita noudattamalla.
-- Käyttäjien ja sisältöjen tiedot talletetaan tietokantaan, josta niitä myös luetaan.
+- Käyttäjien, sisältöjen ja pelisessioiden tiedot talletetaan tietokantaan, josta niitä myös luetaan.
 
 ## Jatkokehitysideoita
 
@@ -93,8 +92,8 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - kysymysten kategorioille haluamansa värit,
   - mukaan vain esimerkiksi monivalintakysymyksiä,
   - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset,
-  - kysymyksiä vain joko omista tai OpenTriviaDatabasen kysymyksistä, tai molemmista,
-  - pelin asetukset valmiista pohjista (valmiiksi annetut ja/tai käyttäjän luomat).
+  - pelin asetukset valmiista pohjista (valmiiksi annetut ja/tai käyttäjän luomat),
+  - kysymyksiä vain joko omista tai [Open Trivia Databasen](https://opentdb.com/api_config.php) kysymyksistä, tai molemmista.
 
 - Omien kysymysten
   - selaamiseen hakukenttä ja kategoriasuodattimet,
@@ -102,7 +101,8 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - luokittelu avoimiin kysymyksiin, monivalintoihin ja kyllä-tai-ei-kysymyksiin,
   - lisäämiseen huomautus, mikäli täsmälleen sama kysymys on jo kategoriassa olemassa.
   - poistamisilmoitukseen listaus käyttäjistä, joiden kysymyksiä ei voitu poistaa,
-  - oheen tietoa kysymyksistä, kuten kuinka monta kysymystä käyttäjät ovat yhteensä luoneet.
+  - oheen tietoa kysymyksistä, kuten kuinka monta kysymystä käyttäjät ovat yhteensä luoneet,
+  - tuonti toisesta tietokannasta tai muusta tietolähteestä (esim. csv-tiedosto tai OpenTriviaDB API).
 
 - Pelisessioon
   - mekanismi, joka välttää kysymästä samaa kysymystä uudelleen, ellei ole aivan pakko,
@@ -112,13 +112,14 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - kattavammat tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
 
 Muita ideoita
-  - Kysymysten ja kategorioiden tuonti muualta.
   - Pelaajan poistaminen kesken pelin.
   - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
-  - Pääkäyttäjäroolin (admin) lisääminen, jotta kenen tahansa profiileja ja kysymyksiä voi tarvittaessa poistaa.
+  - Pääkäyttäjäroolin (admin) lisääminen, jotta profiileja ja kysymyksiä voi tarvittaessa poistaa.
+  - Oman profiilin poistaminen (mahdollisuus kuitenkin säilyttää kysymykset - vaatii admin-toteutuksen).
   - Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
   - Pelin asetuksissa näkyy kategorioiden perässä niiden sisältämät kysymysmäärät.
   - Pelin asetuksissa näkyy peliin valittujen kategorioiden sisältämät kysymykset yhteensä.
   - "Resume game" -toiminnon lisääminen.
   - Näkymien kehittäminen näyttävämmiksi.
   - Näkymien ja widgettien kehittäminen kooltaan responsiivisiksi.
+  - UI:n kehittäminen huomioimaan erinäisiä reunatapauksia (esim. ilmoitus käyttäjälle, mikäli tämä yrittää poistaa kaikki omat kysymyksensä, mutta omia kysymyksiä ei ole yhtäkään)

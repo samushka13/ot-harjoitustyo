@@ -2,17 +2,24 @@ import unittest
 from repositories.database_services import DatabaseServices
 from services.login_services import LoginServices
 from entities.user import User
-from config import TEST_DATABASE_FILENAME
+from config import TEST_DATABASE_FILENAME as test_database
 
 class TestLoginServices(unittest.TestCase):
     def setUp(self):
-        self.window = None
-        datafile = TEST_DATABASE_FILENAME
-        DatabaseServices(datafile).database.execute("DROP TABLE IF EXISTS Users")
-        self.database = DatabaseServices(datafile)
-        self.service = LoginServices(self.window, self.database)
+        # ---------------------------------------------------------------------
+        # First the test database is cleared just to be sure it's empty.
+        # ---------------------------------------------------------------------
+        DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Users")
+        # ---------------------------------------------------------------------
+        # Then the services and test database are initialized.
+        # ---------------------------------------------------------------------
+        self.database = DatabaseServices(test_database)
+        self.service = LoginServices(self.database)
+        # ---------------------------------------------------------------------
+        # Finally some stuff is added to the database to ease test formulation.
+        # ---------------------------------------------------------------------
         self.user = User("samushka", "13")
-        self.database.add_user(self.user)
+        self.database.add_user(self.user.username, self.user.password)
         self.user_invalid = User("s", "")
         self.user_not_exists = User("sam", "")
         self.user_input_invalid = User("samushka", "")
@@ -39,8 +46,7 @@ class TestLoginServices(unittest.TestCase):
 
     def test_register_new_user(self):
         self.assertEqual(
-            self.service.register_new_user(
-                self.user.username, self.user.password), (self.user.username, self.user.password))
+            self.service.register_new_user(self.user.username, self.user.password), None)
 
     def test_check_registration_success(self):
         self.assertEqual(self.service.check_registration_success(self.user.username), True)
@@ -53,7 +59,7 @@ class TestLoginServices(unittest.TestCase):
             self.assertEqual(self.service.check_for_users(), True)
 
     def test_list_all_users(self):
-        self.database.add_user(User("another", ""))
+        self.database.add_user("another", "")
         self.all_users = self.database.get_users()
         if self.all_users == 0:
             self.assertEqual(self.service.list_all_users(), None)

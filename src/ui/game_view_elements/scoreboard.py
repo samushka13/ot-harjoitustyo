@@ -72,9 +72,6 @@ class Scoreboard:
 
         Args:
             player (str): The current player.
-
-        Returns:
-            widget: The category pointer.
         """
         self.highlighter = self.canvas.create_polygon(
             30, 27+(player*25),

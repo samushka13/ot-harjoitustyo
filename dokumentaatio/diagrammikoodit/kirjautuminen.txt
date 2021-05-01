@@ -11,9 +11,9 @@ LoginServices->DatabaseServices: get_credentials()
 DatabaseServices-->LoginServices: credentials
 LoginServices-->LoginView: False
 LoginView->LoginServices: register_new_user(username, password)
-LoginServices-->DatabaseServices: add_user(User(username, password))
-DatabaseServices-->LoginServices: (user.username, user.password)
-LoginServices-->LoginView: (user.username, user.password)
+LoginServices-->DatabaseServices: add_user(username, password)
+DatabaseServices-->LoginServices:
+LoginServices-->LoginView:
 LoginView->LoginServices: check_registration_success(username)
 LoginServices->DatabaseServices: get_users()
 DatabaseServices-->LoginServices: users

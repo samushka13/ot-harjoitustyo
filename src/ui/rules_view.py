@@ -16,8 +16,12 @@ class RulesView:
     """Class that describes the UI of the rules view."""
 
     def __init__(self):
-        """Class constructor that initializes the window
-        with appropriate settings and widgets."""
+        """Class constructor that initializes the class."""
+
+        self.rules_window = None
+
+    def initialize_window(self):
+        """Initializes the window with appropriate settings and widgets."""
 
         self.rules_window = tk.Tk()
         get_window_settings(self.rules_window, RULES_WINDOW_NAME, RULES_WINDOW_SIZE)
@@ -88,3 +92,6 @@ class RulesView:
         """Destroys the current window."""
 
         self.rules_window.destroy()
+
+
+rules_view = RulesView()

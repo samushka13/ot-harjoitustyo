@@ -1,20 +1,20 @@
-from entities.user import User
+from repositories.database_services import database_services as default_database
+
 
 class LoginServices:
     """Class that describes login-related services.
 
     Attributes:
-        window: Value of the current view's window.
+        database: Value of the current database.
     """
 
-    def __init__(self, window, database):
+    def __init__(self, database=default_database):
         """Class constructor that initializes the login-related services.
 
         Args:
-            window: Value of the current view's window.
+            database: Value of the current database.
         """
 
-        self.window = window
         self.database = database
 
     def check_username_length(self, username):
@@ -62,7 +62,7 @@ class LoginServices:
             which in this case is a tuple of the user's username and password.
         """
 
-        return self.database.add_user(User(username, password))
+        self.database.add_user(username, password)
 
     def check_registration_success(self, new_user):
         """Checks if the newly added user is in the database.
@@ -81,16 +81,18 @@ class LoginServices:
         Returns:
             True, if any exist, or False, if none exist.
         """
-        return bool(len('\n'.join(sorted(self.database.get_users()))) > 0)
+        users = '\n'.join(sorted(self.database.get_users()))
+        return bool(len(users) > 0)
 
     def list_all_users(self):
-        """Calls a database_services method that returns
+        """Calls a DatabaseServices class method which returns
         all users in a formatted list.
 
         Returns:
             A sorted list of all users by calling a database operation.
         """
-        return '\n'.join(sorted(self.database.get_users()))
+        users = '\n'.join(sorted(self.database.get_users()))
+        return users
 
     def handle_login(self, current_user):
         """Destroys the current view and initializes a new one.
@@ -101,3 +103,6 @@ class LoginServices:
 
         self.database.remove_logged_in_users()
         self.database.add_logged_in_user(current_user)
+
+
+login_services = LoginServices()

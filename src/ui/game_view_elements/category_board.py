@@ -23,26 +23,27 @@ class CategoryBoard:
             canvas (widget): A tkinter canvas widget.
             category_colors (list): List of category colors.
         """
-        self.service = service
-        self.window = window
         self.canvas = canvas
-        self.categories = self.service.get_categories()
+        self.categories = service.get_categories()
         self.category_colors = category_colors
-        self.highlighter = ""
-        self._build_board()
+        self.highlighter = None
+        self._build_board(window)
 
-    def _build_board(self):
+    def _build_board(self, window):
         """Builds the category board on the canvas with a drawing loop.
+
+        Args:
+            window: A tkinter window.
         """
         category_index = 1
         x_increase = 0
         y_increase = 0
-        special_category = get_display_textbox(self.window, 1, 25, TEXT_FONT)
+        special_category = get_display_textbox(window, 1, 25, TEXT_FONT)
         special_category.place(x=40+x_increase, y=560+y_increase, anchor="w")
         special_category.insert(tk.END, self.categories[0])
         special_category.config(state=DISABLED, fg=self.category_colors[0])
         while category_index < len(self.categories):
-            category = get_display_textbox(self.window, 1, 25, TEXT_FONT)
+            category = get_display_textbox(window, 1, 25, TEXT_FONT)
             category.place(x=40+x_increase, y=585+y_increase, anchor="w")
             category.insert(tk.END, self.categories[category_index])
             category.config(state=DISABLED, fg=self.category_colors[category_index])
@@ -57,9 +58,6 @@ class CategoryBoard:
 
         Args:
             category (str): The current category.
-
-        Returns:
-            widget: The category pointer.
         """
         if category in self.categories:
             i = random.choice([x for x, c in enumerate(self.categories) if c == category])
@@ -79,7 +77,6 @@ class CategoryBoard:
                     fill=self.category_colors[i],
                     outline="",
                 )
-        return self.highlighter
 
     def remove_previous_highlight(self):
         """Removes the previous highlighter.

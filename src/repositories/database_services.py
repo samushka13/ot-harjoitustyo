@@ -1,8 +1,10 @@
 import sqlite3
+from config import DATABASE_FILENAME as default_database
+
 
 class DatabaseServices:
-    def __init__(self, database_name):
-        self.database = sqlite3.connect(database_name, timeout=10)
+    def __init__(self, database=default_database):
+        self.database = sqlite3.connect(database)
         self._initialize_database()
 
     def _initialize_database(self):
@@ -26,24 +28,25 @@ class DatabaseServices:
         return self.database
 
     # ------------------------------------------------
-    # Login operations.
+    # Login and logout operations.
     # ------------------------------------------------
 
-    def add_user(self, user):
+    def add_user(self, username, password):
         self.database.execute("INSERT INTO Users (username, password) \
-            VALUES (?,?)", (user.username, user.password))
-        return (user.username, user.password)
+            VALUES (?,?)", (username, password))
 
     def get_credentials(self):
         credentials = []
         for row in self.database.execute("SELECT username, password FROM Users").fetchall():
             credentials.append((row['username'],row['password']))
+
         return credentials
 
     def get_users(self):
         users = []
         for user in self.database.execute("SELECT username FROM Users").fetchall():
             users.append(f"{user['username']}")
+
         return users
 
     def add_logged_in_user(self, username):
@@ -55,11 +58,8 @@ class DatabaseServices:
         for row in self.database.execute(f"SELECT id, username, password FROM Users \
             WHERE login_status={1}").fetchall():
             user.append((row['id'], row['username'], row['password']))
-        return user
 
-    # ------------------------------------------------
-    # Logout operations.
-    # ------------------------------------------------
+        return user
 
     def remove_logged_in_users(self):
         self.database.execute(f"UPDATE Users SET login_status={0}")
@@ -73,6 +73,7 @@ class DatabaseServices:
         for row in self.database.execute("SELECT category \
             FROM Questions GROUP BY category").fetchall():
             categories.append(row['category'])
+
         return categories
 
     def get_listbox_items(self):
@@ -86,15 +87,18 @@ class DatabaseServices:
             user = self.database.execute(f"SELECT username FROM Users \
                 WHERE id='{row['user_id']}'").fetchone()
             items.append(f"{qid}. | {cat} | {diff} | {question} | {answer} ||| {user['username']}")
+
         return items
 
     def count_questions_in_the_database(self):
         total = self.database.execute("SELECT COUNT(*) FROM Questions").fetchone()
+
         return total['COUNT(*)']
 
     def get_question(self, question_id: int, user_id: int):
         total = self.database.execute(f"SELECT COUNT(*) FROM Questions \
             WHERE id='{question_id}' AND user_id='{user_id}'").fetchone()
+
         return total['COUNT(*)']
 
     def save_item_to_database(self, user_id, category, difficulty, question, answer):
@@ -112,6 +116,7 @@ class DatabaseServices:
     def get_item_for_editing(self, question_id: int):
         item = self.database.execute(f"SELECT category, difficulty, question, answer \
             FROM Questions WHERE id='{question_id}'").fetchone()
+
         return item['category'], item['difficulty'], item['question'], item['answer']
 
     def update_item(self, question_id, category, difficulty, question, answer):
@@ -151,13 +156,19 @@ class DatabaseServices:
         return difficulty, board_size, players, categories
 
     def get_question_for_player(self, category: str):
-        return self.database.execute(f"SELECT question FROM Questions \
+        question = self.database.execute(f"SELECT question FROM Questions \
             WHERE category='{category}' ORDER BY RANDOM()").fetchone()
+
+        return question
 
     def get_answer_for_player(self, question: str):
         answer = self.database.execute(f"SELECT answer FROM Questions \
             WHERE question='{question}'").fetchone()
+
         return answer
 
     def remove_game_active_status(self):
         self.database.execute(f"UPDATE Games SET active={0} WHERE active={1}")
+
+
+database_services = DatabaseServices()

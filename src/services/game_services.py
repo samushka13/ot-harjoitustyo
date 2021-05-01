@@ -1,19 +1,23 @@
 import random
+from repositories.database_services import database_services as default_database
+
 
 class GameServices:
     """Class constructor that initializes a new game service.
 
     Attributes:
-        database (database): The current database.
+        database: Value of the current database.
     """
-    def __init__(self, database):
+
+    def __init__(self, database=default_database):
         """Class constructor that initializes a new game service.
         It fetches the necessary game session variables
         by calling a database class method.
 
         Args:
-            database (database): The current database.
+            database: Value of the current database.
         """
+
         self.database = database
         self.difficulty = self.database.get_session_variables()[0]
         self.board_size = self.database.get_session_variables()[1]
@@ -30,6 +34,8 @@ class GameServices:
         Returns:
             An integer value describing the difficulty.
         """
+        self.difficulty = self.database.get_session_variables()[0]
+
         return self.difficulty
 
     def get_board_size(self):
@@ -38,6 +44,8 @@ class GameServices:
         Returns:
             An integer value describing the board size.
         """
+        self.board_size = self.database.get_session_variables()[1]
+
         return self.board_size
 
     def get_players(self):
@@ -46,6 +54,9 @@ class GameServices:
         Returns:
             A list of string values describing player names.
         """
+
+        self.players = self.database.get_session_variables()[2]
+
         return self.players
 
     def get_categories(self):
@@ -54,6 +65,9 @@ class GameServices:
         Returns:
             A list of string values describing category names.
         """
+
+        self.categories = self.database.get_session_variables()[3]
+
         return self.categories
 
     def calculate_segment_size(self):
@@ -74,6 +88,8 @@ class GameServices:
 
     def list_all_category_segments(self):
         """Provides the places of categories on the board.
+        The first value of the categories is excluded,
+        as it represents the unique starting segment.
 
         Returns:
             A nested list of integers of the places of categories on the board.
@@ -104,13 +120,12 @@ class GameServices:
         Returns:
             (int): The player token's corrected position.
         """
-        new = new_position
-        if new <= 0:
-            while new <= 0:
-                new += 360
+        if new_position <= 0:
+            while new_position <= 0:
+                new_position += 360
                 self.laps[player] += 1
-            starting_position[player] = new
-        return new
+            starting_position[player] = new_position
+        return new_position
 
     def get_laps(self):
         """Provides the number of laps player tokens have travelled during the session.
@@ -124,7 +139,7 @@ class GameServices:
         """Provides the images and numbers of the die.
 
         Returns:
-            A list of tuples describing the die faces and numbers.
+            A list of tuples describing the die face image paths and numbers.
         """
         die_faces = [
             (r'src/assets/die_1.png', 1),
@@ -144,10 +159,11 @@ class GameServices:
         """
         # This should actually be determined by
         # the player's position on the game board.
-        # ----------------------------------------------------
+        # I.e. this will be replaced with another solution later.
+        # -------------------------------------------------------
         self.current_category = random.choice(self.categories)
         return self.get_current_category()
-        # ----------------------------------------------------
+        # -------------------------------------------------------
 
     def get_current_category(self):
         """Provides the current category.
@@ -158,10 +174,11 @@ class GameServices:
         return self.current_category
 
     def get_question_for_player(self):
-        """Provides a question from the selected category.
+        """Provides a question from the selected category by
+        calling a database services class method.
 
         Returns:
-            (str): The current question.
+            (str): The question as a string value.
         """
         self.current_question = self.database.get_question_for_player(
             self.get_current_category().replace("'", "''"))
@@ -171,12 +188,13 @@ class GameServices:
         """Provides the current question.
 
         Returns:
-            (str): The current question.
+            (str): The question as a string value.
         """
         return self.current_question['question']
 
     def get_answer_for_player(self):
-        """Provides an answer to the selected question.
+        """Provides an answer to the selected question by
+        calling a database services class method.
 
         Returns:
             (str): The current answer.
@@ -210,3 +228,6 @@ class GameServices:
         removes the current game's active status.
         """
         self.database.remove_game_active_status()
+
+
+game_services = GameServices()

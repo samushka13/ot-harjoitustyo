@@ -1,7 +1,7 @@
 import tkinter as tk
-from services.settings_services import SettingsServices
-from ui.custom_content_view import CustomContentView
-from ui.rules_view import RulesView
+from services.settings_services import settings_services
+from ui.custom_content_view import custom_content_view
+from ui.rules_view import rules_view
 from ui.stylings import (
     get_window_settings,
     SETTINGS_WINDOW_NAME,
@@ -22,20 +22,22 @@ from ui.dialogs import (
 )
 
 class SettingsView:
-    """Class that describes the UI of the settings view.
+    """Class that describes the UI of the settings view."""
 
-    Attributes:
-        database: A value of the current database.
-    """
+    def __init__(self, service=settings_services):
+        """Class constructor that initializes the class with appropriate services."""
 
-    def __init__(self, database):
-        """Class constructor that initializes the window
-        with appropriate settings, services and widgets."""
+        self.window = None
+        self.service = service
+        self.players = None
+        self.categories = None
+        self.board_size = None
+
+    def initialize_window(self):
+        """Initializes the window with appropriate settings and widgets."""
 
         self.window = tk.Tk()
         get_window_settings(self.window, SETTINGS_WINDOW_NAME, SETTINGS_WINDOW_SIZE)
-        self.database = database
-        self.service = SettingsServices(self.window, self.database)
         self._build_layout()
         self._build_widgets()
         self.window.mainloop()
@@ -121,6 +123,7 @@ class SettingsView:
             entry_fields.append(entry_field)
             i += 1
         entry_fields[0].focus()
+
         return entry_fields
 
     def _build_category_comboboxes(self):
@@ -135,6 +138,7 @@ class SettingsView:
         for i in range(0,12):
             category_combobox = get_combobox(self.window)
             categories = self.service.get_categories()
+            categories.append("")
             category_combobox['values'] = categories
             category_combobox.state(['readonly'])
             category_combobox.set("Add category")
@@ -153,6 +157,7 @@ class SettingsView:
             category_combobox.grid(column=1, row=2+i)
             comboboxes.append(category_combobox)
             i += 1
+
         return comboboxes
 
     def _build_board_size_combobox(self):
@@ -167,6 +172,7 @@ class SettingsView:
         board_size_combobox.state(['readonly'])
         board_size_combobox.set(self.service.get_default_board_sizes()[2][0])
         board_size_combobox.grid(column=2, row=2, padx=X)
+
         return board_size_combobox
 
     def _handle_game_start(self):
@@ -196,25 +202,28 @@ class SettingsView:
         """Destroys the current window and initializes a new one."""
 
         self.window.destroy()
-        CustomContentView(self.database)
+        custom_content_view.initialize_window()
 
     def _open_rules_view(self):
         """Initializes a new window on top of the current one."""
 
-        RulesView()
+        rules_view.initialize_window()
 
     def _open_game_view(self, player_colors, category_colors):
         """Destroys the current window and initializes a new one."""
 
-        self.window.destroy()
         from ui.game_view import GameView
-        GameView(self.database, player_colors, category_colors)
+        self.window.destroy()
+        GameView().initialize_window(player_colors, category_colors)
 
     def _handle_logout(self):
         """Calls SettingsServices class methods which logs out all users,
         the ndestroys the current window and initialzies a new one."""
 
+        from ui.login_view import login_view
         self.service.logout_users()
         self.window.destroy()
-        from ui.login_view import LoginView
-        LoginView(self.database)
+        login_view.initialize_window()
+
+
+settings_view = SettingsView()

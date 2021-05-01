@@ -1,5 +1,6 @@
 import tkinter as tk
-from services.custom_content_services import CustomContentServices
+from services.custom_content_services import custom_content_services
+from ui.edit_view import EditView as edit_view
 from ui.dialogs import (
     show_save_error_dialog,
     show_save_successful_dialog,
@@ -24,34 +25,28 @@ from ui.widgets import (
     get_listbox,
 )
 
+
 class CustomContentView:
     """Class that describes the UI of the custom questions view.
-
-    Attributes:
-        database: Value of the initialized database.
-        Only passed on to CustomContentServices class.
-        This is not optimal, but will be changed when
-        a new way of starting the app is implemented.
     """
 
-    def __init__(self, database):
-        """Class constructor that initializes the window
-        with appropriate settings, services and widgets.
+    def __init__(self, service=custom_content_services):
+        """Class constructor that initializes the class with appropriate services."""
 
-        Args:
-            database: Value of the initialized database.
-        """
+        self.window = None
+        self.service = service
+        self.category_combobox = None
+        self.difficulty_combobox = None
+        self.question_entry = None
+        self.answer_entry = None
+        self.listbox =  None
+
+    def initialize_window(self):
+        """Initializes the window with appropriate settings and widgets."""
 
         self.window = tk.Tk()
         get_window_settings(self.window, CUSTOM_CONTENT_WINDOW_NAME, CUSTOM_CONTENT_WINDOW_SIZE)
-        self.database = database
-        self.service = CustomContentServices(self.window, self.database)
         self._build_layout()
-        self.question_entry = None
-        self.answer_entry = None
-        self.category_combobox = None
-        self.difficulty_combobox = None
-        self.listbox =  None
         self._build_widgets()
         self.window.mainloop()
 
@@ -110,11 +105,12 @@ class CustomContentView:
             A listbox with all question items in the database.
         """
 
-        listbox = get_listbox(self.window, 30, 82)
+        listbox = get_listbox()
         for entry in self.service.get_listbox_items():
             listbox.insert(tk.END, entry)
             listbox.select_set(0)
         listbox.grid(column=2, row=1, columnspan=3, rowspan=9, padx=X)
+
         return listbox
 
     def _build_category_combobox(self):
@@ -127,6 +123,7 @@ class CustomContentView:
         category_combobox = get_combobox(self.window, 43)
         category_combobox['values'] = self.service.get_categories()
         category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
+
         return category_combobox
 
     def _build_difficulty_combobox(self):
@@ -141,6 +138,7 @@ class CustomContentView:
         difficulty_combobox.state(['readonly'])
         difficulty_combobox.set(self.service.get_difficulties()[1])
         difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
+
         return difficulty_combobox
 
     # -------------------------------------------------------------------
@@ -181,12 +179,10 @@ class CustomContentView:
         """Calls CustomContentServices class methods to determine the question id and owner,
         then accommodates the UI accordingly."""
 
-        from ui.edit_view import EditView
-
         selected = self.service.determine_question_ids(self.listbox)[0]
         if self.service.check_owner(selected) is True:
             self.window.destroy()
-            EditView(self.database, self.service, selected)
+            edit_view(selected).initialize_window()
         else:
             show_edit_error_dialog()
             self.window.focus()
@@ -219,6 +215,9 @@ class CustomContentView:
     def _open_settings_view(self):
         """Destroys the current view and initialize a new one."""
 
-        from ui.settings_view import SettingsView
+        from ui.settings_view import settings_view
         self.window.destroy()
-        SettingsView(self.database)
+        settings_view.initialize_window()
+
+
+custom_content_view = CustomContentView()

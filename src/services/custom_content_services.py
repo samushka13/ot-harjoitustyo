@@ -1,21 +1,22 @@
+from repositories.database_services import database_services as default_database
+from services.settings_services import settings_services
+
+
 class CustomContentServices:
     """Class that describes all services related to game settings.
 
     Attributes:
-        current_user: String value of the user's username.
         database: Value of the current database.
     """
 
-    def __init__(self, window, database):
+    def __init__(self, database=default_database):
         """Class constructor that creates a new settings service
         and initializes an instance of database services class.
 
         Args:
-            current_user: String value of the user's username.
             database: Value of the current database.
         """
 
-        self.window = window
         self.database = database
 
     def get_listbox_items(self):
@@ -43,9 +44,7 @@ class CustomContentServices:
             A list of string values describing difficulties.
         """
 
-        from services.settings_services import SettingsServices
-
-        return SettingsServices(self.window, self.database).get_default_difficulties()
+        return settings_services.get_default_difficulties()
 
     def get_current_user_id(self):
         """Calls DatabaseServices class method to get the currently logged in user's id.
@@ -82,7 +81,7 @@ class CustomContentServices:
         """
 
         if question.endswith('?') is False:
-            question = question + "?"
+            question += "?"
         return question
 
     def format_answer(self, answer):
@@ -97,7 +96,7 @@ class CustomContentServices:
 
         if answer.endswith('.') is False:
             if answer.endswith('!') is False:
-                answer = answer + "."
+                answer += "."
         return answer
 
     def handle_save_item(self, category, difficulty, question, answer):
@@ -110,7 +109,7 @@ class CustomContentServices:
             answer: A string value describing an answer.
         """
 
-        return self.database.save_item_to_database(
+        self.database.save_item_to_database(
             self.get_current_user_id(),
             category,
             difficulty,
@@ -211,3 +210,6 @@ class CustomContentServices:
             self.format_question(question),
             self.format_answer(answer),
         )
+
+
+custom_content_services = CustomContentServices()

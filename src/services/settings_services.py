@@ -1,18 +1,20 @@
+from repositories.database_services import database_services as default_database
+
+
 class SettingsServices:
     """Class that describes all services related to game settings.
 
     Attributes:
-        window: Value of the current view's window.
         database: Value of the current database.
     """
-    def __init__(self, window, database):
+
+    def __init__(self, database=default_database):
         """Class constructor that creates a new settings service.
 
         Args:
-            window: Value of the current view's window.
             database: Value of the current database.
         """
-        self.window = window
+
         self.database = database
         self.players = []
         self.player_colors = []
@@ -21,9 +23,9 @@ class SettingsServices:
         self.difficulty_names = []
         self.board_size = None
 
-    # ------------------------------------------------------
-    # Methods that provide default settings for the user:
-    # ------------------------------------------------------
+    # ---------------------------------------------------------
+    # Methods that provide default settings for game sessions:
+    # ---------------------------------------------------------
 
     def get_default_players(self):
         """Provides a list of default player names.
@@ -69,6 +71,10 @@ class SettingsServices:
     def get_default_board_sizes(self):
         """Provides a list of default board sizes.
 
+        The integer after the string determines how many times
+        each category is represented on the game board.
+        Game difficulty rises as the integer value increases.
+
         The app logic has been made to accommodate changes here
         (or even implementing a way to let the user select the size freely),
         so adding more options, for example, is possible.
@@ -82,7 +88,7 @@ class SettingsServices:
         """
 
         board_sizes = [
-            ("Tiny (least difficult)", 1),
+            ("Tiny", 1),
             ("Small", 3),
             ("Medium", 5),
             ("Large", 7),
@@ -143,11 +149,12 @@ class SettingsServices:
             "Intermediate",
             "Advanced Triviliast"
         ]
+
         return self.difficulty_names
 
-    # ------------------------------------------------------
+    # --------------------------------------------------
     # Methods that collect settings for a game session:
-    # ------------------------------------------------------
+    # --------------------------------------------------
 
     def collect_player_settings(self, added_players):
         """Provides a list of player names from user inputs.
@@ -161,16 +168,15 @@ class SettingsServices:
 
         self.players = []
         for entry in added_players:
-            if entry.get() == "" or entry.get() == "Add player":
-                pass
-            else:
+            if entry.get() != "" and entry.get() != "Add player":
                 self.players.append(entry.get())
 
         return self.players
 
     def collect_player_color_settings(self):
         """Provides a list of player colors from default values.
-        Can be expanded so that it takes the values from user inputs.
+        Can be expanded so that it takes the values from user inputs,
+        when the UI accommodates such a feature.
 
         Returns:
             A list of values of player colors.
@@ -190,16 +196,15 @@ class SettingsServices:
 
         self.categories = []
         for category in added_categories:
-            if category.get() == "" or category.get() == "Add category":
-                pass
-            else:
+            if category.get() != "" and category.get() != "Add category":
                 self.categories.append(category.get())
 
         return self.categories
 
     def collect_category_color_settings(self):
         """Provides a list of category colors from default values.
-        Can be expanded so that it takes the values from user inputs.
+        Can be expanded so that it takes the values from user inputs,
+        when the UI accommodates such a feature.
 
         Returns:
             A list of values of category colors.
@@ -225,13 +230,14 @@ class SettingsServices:
 
     def handle_session_save(self, players, categories, board_size):
         """Calls database class methods which ensure that no other game session is active
-        and save the current game session variables to the database.
+        and then save the current game session variables to the database.
 
         Args:
             players (list): The selected players.
             categories (list): The selected categories.
             board_size (int): The selected board size.
         """
+
         self.database.remove_game_active_status()
         difficulty = ""
         self.database.save_session_variables(
@@ -277,3 +283,6 @@ class SettingsServices:
         (currently only one simultaneous login is allowed, but this method can handle more)."""
 
         return self.database.remove_logged_in_users()
+
+
+settings_services = SettingsServices()
