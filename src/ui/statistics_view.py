@@ -33,6 +33,7 @@ class StatisticsView:
         """Initializes the window with appropriate settings and widgets."""
 
         self.window = tk.Tk()
+        self.window.grab_set()
         get_window_settings(self.window, STATISTICS_WINDOW_NAME, STATISTICS_WINDOW_SIZE)
         self._build_widgets()
         self.window.mainloop()
@@ -45,23 +46,21 @@ class StatisticsView:
         title.insert(tk.END, "Laps per player")
         title.config(state=DISABLED)
 
-        i = 0
         y_increase = 0
-        players = self.service.get_players()
-        while i < len(players):
+        players = self.service.players
+        for i, player in enumerate(players):
             player = get_display_textbox(self.window, 1, 25, TEXT_FONT)
             player.place(x=30, y=90+y_increase, anchor="w")
             player.insert(tk.END, players[i])
             player.config(state=DISABLED)
             laps = get_display_textbox(self.window, 1, 5, TEXT_FONT)
-            laps.place(x=200, y=90+y_increase, anchor="w")
-            laps.insert(tk.END, self.service.get_laps()[i])
+            laps.place(x=310, y=90+y_increase, anchor="w")
+            laps.insert(tk.END, self.service.laps[i])
             laps.config(state=DISABLED)
-            i += 1
             y_increase += 25
 
         get_basic_button(self.window, "Got it!", self._close_window,
-        ).place(x=370, y=620, anchor="center")
+        ).place(x=180, y=260, anchor="center")
 
     def _close_window(self):
         """Closes the statistics window."""

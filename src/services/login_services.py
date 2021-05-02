@@ -5,14 +5,15 @@ class LoginServices:
     """Class that describes login-related services.
 
     Attributes:
-        database: Value of the current database.
+        database: The current database.
     """
 
     def __init__(self, database=default_database):
-        """Class constructor that initializes the login-related services.
+        """Class constructor that initializes the class
+        with an appropriate database service.
 
         Args:
-            database: Value of the current database.
+            database: The current database.
         """
 
         self.database = database
@@ -21,7 +22,7 @@ class LoginServices:
         """Checks the length of the username.
 
         Args:
-            username: String value of the user's username.
+            username (str): The user's username.
         Returns:
             True, if the username is long enough, or False, if it's not.
         """
@@ -29,13 +30,13 @@ class LoginServices:
         return bool(len(username) >= 3)
 
     def check_username_and_password(self, username, password):
-        """Checks if the credentials are already in the database.
+        """Checks if the input credentials already exist.
 
         Args:
             username: String value of the user's username.
             password: String value of the user's password.
         Returns:
-            True, if the credentials are in the database, or False, if they're not.
+            True, if the credentials exist, or False, if they don't.
         """
 
         return bool((username, password) in self.database.get_credentials())
@@ -52,14 +53,11 @@ class LoginServices:
         return bool([item for item in self.database.get_credentials() if item[0] == username])
 
     def register_new_user(self, username, password):
-        """Calls a database_services method that adds the new user to the database.
+        """Calls a DatabaseServices method which adds the new user to the database.
 
         Args:
             username: String value of the user's username.
             password: String value of the user's password.
-        Returns:
-            The result of a database operation method call,
-            which in this case is a tuple of the user's username and password.
         """
 
         self.database.add_user(username, password)
@@ -76,22 +74,24 @@ class LoginServices:
         return bool(new_user in self.database.get_users())
 
     def check_for_users(self):
-        """Checks if there are any users in the database.
+        """Checks if any users exist.
 
         Returns:
             True, if any exist, or False, if none exist.
         """
-        users = '\n'.join(sorted(self.database.get_users()))
-        return bool(len(users) > 0)
+
+        return bool(len(self.list_all_users()) > 0)
 
     def list_all_users(self):
         """Calls a DatabaseServices class method which returns
         all users in a formatted list.
 
         Returns:
-            A sorted list of all users by calling a database operation.
+            users: A sorted list of all users.
         """
+
         users = '\n'.join(sorted(self.database.get_users()))
+
         return users
 
     def handle_login(self, current_user):

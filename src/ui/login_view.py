@@ -33,7 +33,8 @@ class LoginView:
     """
 
     def __init__(self, service=login_services):
-        """Class constructor that initializes the class with appropriate services.
+        """Class constructor that initializes the class with
+        appropriate services and attributes.
 
         Args:
             service: The current services class entity.

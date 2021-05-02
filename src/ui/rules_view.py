@@ -18,31 +18,32 @@ class RulesView:
     def __init__(self):
         """Class constructor that initializes the class."""
 
-        self.rules_window = None
+        self.window = None
 
     def initialize_window(self):
         """Initializes the window with appropriate settings and widgets."""
 
-        self.rules_window = tk.Tk()
-        get_window_settings(self.rules_window, RULES_WINDOW_NAME, RULES_WINDOW_SIZE)
+        self.window = tk.Tk()
+        self.window.grab_set()
+        get_window_settings(self.window, RULES_WINDOW_NAME, RULES_WINDOW_SIZE)
         self._build_widgets()
-        self.rules_window.mainloop()
+        self.window.mainloop()
 
     def _build_widgets(self):
         """Build the widgets of the parent window."""
 
-        title = get_display_textbox(self.rules_window, 1, 85, TITLE_FONT)
+        title = get_display_textbox(self.window, 1, 85, TITLE_FONT)
         title.place(x=30, y=30)
         title.insert(tk.END, "Trivioboros")
         title.config(state=DISABLED)
 
-        rules = get_display_textbox(self.rules_window, 40, 85, TEXT_FONT)
+        rules = get_display_textbox(self.window, 40, 85, TEXT_FONT)
         rules.place(x=30, y=80)
         rules.insert(tk.END, self._game_rules_text())
         rules.config(state=DISABLED)
 
         get_basic_button(
-            self.rules_window,
+            self.window,
             "Got it!",
             command=self._close_window,
         ).place(x=370, y=620, anchor="center")
@@ -55,43 +56,40 @@ class RulesView:
             The text as a multiline string value.
         """
 
-        return """Yleistä:
+        return """Game start:
 
-    - Pelaajat aloittavat mustasta ruudusta ('aloitusruutu').
-    - Pelin aloittaa Pelaaja 1, ja vuorot vaihtuvat järjestyksessä.
-    - Jokaista peliin valittua kategoriaa edustaa yksi kategoriapiste.
-    - Pistetilannetta voi seurata pelilaudan vasemmasta ylälaidasta löytyvän pistetaulukon avulla.
+- All players start from the unique starting segment.
+- The highlighted player starts the game, and turns change in order.
 
 
-    Pelin kulku:
+Game progression:
 
-    1. Vuorossa oleva pelaaja heittää noppaa.
-    2. Pelaaja siirtyy laudalla myötäpäivään nopan osoittaman silmäluvun verran.
-    3. Pelaajalle esitetään kysymys kategoriasta, jonka edustamaan ruutuun tämä on siirryttyään päätynyt.
-        - Mikäli pelaaja vastaa oikein, hän saa pisteen kyseisestä kategoriasta.
-        - Mikäli pelaajalla on jo kategoriasta piste, tämä ei saa uutta pistettä.
-        - Mikäli pelaaja vastaa väärin, hän menettää kategoriapisteen.
-        - Mikäli pelaajalla ei ole kategoriassa pistettä, tämä ei menetä mitään.
-    4. Vuoro vaihtuu.
-
-
-    Pelin päättyminen:
-
-    - Pelin voittaa se, joka ensimmäisenä pääsee aloitusruutuun tai sen yli kaikkien kategoriapisteiden kera.
-    - Mikäli samalla kierroksella useampi pelaaja onnistuu tässä, voitto jaetaan.
+1. The player whose turn it is casts the die.
+2. The player token is moved clockwise by the number declared by the die.
+3. The player is presented with a question from the category segment on which the player token is.
+    - If the player's answer is correct, they receive the category point.
+    - If the player already has this category point, they get nothing.
+    - If the player's answer is incorrect, they lose the category point.
+    - If the player does not have this category point, they lose nothing.    
+4. The player turn changes.
 
 
-    Vaikeustaso:
+Game ending:
 
-    - Pelin vaikeustasoon voi vaikuttaa monella tapaa, ja yhdistelmiä on useita. 
-    - Pääsääntöisesti vaikeustaso kasvaa pelilaudan kokoa tai kysymyskategorioiden määrää kasvattamalla.
-    - Erilaisia yhdistelmiä kannattaa rohkeasti kokeilla!
-    """
+- The game is won by the player who first gets on or over the starting segment with all the category points.
+
+
+Note on game difficulty:
+
+- The difficulty level can be modified in many ways, and there are various combinations.
+- In general, the difficulty is increased as the board size and the number of categories are increased.
+- Try different combinatations to see what works for you!
+"""
 
     def _close_window(self):
         """Destroys the current window."""
 
-        self.rules_window.destroy()
+        self.window.destroy()
 
 
 rules_view = RulesView()

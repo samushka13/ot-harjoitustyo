@@ -23,10 +23,6 @@ class SettingsServices:
         self.difficulty_names = []
         self.board_size = None
 
-    # ---------------------------------------------------------
-    # Methods that provide default settings for game sessions:
-    # ---------------------------------------------------------
-
     def get_default_players(self):
         """Provides a list of default player names.
 
@@ -46,6 +42,7 @@ class SettingsServices:
             "Player 5",
             "Player 6",
         ]
+
         return default_players
 
     def get_default_player_colors(self):
@@ -66,6 +63,7 @@ class SettingsServices:
             "orange",
             "blue",
         ]
+
         return default_player_colors
 
     def get_default_board_sizes(self):
@@ -95,6 +93,7 @@ class SettingsServices:
             ("Insane", 9),
             ("The Ultimate Challenge", 30)
         ]
+
         return board_sizes
 
     def get_categories(self):
@@ -111,7 +110,8 @@ class SettingsServices:
         """Provides a list of default category colors.
 
         The UI only accommodates 12 categories,
-        so increasing the number here would require changes in the UI as well.
+        so increasing the number here would require changes in the UI as well
+        for the added colors to be actually shown.
 
         Returns:
             A list of the default category colors.
@@ -131,6 +131,7 @@ class SettingsServices:
             "magenta",
             "turquoise",
         ]
+
         return self.category_colors
 
     def get_default_difficulties(self):
@@ -151,10 +152,6 @@ class SettingsServices:
         ]
 
         return self.difficulty_names
-
-    # --------------------------------------------------
-    # Methods that collect settings for a game session:
-    # --------------------------------------------------
 
     def collect_player_settings(self, added_players):
         """Provides a list of player names from user inputs.
@@ -239,6 +236,7 @@ class SettingsServices:
         """
 
         self.database.remove_game_active_status()
+
         difficulty = ""
         self.database.save_session_variables(
             difficulty,
@@ -246,10 +244,6 @@ class SettingsServices:
             players,
             categories,
         )
-
-    # ------------------------------------------------------
-    # Methods that check the validity of the game settings:
-    # ------------------------------------------------------
 
     def check_player_number_validity(self):
         """Checks if enough players were added.

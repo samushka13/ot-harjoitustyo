@@ -6,9 +6,11 @@ Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustom
 
 Sovellus on kehitetty Python-versiolla 3.9.2 ja sen toiminta on testattu Python-versiolla 3.6.9. Yhteensopivuutta tätä vanhempien Python-versioiden kanssa ei voida taata.
 
-Huomioithan, että peli on originaali konsepti, joten mahdollisesta matkimisesta ja sillä rahastamisesta tai omana ideana esittämisestä ilman asianmukaisia lupia saattaa tulla kovastikin kuonoon :)
+Huomioithan, että peli on originaali konsepti, joten mahdollisesta matkimisesta ja sillä rahastamisesta tai konseptin omana ideana esittämisestä saattaa tulla kovastikin kuonoon :)
 
 ### Dokumentaatio
+
+[Käyttöohje](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
 
 [Vaatimusmäärittely](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
@@ -16,19 +18,17 @@ Huomioithan, että peli on originaali konsepti, joten mahdollisesta matkimisesta
 
 [Työaikakirjanpito](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
-### Asennus
+### Pika-asennus
 
 1. Lataa uusin [release](https://github.com/samushka13/ot-harjoitustyo/releases).
 
-2. Varmista, että koneellasi on asianmukainen Python-versio (^3.6).
+2. Varmista, että koneellasi on asianmukainen Python-versio (^3.6) ja Poetry-versio (^1.1.5 suositeltu).
 
-3. Varmista, että koneellasi on asianmukainen Poetry-versio (^1.1.5 suositeltu).
-
-4. Asenna projektin riippuvuudet komennolla:
+3. Asenna projektin riippuvuudet komennolla:
 
        poetry install
 
-5. Käynnistä projekti komennolla:
+4. Käynnistä sovellus komennolla:
 
        poetry run invoke start
 

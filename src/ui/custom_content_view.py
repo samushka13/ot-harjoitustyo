@@ -27,8 +27,7 @@ from ui.widgets import (
 
 
 class CustomContentView:
-    """Class that describes the UI of the custom questions view.
-    """
+    """Class that describes the UI of the custom questions view."""
 
     def __init__(self, service=custom_content_services):
         """Class constructor that initializes the class with appropriate services."""
@@ -47,7 +46,8 @@ class CustomContentView:
         self.window = tk.Tk()
         get_window_settings(self.window, CUSTOM_CONTENT_WINDOW_NAME, CUSTOM_CONTENT_WINDOW_SIZE)
         self._build_layout()
-        self._build_widgets()
+        self._build_create_widgets()
+        self._build_browse_widgets()
         self.window.mainloop()
 
     def _build_layout(self):
@@ -57,46 +57,52 @@ class CustomContentView:
         for i in (0,11):
             self.window.grid_rowconfigure(i, weight=3)
 
-    def _build_widgets(self):
-        """Builds the widgets of the parent window."""
+    def _build_create_widgets(self):
+        """Builds the left-side widgets of the parent window."""
 
-        # -------------------------------------------------------------------
-        # Left-side widgets:
-        # -------------------------------------------------------------------
+        get_title_label(self.window, "Create"
+        ).grid(column=0, row=0, columnspan=2)
 
-        get_title_label(self.window, "Create").grid(column=0, row=0, columnspan=2)
-
-        get_basic_label(self.window, "Category").grid(column=0, row=1, columnspan=2)
+        get_basic_label(self.window, "Category"
+        ).grid(column=0, row=1, columnspan=2)
         self.category_combobox = self._build_category_combobox()
         self.category_combobox.focus()
 
-        get_basic_label(self.window, "Difficulty").grid(column=0, row=3, columnspan=2)
+        get_basic_label(self.window, "Difficulty"
+        ).grid(column=0, row=3, columnspan=2)
         self.difficulty_combobox = self._build_difficulty_combobox()
 
-        get_basic_label(self.window, "Question").grid(column=0, row=5, columnspan=2)
+        get_basic_label(self.window, "Question"
+        ).grid(column=0, row=5, columnspan=2)
         self.question_entry = get_edit_textbox(self.window, 6, 50)
         self.question_entry.grid(column=0, row=6, columnspan=2)
 
-        get_basic_label(self.window, "Answer").grid(column=0, row=7, columnspan=2)
+        get_basic_label(self.window, "Answer"
+        ).grid(column=0, row=7, columnspan=2)
         self.answer_entry = get_edit_textbox(self.window, 4, 50)
         self.answer_entry.grid(column=0, row=8, columnspan=2)
 
-        get_basic_button(self.window, "Save", self._handle_save).grid(column=0, row=9, pady=Y)
-        get_basic_button(self.window, "Clear", self._clear_entries).grid(column=1, row=9, pady=Y)
+        get_basic_button(self.window, "Save", self._handle_save
+        ).grid(column=0, row=9, pady=Y)
+        get_basic_button(self.window, "Clear", self._clear_entries
+        ).grid(column=1, row=9, pady=Y)
         get_basic_button(self.window, "Back to Settings", self._open_settings_view
         ).grid(column=0, row=11, columnspan=2, pady=Y)
 
-        # -------------------------------------------------------------------
-        # Right-side widgets:
-        # -------------------------------------------------------------------
+    def _build_browse_widgets(self):
+        """Builds the right-side widgets of the parent window."""
 
         get_title_label(self.window, "Browse"
         ).grid(column=2, row=0, columnspan=3)
+
         self.listbox = self._build_listbox()
-        get_basic_button(self.window, "Edit", self._handle_edit).grid(column=2, row=11)
-        get_basic_button(self.window, "Delete Selected", self._handle_delete_item
+
+        get_basic_button(self.window, "Edit", self._handle_edit
+        ).grid(column=2, row=11)
+        get_basic_button(self.window, "Delete selected", self._handle_delete_item
         ).grid(column=3, row=11)
-        get_basic_button(self.window, "Delete all", self._handle_delete_all).grid(column=4, row=11)
+        get_basic_button(self.window, "Delete all", self._handle_delete_all
+        ).grid(column=4, row=11)
 
     def _build_listbox(self):
         """Builds a listbox widget.
@@ -141,10 +147,6 @@ class CustomContentView:
 
         return difficulty_combobox
 
-    # -------------------------------------------------------------------
-    # These methods handle button commands:
-    # -------------------------------------------------------------------
-
     def _handle_save(self):
         """Collects input values, calls CustomContentServices class methods
         which handle these values, and accommodates the UI accordingly."""
@@ -161,7 +163,8 @@ class CustomContentView:
             self.service.handle_save_item(category, difficulty, question, answer)
             show_save_successful_dialog()
             self._clear_entries()
-            self._build_widgets()
+            self._build_create_widgets()
+            self._build_browse_widgets()
             self.window.focus()
             self.category_combobox.focus()
 
@@ -197,7 +200,8 @@ class CustomContentView:
             deleted = self.service.delete_items(selected)
             if len(selected) > (deleted):
                 show_delete_error_dialog(len(selected)-(deleted))
-            self._build_widgets()
+            self._build_create_widgets()
+            self._build_browse_widgets()
             self.window.focus()
             self.listbox.focus()
 
@@ -208,7 +212,8 @@ class CustomContentView:
 
         if show_delete_all_confirmation_dialog() == "yes":
             self.service.delete_all()
-            self._build_widgets()
+            self._build_create_widgets()
+            self._build_browse_widgets()
             self.window.focus()
             self.listbox.focus()
 

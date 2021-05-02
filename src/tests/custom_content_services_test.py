@@ -27,7 +27,6 @@ class TestCustomContentServices(unittest.TestCase):
         self.database.add_user(self.user.username, self.user.password)
         self.database.add_logged_in_user(self.user.username)
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.question_invalid = Question(2, "", "", "", "")
         self.database.save_item_to_database(
             self.question.user_id,
             self.question.category,
@@ -35,9 +34,7 @@ class TestCustomContentServices(unittest.TestCase):
             self.question.question,
             self.question.answer,
         )
-
-    def test_database_exists(self):
-        self.assertNotEqual(self.database, None)
+        self.question_invalid = Question(2, "", "", "", "")
 
     def test_get_listbox_items(self):
         self.assertEqual(

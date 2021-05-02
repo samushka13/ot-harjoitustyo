@@ -1,12 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, WORD, EXTENDED
-from ui.stylings import (
-    BACKGROUND,
-    TITLE_FONT,
-    TEXT_FONT,
-    BOARD_TEXT_FONT,
-    BASIC_CURSOR,
-)
+from ui.stylings import BACKGROUND, TITLE_FONT, TEXT_FONT, BOARD_TEXT_FONT, BASIC_CURSOR
 
 # ------------------------------------------------------
 # Comboboxes.
@@ -22,10 +16,12 @@ def get_combobox(window=None, width=30):
     Returns:
         widget: A combobox.
     """
+
     combobox = ttk.Combobox(
         window,
         width=width,
     )
+
     return combobox
 
 # ------------------------------------------------------
@@ -42,6 +38,7 @@ def get_title_label(window=None, text=None):
     Returns:
         widget: A label.
     """
+
     label = tk.Label(
         window,
         text=text,
@@ -49,6 +46,7 @@ def get_title_label(window=None, text=None):
         bg=BACKGROUND,
         highlightbackground=BACKGROUND,
     )
+
     return label
 
 def get_basic_label(window=None, text=None):
@@ -61,6 +59,7 @@ def get_basic_label(window=None, text=None):
     Returns:
         widget: A label.
     """
+
     label = tk.Label(
         window,
         text=text,
@@ -68,6 +67,7 @@ def get_basic_label(window=None, text=None):
         bg=BACKGROUND,
         highlightbackground=BACKGROUND,
     )
+
     return label
 
 # ------------------------------------------------------
@@ -86,6 +86,7 @@ def get_basic_button(window=None, text=None, command=None):
     Returns:
         widget: A button.
     """
+
     if len(text) in range(0,10):
         width = 10
     elif len(text) in range(10,17):
@@ -104,6 +105,7 @@ def get_basic_button(window=None, text=None, command=None):
         highlightbackground=BACKGROUND,
         command=command,
     )
+
     return button
 
 # ------------------------------------------------------
@@ -122,12 +124,14 @@ def get_basic_entry(window=None, width=30, show=None, textvariable=None):
     Returns:
         widget: An entry.
     """
+
     entry = tk.Entry(
         window,
         width=width,
         show=show,
         textvariable=textvariable,
     )
+
     return entry
 
 # ------------------------------------------------------
@@ -146,6 +150,7 @@ def get_display_textbox(window, height, width, font=BOARD_TEXT_FONT):
     Returns:
         widget: A disabled textbox.
     """
+
     textbox = tk.Text(
         window,
         height=height,
@@ -156,6 +161,7 @@ def get_display_textbox(window, height, width, font=BOARD_TEXT_FONT):
         bg=BACKGROUND,
         highlightbackground=BACKGROUND,
     )
+
     return textbox
 
 def get_edit_textbox(window, height, width, font=TEXT_FONT):
@@ -170,6 +176,7 @@ def get_edit_textbox(window, height, width, font=TEXT_FONT):
     Returns:
         widget: A textbox.
     """
+
     textbox = tk.Text(
         window,
         height=height,
@@ -178,6 +185,7 @@ def get_edit_textbox(window, height, width, font=TEXT_FONT):
         wrap=WORD,
         highlightbackground=BACKGROUND,
     )
+
     return textbox
 
 # ------------------------------------------------------
@@ -195,6 +203,7 @@ def get_listbox(window=None, height=30, width=82):
     Returns:
         widget: A listbox.
     """
+
     listbox = tk.Listbox(
         window,
         height=height,
@@ -202,6 +211,7 @@ def get_listbox(window=None, height=30, width=82):
         highlightbackground=BACKGROUND,
         selectmode=EXTENDED,
     )
+
     return listbox
 
 # ------------------------------------------------------
@@ -219,6 +229,7 @@ def get_canvas(window, height, width):
     Returns:
         widget: A canvas.
     """
+
     canvas = tk.Canvas(
         window,
         height=height,
@@ -226,25 +237,28 @@ def get_canvas(window, height, width):
         bg=BACKGROUND,
         highlightbackground=BACKGROUND,
     )
+
     return canvas
 
-def get_board_segment(canvas, distance: float, segment: float, fill):
+def get_board_segment(canvas, distance: float, extent: float, fill):
     """Builds a tkinter arc element on a canvas.
 
     Args:
         canvas (widget): The canvas on which the arc will be drawn.
-        distance (float): The starting angle of the arc.
-        segment (float): The length of the arc.
+        distance (float): Helps calculate the starting angle of the arc.
+        extent (float): The length of the arc.
         fill (color): The color of the arc.
 
     Returns:
-        element: An arc.
+        segment (widget): A piece of the game board.
     """
+
     segment = canvas.create_arc(
         20, 20, 700, 700,
         start=360-distance,
-        extent=-segment,
+        extent=-extent,
         fill=fill,
         width=4,
     )
+
     return segment

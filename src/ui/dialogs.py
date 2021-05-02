@@ -13,17 +13,16 @@ def whats_new_dialog():
 - All login-related stuff.
 - All settings-related stuff.
 - All stuff related to custom content.
-- Most stuff related to game sessions \
-(excluding matching question categories with player position).
+- Most stuff related to game sessions.
 - Most database-related stuff.
 
-Total test coverage: 97 %.
-However, more integration testing is needed.
+Total test coverage: 100 %.
+However, the level of integration testing can still be increased.
 
-What to expect next week?
+What to expect in the next release?
 
 - More integration tests.
-- Finalized game board logic.
+- Finalized game board logic (i.e. matching question categories with player position).
 - Possibly a nicer-looking UI.""")
 
 # ------------------------------------------------------
@@ -133,6 +132,7 @@ def show_delete_confirmation_dialog(number: int):
             "Delete Items",
             f"Are you sure you want to delete these {number} selected questions?"
         )
+
     return dialog
 
 def show_delete_error_dialog(number: int):
@@ -146,6 +146,7 @@ def show_delete_error_dialog(number: int):
         "Delete Error",
         f"{number} questions were not deleted, as they belong to different usernames."
     )
+
     return dialog
 
 def show_delete_all_confirmation_dialog():

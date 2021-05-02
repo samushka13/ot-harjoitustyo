@@ -12,6 +12,7 @@ class CategoryBoard:
         canvas (widget): A tkinter canvas widget.
         category_colors (list): List of category colors.
     """
+
     def __init__(self, service, window, canvas, category_colors):
         """Class constructor that initiates a new category board for the game view window.
         The board is drawn on a tkinter canvas widget.
@@ -22,42 +23,37 @@ class CategoryBoard:
             canvas (widget): A tkinter canvas widget.
             category_colors (list): List of category colors.
         """
+
+        self.window = window
         self.canvas = canvas
-        self.categories = service.get_categories()
         self.category_colors = category_colors
+        self.categories = service.categories
         self.highlighter = None
-        self._build_board(window)
+        self._draw_board()
 
-    def _build_board(self, window):
-        """Builds the category board on the canvas with a drawing loop.
+    def _draw_board(self):
+        """Draws the category board on the canvas with a loop."""
 
-        Args:
-            window: A tkinter window.
-        """
-        category_index = 1
         x_increase = 0
         y_increase = 0
-        special_category = get_display_textbox(window, 1, 25, TEXT_FONT)
-        special_category.place(x=40+x_increase, y=560+y_increase, anchor="w")
-        special_category.insert(tk.END, self.categories[0])
-        special_category.config(state=DISABLED, fg=self.category_colors[0])
-        while category_index < len(self.categories):
-            category = get_display_textbox(window, 1, 25, TEXT_FONT)
-            category.place(x=40+x_increase, y=585+y_increase, anchor="w")
-            category.insert(tk.END, self.categories[category_index])
-            category.config(state=DISABLED, fg=self.category_colors[category_index])
-            category_index += 1
+        for i in range(len(self.categories)):
+            category = get_display_textbox(self.window, 1, 25, TEXT_FONT)
+            category.place(x=40+x_increase, y=560+y_increase, anchor="w")
+            category.insert(tk.END, self.categories[i])
+            category.config(state=DISABLED, fg=self.category_colors[i])
+            i += 1
             y_increase += 25
-            if category_index == 6:
+            if i == 6:
                 x_increase += 250
-                y_increase = -25
+                y_increase = 0
 
     def highlight_category(self, category):
-        """Highlights the current category with a triangular pointer.
+        """Draws a triangular pointer next to the current category.
 
         Args:
-            category (int): The current category index.
+            category (int): The current category's index value.
         """
+
         if category < 6:
             self.highlighter = self.canvas.create_polygon(
                 30, 557+(category*25),
@@ -76,6 +72,6 @@ class CategoryBoard:
             )
 
     def remove_previous_highlight(self):
-        """Removes the previous highlighter.
-        """
+        """Deletes the previous highlighter widget."""
+
         self.canvas.delete(self.highlighter)

@@ -29,4 +29,6 @@
 | 23.4. |  1  | Dokumentaation parantelua.                                          |
 |  1.5. |  3  | Pelisession pistesysteemin rakentelua. Refaktorointia.              |
 |  2.5. |  1  | Pelisession testit toteutettu.                                      |
-|  yht. | 78  |                                                                     |
+|  2.5. |  1  | Käyttöohje lisätty. Dokumentaatiota päivitetty.                     |
+|  3.5. |  1  | Refaktorointia.                                                     |
+|  yht. | 80  |                                                                     |

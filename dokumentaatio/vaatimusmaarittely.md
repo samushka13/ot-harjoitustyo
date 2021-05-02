@@ -64,19 +64,19 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - painikkeen, jolla voi näyttää vastauksen,
   - painikkeet, joilla voi valita, vastasiko pelaaja oikein vai väärin.
 - Kysymys esitetään kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
-- Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti.
+- Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti. (TEHTY)
 - Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla. (TEHTY)
 - Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla. (TEHTY)
 - Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla. (TEHTY)
   - Käyttäjältä pyydetään tällöin vahvistus. (TEHTY)
-- Kun yksi pelaajista voittaa (säännöt ja siten myös vaatimukset tarkentuvat myöhemmin), peli päättyy.
+- Kun yksi pelaajista voittaa, peli päättyy.
   - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
   - Käyttäjä voi siirtyä asianmukaisella painikkeella näkymään "Pelin asetukset".
 
 ## Toimintaympäristön rajoitteet
 
 - Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
-  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä Tietojenkäsittelytieteen laitoksen Linux-koneilla asianmukaisia ohjeita noudattamalla.
+  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä HY:n Tietojenkäsittelytieteen laitoksen Linux-koneilla asianmukaisia ohjeita noudattamalla.
 - Käyttäjien, sisältöjen ja pelisessioiden tiedot talletetaan tietokantaan, josta niitä myös luetaan.
 
 ## Jatkokehitysideoita

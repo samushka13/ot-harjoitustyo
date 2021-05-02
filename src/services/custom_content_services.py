@@ -82,6 +82,7 @@ class CustomContentServices:
 
         if question.endswith('?') is False:
             question += "?"
+
         return question
 
     def format_answer(self, answer):
@@ -97,6 +98,7 @@ class CustomContentServices:
         if answer.endswith('.') is False:
             if answer.endswith('!') is False:
                 answer += "."
+
         return answer
 
     def handle_save_item(self, category, difficulty, question, answer):
@@ -171,6 +173,7 @@ class CustomContentServices:
         for item in items:
             self.database.delete_item_from_database(item, self.get_current_user_id())
         after = self.count_questions()
+
         return before-after
 
     def delete_all(self):

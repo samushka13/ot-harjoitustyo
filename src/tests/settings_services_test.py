@@ -35,9 +35,6 @@ class TestSettingsServices(unittest.TestCase):
             self.question.answer,
         )
 
-    def test_database_exists(self):
-        self.assertNotEqual(self.database, None)
-
     def test_get_default_players(self):
         self.assertEqual(len(self.service.get_default_players()), 6)
         self.assertEqual(self.service.get_default_players()[0], "samushka")

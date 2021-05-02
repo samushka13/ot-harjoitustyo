@@ -111,7 +111,6 @@ class SettingsView:
         """
 
         entry_fields = []
-        i = 0
         for i in range(0,6):
             entry_field = get_combobox(self.window)
             entry_field['values'] = self.service.get_default_players()[1:]
@@ -121,7 +120,6 @@ class SettingsView:
                 entry_field.set("Add player")
             entry_field.grid(column=0, row=2+i, padx=X)
             entry_fields.append(entry_field)
-            i += 1
         entry_fields[0].focus()
 
         return entry_fields
@@ -134,7 +132,6 @@ class SettingsView:
         """
 
         comboboxes = []
-        i = 0
         for i in range(0,12):
             category_combobox = get_combobox(self.window)
             categories = self.service.get_categories()
@@ -142,21 +139,8 @@ class SettingsView:
             category_combobox['values'] = categories
             category_combobox.state(['readonly'])
             category_combobox.set("Add category")
-
-            # This fills the categories automatically with existing values.
-            #
-            # if len(categories) < 12:
-            #     if len(categories) == 0:
-            #         category_combobox.set("")
-            #     else:
-            #         if i < len(categories):
-            #             category_combobox.set(categories[i])
-            #         else:
-            #             category_combobox.set(categories[i-len(categories)])
-
             category_combobox.grid(column=1, row=2+i)
             comboboxes.append(category_combobox)
-            i += 1
 
         return comboboxes
 
