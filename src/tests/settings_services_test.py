@@ -6,6 +6,7 @@ from entities.question import Question
 from ui.widgets import get_combobox
 from config import TEST_DATABASE_FILENAME as test_database
 
+
 class TestSettingsServices(unittest.TestCase):
     def setUp(self):
         # ---------------------------------------------------------------------

@@ -2,7 +2,7 @@ import tkinter as tk
 import random
 from tkinter import DISABLED
 from PIL import ImageTk, Image
-from services.game_services import game_services
+from services.game_services import GameServices
 from ui.game_view_elements.scoreboard import Scoreboard
 from ui.game_view_elements.category_board import CategoryBoard
 from ui.game_view_elements.game_board import GameBoard
@@ -24,20 +24,12 @@ from ui.stylings import (
 
 class GameView:
     """Class that describes the UI of the game view.
-
-    Attributes:
-        service: The current services class entity.
     """
-
-    def __init__(self, service=game_services):
+    def __init__(self):
         """Class constructor that initializes the class with appropriate services.
-
-        Args:
-            service: The current services class entity. Defaults to GameServices class entity.
         """
-
         self.window = None
-        self.service = service
+        self.service = GameServices()
         self.img = None
         self.question_textbox = None
         self.answer_textbox = None
@@ -52,7 +44,6 @@ class GameView:
             player_colors (list): Player colors.
             category_colors (list): Category colors.
         """
-
         self.window = tk.Tk()
         get_window_settings(self.window, BOARD_WINDOW_NAME, BOARD_WINDOW_SIZE)
         self._build_background()
@@ -67,8 +58,8 @@ class GameView:
         """Builds a canvas for the scoreboard, question and categories,
         and a second one for the game board. Builds also a line that
         separates the scoreboard from the question, and a second one
-        that separates the question from the categories."""
-
+        that separates the question from the categories.
+        """
         self.right_side = get_canvas(self.window, 720, 560)
         self.right_side.place(x=280, y=360, anchor="center")
 
@@ -79,20 +70,21 @@ class GameView:
         self.left_side.place(x=920, y=360, anchor="center")
 
     def _build_scoreboard(self, player_colors, category_colors):
-        """Builds the scoreboard."""
-
+        """Builds the scoreboard.
+        """
         self.scoreboard = Scoreboard(
             self.service,
             self.window,
             self.right_side,
             player_colors,
             category_colors,
+            self.service.get_default_player_points()
         )
         self.scoreboard.highlight_player(0)
 
     def _build_category_board(self, category_colors):
-        """Builds the category board."""
-
+        """Builds the category board.
+        """
         self.category_board = CategoryBoard(
             self.service,
             self.window,
@@ -101,8 +93,8 @@ class GameView:
         )
 
     def _build_game_board(self, player_colors, category_colors):
-        """Builds the game board, player tokens and die."""
-
+        """Builds the game board, player tokens and die.
+        """
         GameBoard(
             self.service,
             self.left_side,
@@ -119,8 +111,8 @@ class GameView:
 
     def _build_left_side_buttons(self):
         """Builds buttons for showing rules and statistics,
-        and quitting the current game session."""
-
+        and quitting the current game session.
+        """
         get_basic_button(self.window, "Quit", self._quit_game,
         ).place(x=1260, y=30, anchor="e")
 
@@ -136,32 +128,31 @@ class GameView:
         Args:
             die_face = Path of the die face image asset.
         """
-
         self.img = ImageTk.PhotoImage(Image.open(die_face))
         self.left_side.create_image(360, 340, anchor="center", image=self.img)
 
     def _build_cast_button(self):
-        """Builds a button for casting the die."""
-
+        """Builds a button for casting the die.
+        """
         cast_btn = get_basic_button(self.window, "Cast", lambda: self._cast_die(cast_btn))
         cast_btn.place(x=917,y=420, anchor="center")
 
     def _cast_die(self, cast_btn):
         """Selects a random number from the die, builds the corresponding die face image,
         removes the die cast button, shows the question, highlights the category,
-        and moves the player's token to the correct position on the game board."""
-
+        and moves the player's token to the correct position on the game board.
+        """
         number = random.choice(self.service.get_die_faces())
         self._build_die(number[0])
         cast_btn.destroy()
         self._show_question()
-        self.category_board.highlight_category(self.service.get_current_category())
+        self.category_board.highlight_category(self.service.get_current_category_index())
         self.player_tokens.move_token(self.service.get_current_turn(), number[1])
 
     def _show_question(self):
         """Shows the current category and question,
-        and builds a button for showing the correct answer."""
-
+        and builds a button for showing the correct answer.
+        """
         self.service.get_category_for_player()
         self.question_textbox = get_display_textbox(self.window, 7, 45)
         self.question_textbox.place(x=30, y=285, anchor="w")
@@ -170,14 +161,14 @@ class GameView:
         self.show_answer_btn = get_basic_button(
             self.window,
             "Show answer",
-            self._show_answer_and_buttons,
+            self._show_answer_confirmation_buttons,
         )
         self.show_answer_btn.place(x=280, y=420, anchor="center")
 
-    def _show_answer_and_buttons(self):
+    def _show_answer_confirmation_buttons(self):
         """Shows the correct answer and buttons for confirming
-        whwther the player's answer was correct."""
-
+        whwther the player's answer was correct.
+        """
         self.answer_textbox = get_display_textbox(self.window, 3, 45)
         self.answer_textbox.place(x=30, y=420, anchor="w")
         self.answer_textbox.insert(tk.END, self.service.get_answer_for_player())
@@ -198,28 +189,32 @@ class GameView:
         self.answer_incorrect_btn.place(x=300, y=490, anchor="w")
 
     def _handle_correct_answer(self):
-        """Calls a scoreboard class method which then updates the scoreboard, if needed."""
-
-        self.scoreboard.add_point_to_player(self.service.get_current_category())
+        """Calls a services class method which returns an updated list of players' points
+        and a scoreboard class method which then updates the scoreboard, if needed.
+        """
+        points = self.service.add_point_to_player()
+        self.scoreboard.draw_player_points(points)
         self._handle_turn_end()
 
     def _handle_incorrect_answer(self):
-        """Calls a scoreboard class method which then updates the scoreboard, if needed."""
-
-        self.scoreboard.remove_point_from_player(self.service.get_current_category())
+        """Calls a services class method which returns an updated list of players' points
+        and a scoreboard class method which then updates the scoreboard, if needed.
+        """
+        points = self.service.remove_point_from_player()
+        self.scoreboard.draw_player_points(points)
         self._handle_turn_end()
 
     def _handle_turn_end(self):
-        """Removes unnecessary widgets and highlights,
+        """Removes unnecessary widgets and highlighters,
         calls a services class method which updates the player turn tracker,
-        highlights the current player, and rebuilds the die cast button."""
-
+        highlights the current player, and rebuilds the die cast button.
+        """
         self.question_textbox.destroy()
         self.answer_textbox.destroy()
         self.show_answer_btn.destroy()
         self.answer_correct_btn.destroy()
         self.answer_incorrect_btn.destroy()
-        self.scoreboard.remove_previous_highlight()
+        self.scoreboard.remove_previous_highlighter()
         self.category_board.remove_previous_highlight()
         self.service.update_current_turn()
         self.scoreboard.highlight_player(self.service.get_current_turn())
@@ -228,19 +223,19 @@ class GameView:
     def _quit_game(self):
         """Shows a dialog with confirmation buttons.
         If the user clicks 'yes', closes the current window
-        and initiates a new SettingsView instance."""
-
+        and initiates a new SettingsView instance.
+        """
         if quit_game_dialog() == 'yes':
             self.service.remove_game_active_status()
             self.window.destroy()
             settings_view.initialize_window()
 
     def _open_statistics_view(self):
-        """Opens a new window on top of the current one."""
-
+        """Opens a new window on top of the current one.
+        """
         StatisticsView(self.service).initialize_window()
 
     def _open_rules_view(self):
-        """Opens a new window on top of the current one."""
-
+        """Opens a new window on top of the current one.
+        """
         rules_view.initialize_window()

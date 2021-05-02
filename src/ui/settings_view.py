@@ -114,7 +114,7 @@ class SettingsView:
         i = 0
         for i in range(0,6):
             entry_field = get_combobox(self.window)
-            entry_field['values'] = self.service.get_default_players()
+            entry_field['values'] = self.service.get_default_players()[1:]
             if i == 0:
                 entry_field.set(f"{self.service.get_default_players()[0]}")
             else:

@@ -27,5 +27,6 @@
 | 21.4. |  3  | Testikattavuutta parannettu. Joitakin toimintoja lisätty.           |
 | 22.4. |  3  | Pelisession koodin parantelua.                                      |
 | 23.4. |  1  | Dokumentaation parantelua.                                          |
-|  1.5. |  1  | Refaktorointia.                                                     |
-|  yht. | 75  |                                                                     |
+|  1.5. |  3  | Pelisession pistesysteemin rakentelua. Refaktorointia.              |
+|  2.5. |  1  | Pelisession testit toteutettu.                                      |
+|  yht. | 78  |                                                                     |

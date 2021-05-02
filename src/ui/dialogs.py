@@ -13,16 +13,17 @@ def whats_new_dialog():
 - All login-related stuff.
 - All settings-related stuff.
 - All stuff related to custom content.
-- Most stuff related to game sessions (excluding points system \
-and matching categories with player position).
+- Most stuff related to game sessions \
+(excluding matching question categories with player position).
 - Most database-related stuff.
 
-Total test coverage: 71 %.
+Total test coverage: 97 %.
+However, more integration testing is needed.
 
 What to expect next week?
 
-- More tests.
-- A game board view with improved functionalities.
+- More integration tests.
+- Finalized game board logic.
 - Possibly a nicer-looking UI.""")
 
 # ------------------------------------------------------

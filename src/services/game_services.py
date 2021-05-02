@@ -8,7 +8,6 @@ class GameServices:
     Attributes:
         database: Value of the current database.
     """
-
     def __init__(self, database=default_database):
         """Class constructor that initializes a new game service.
         It fetches the necessary game session variables
@@ -17,9 +16,7 @@ class GameServices:
         Args:
             database: Value of the current database.
         """
-
         self.database = database
-        self.difficulty = self.database.get_session_variables()[0]
         self.board_size = self.database.get_session_variables()[1]
         self.players = self.database.get_session_variables()[2]
         self.categories = self.database.get_session_variables()[3]
@@ -27,6 +24,7 @@ class GameServices:
         self.current_category = None
         self.current_question = None
         self.laps = [0, 0, 0, 0, 0, 0]
+        self.player_points = []
 
     def get_difficulty(self):
         """Provides the selected difficulty for the game session.
@@ -34,9 +32,9 @@ class GameServices:
         Returns:
             An integer value describing the difficulty.
         """
-        self.difficulty = self.database.get_session_variables()[0]
+        difficulty = self.database.get_session_variables()[0]
 
-        return self.difficulty
+        return difficulty
 
     def get_board_size(self):
         """Provides the selected board size for the game session.
@@ -54,7 +52,6 @@ class GameServices:
         Returns:
             A list of string values describing player names.
         """
-
         self.players = self.database.get_session_variables()[2]
 
         return self.players
@@ -65,7 +62,6 @@ class GameServices:
         Returns:
             A list of string values describing category names.
         """
-
         self.categories = self.database.get_session_variables()[3]
 
         return self.categories
@@ -76,15 +72,18 @@ class GameServices:
         Returns:
             An integer value of the segment size.
         """
-        return 360/self.calculate_number_of_segments()
+        return 360 / self.calculate_number_of_segments()
 
     def calculate_number_of_segments(self):
         """Calculates the number of board segments.
+        The operation consists of the starting segment
+        plus the number of the other categories times
+        the selected board size.
 
         Returns:
             An integer value of the number of segments.
         """
-        return len(self.categories[1:])*self.board_size+1
+        return 1 + len(self.categories[1:]) * self.board_size
 
     def list_all_category_segments(self):
         """Provides the places of categories on the board.
@@ -125,6 +124,7 @@ class GameServices:
                 new_position += 360
                 self.laps[player] += 1
             starting_position[player] = new_position
+
         return new_position
 
     def get_laps(self):
@@ -149,6 +149,7 @@ class GameServices:
             (r'src/assets/die_5.png', 5),
             (r'src/assets/die_6.png', 6),
         ]
+
         return die_faces
 
     def get_category_for_player(self):
@@ -157,19 +158,18 @@ class GameServices:
         Returns:
             (str): The current category.
         """
-        # This should actually be determined by
-        # the player's position on the game board.
-        # I.e. this will be replaced with another solution later.
-        # -------------------------------------------------------
-        self.current_category = random.choice(self.categories)
-        return self.get_current_category()
-        # -------------------------------------------------------
+        # This should actually be determined by the player's position on the game board.
+        # I.e. this will be replaced by another solution for the final deadline.
+        # -------------------------------------------------------------------------------
+        self.current_category = random.choice(range(len(self.categories)))
+        return self.categories[self.current_category]
+        # -------------------------------------------------------------------------------
 
-    def get_current_category(self):
-        """Provides the current category.
+    def get_current_category_index(self):
+        """Provides the current category index.
 
         Returns:
-            (str): The current category.
+            (int): The current category index.
         """
         return self.current_category
 
@@ -181,15 +181,8 @@ class GameServices:
             (str): The question as a string value.
         """
         self.current_question = self.database.get_question_for_player(
-            self.get_current_category().replace("'", "''"))
-        return self.get_current_question()
+            self.categories[self.current_category].replace("'", "''"))
 
-    def get_current_question(self):
-        """Provides the current question.
-
-        Returns:
-            (str): The question as a string value.
-        """
         return self.current_question['question']
 
     def get_answer_for_player(self):
@@ -200,7 +193,8 @@ class GameServices:
             (str): The current answer.
         """
         answer = self.database.get_answer_for_player(
-            self.get_current_question().replace("'", "''"))
+            self.current_question['question'].replace("'", "''"))
+
         return answer['answer']
 
     def update_current_turn(self):
@@ -213,6 +207,7 @@ class GameServices:
         self.current_turn += 1
         if self.current_turn == len(self.players):
             self.current_turn = 0
+
         return self.get_current_turn()
 
     def get_current_turn(self):
@@ -223,11 +218,50 @@ class GameServices:
         """
         return self.current_turn
 
+    def get_default_player_points(self):
+        """Provides default player points.
+
+        Returns:
+            player_points (list): The default player points.
+        """
+        for player in range(len(self.players)):
+            for category in range(len(self.categories)):
+                self.player_points.append((player, category, 0))
+
+        return self.player_points
+
+    def add_point_to_player(self):
+        """Provides updated player points.
+
+        Returns:
+            player_points (list): The updated player points.
+        """
+        no_point = (self.current_turn, self.current_category, 0)
+        give_point = (self.current_turn, self.current_category, 1)
+
+        for i in range(len(self.player_points)):
+            if self.player_points[i] == no_point:
+                self.player_points[i] = give_point
+
+        return self.player_points
+
+    def remove_point_from_player(self):
+        """Provides updated player points.
+
+        Returns:
+            player_points (list): The updated player points.
+        """
+        has_point = (self.current_turn, self.current_category, 1)
+        remove_point = (self.current_turn, self.current_category, 0)
+
+        for i in range(len(self.player_points)):
+            if self.player_points[i] == has_point:
+                self.player_points[i] = remove_point
+
+        return self.player_points
+
     def remove_game_active_status(self):
         """Calls a database service method which
         removes the current game's active status.
         """
         self.database.remove_game_active_status()
-
-
-game_services = GameServices()

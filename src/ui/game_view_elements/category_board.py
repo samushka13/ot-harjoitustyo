@@ -1,5 +1,4 @@
 import tkinter as tk
-import random
 from tkinter import DISABLED
 from ui.widgets import get_display_textbox
 from ui.stylings import TEXT_FONT
@@ -57,26 +56,24 @@ class CategoryBoard:
         """Highlights the current category with a triangular pointer.
 
         Args:
-            category (str): The current category.
+            category (int): The current category index.
         """
-        if category in self.categories:
-            i = random.choice([x for x, c in enumerate(self.categories) if c == category])
-            if i < 6:
-                self.highlighter = self.canvas.create_polygon(
-                    30, 557+(i*25),
-                    39, 562+(i*25),
-                    30, 567+(i*25),
-                    fill=self.category_colors[i],
-                    outline="",
-                )
-            else:
-                self.highlighter = self.canvas.create_polygon(
-                    280, 557+((i-6)*25),
-                    289, 562+((i-6)*25),
-                    280, 567+((i-6)*25),
-                    fill=self.category_colors[i],
-                    outline="",
-                )
+        if category < 6:
+            self.highlighter = self.canvas.create_polygon(
+                30, 557+(category*25),
+                39, 562+(category*25),
+                30, 567+(category*25),
+                fill=self.category_colors[category],
+                outline="",
+            )
+        else:
+            self.highlighter = self.canvas.create_polygon(
+                280, 557+((category-6)*25),
+                289, 562+((category-6)*25),
+                280, 567+((category-6)*25),
+                fill=self.category_colors[category],
+                outline="",
+            )
 
     def remove_previous_highlight(self):
         """Removes the previous highlighter.

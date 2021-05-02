@@ -1,8 +1,6 @@
 # --------------------------------------------------------------------------------------
 # WEEK 6 - 4.5.
 # --------------------------------------------------------------------------------------
-# GAME: Implement points system.
-# TESTS: Implement tests for GameServices etc.
 # DOCUMENTATION: Add more stuff to architecture, logic, sequence diagrams etc.
 # DOCUMENTATION: Include a draft of the app's manual.
 # DOCUMENTATION: Describe testing.
@@ -23,6 +21,7 @@
 # GENERAL: Try to make everything run in a single window that simply changes size and stuff.
 # GENERAL: Implement config and environmental variables with .env etc.
 # GENERAL: Remove all commented code and unnecessary files.
+# GENERAL: Translate rules.
 # DOCUMENTATION: Double-check all docstrings.
 # DOCUMENTATION: Finalize the app's manual.
 # DOCUMENTATION: Ensure everything is up-to-date with the final product.

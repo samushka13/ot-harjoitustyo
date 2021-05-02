@@ -4,6 +4,7 @@ from services.login_services import LoginServices
 from entities.user import User
 from config import TEST_DATABASE_FILENAME as test_database
 
+
 class TestLoginServices(unittest.TestCase):
     def setUp(self):
         # ---------------------------------------------------------------------

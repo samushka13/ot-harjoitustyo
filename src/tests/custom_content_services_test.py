@@ -7,6 +7,7 @@ from entities.question import Question
 from config import TEST_DATABASE_FILENAME as test_database
 from ui.widgets import get_listbox
 
+
 class TestCustomContentServices(unittest.TestCase):
     def setUp(self):
         # ---------------------------------------------------------------------
