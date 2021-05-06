@@ -25,8 +25,10 @@ class GameServices:
         self.current_turn = 0
         self.current_category_index = None
         self.current_question = None
+        self.category_places = self.get_category_places()
         self.laps = [0, 0, 0, 0, 0, 0]
-        self.player_positions = [360, 360, 360, 360, 360, 360]
+        self.player_positions_radii = [360, 360, 360, 360, 360, 360]
+        self.player_positions_indices = [0, 0, 0, 0, 0, 0]
         self.player_points = []
 
     def calculate_segment_size(self):
@@ -53,47 +55,72 @@ class GameServices:
 
         return segments
 
-    def list_all_category_segments(self):
+    def get_category_places(self):
         """Provides the places of categories on the board.
         The first value of the categories is excluded,
         as it represents the unique starting segment.
 
         Returns:
-            all_category_segments (list): Lists of category segments as integers.
+            self.category_places (list): Lists of category segments as integers.
             Each nested list describes the positions of one of the categories on the game board.
         """
 
-        all_category_segments = []
+        self.category_places = []
         i = 0
         while i < len(self.categories[1:]):
             j = 0
             k = 1 + i
             category_segments = []
-            while j <= self.board_size:
+            while j < self.board_size:
                 category_segments.append(k)
                 k += len(self.categories[1:])
                 j += 1
             i += 1
-            all_category_segments.append(category_segments)
+            self.category_places.append(category_segments)
 
-        return all_category_segments
+        return self.category_places
 
-    def update_player_positions(self, player, number):
-        """Keeps track of the players' positions on the game board.
+    def update_player_positions_radii(self, player, number):
+        """Keeps track of the players' positions on the game board,
+        so that the UI knows where to draw the player tokens.
+        Also calls another method which updates players' position indices.
 
         Args:
             player (int): The current player.
             number (int): The current die face.
 
         Returns:
-            player_positions (list): The players' current positions.
+            self.player_positions_radii (list): The players' current positions as radii.
         """
 
-        new_position = self.player_positions[player] - self.calculate_segment_size() * number
-        self.player_positions[player] = new_position
-        self.count_laps(player, self.player_positions, new_position)
+        new_position = self.player_positions_radii[player] - self.calculate_segment_size() * number
+        self.player_positions_radii[player] = new_position
+        self.count_laps(player, self.player_positions_radii, new_position)
 
-        return self.player_positions
+        self._update_player_positions_indices(player, number)
+
+        return self.player_positions_radii
+
+    def _update_player_positions_indices(self, player, number):
+        """Keeps track of the players' position indices on the game board,
+        so that the game services can match the current player position with a category.
+
+        Args:
+            player (int): The current player.
+            number (int): The current die face.
+
+        Returns:
+            self.player_positions_indices (list): The players' current positions as indices.
+        """
+
+        segments = self.calculate_number_of_segments()
+        new_position_index = self.player_positions_indices[player] + number
+        if new_position_index >= segments:
+            while new_position_index >= segments:
+                new_position_index -= segments
+        self.player_positions_indices[player] = new_position_index
+
+        return self.player_positions_indices
 
     def count_laps(self, player, starting_position, new_position):
         """Counts the laps player tokens have travelled during the session.
@@ -151,14 +178,16 @@ class GameServices:
             category (str): The current category.
         """
 
-        # This should actually be determined by the player's position on the game board,
-        # so this will be replaced by another solution by the DL of the final release.
-        # -------------------------------------------------------------------------------
-        self.current_category_index = random.choice(range(len(self.categories)))
+        if self.player_positions_indices[self.current_turn] == 0:
+            self.current_category_index = 0
+        else:
+            for nested_list in self.category_places:
+                if self.player_positions_indices[self.current_turn] in nested_list:
+                    self.current_category_index = self.category_places.index(nested_list)+1
+
         category = self.categories[self.current_category_index]
 
         return category
-        # -------------------------------------------------------------------------------
 
     def get_question_for_player(self):
         """Provides a question from the selected category by
@@ -248,6 +277,27 @@ class GameServices:
                 self.player_points[i] = remove_point
 
         return self.player_points
+
+    def check_victory_condition(self, player_starting_laps):
+        """Checks whether the current player's new position is on or over
+        the unique starting segment, and, if it is, checks whether the
+        player has all the required category points for winning the game.
+
+        Returns:
+            True, if the player is victorious, or False, if not.
+        """
+
+        if self.laps[self.current_turn] > player_starting_laps:
+            player_points = []
+            for i in range(len(self.player_points)):
+                if self.player_points[i][0] == self.current_turn:
+                    player_points.append(self.player_points[i])
+            for i in range(len(player_points)):
+                if player_points[i] != (self.current_turn, i, 1):
+                    return False
+            return True
+
+        return False
 
     def remove_game_active_status(self):
         """Calls a DatabaseService class method which

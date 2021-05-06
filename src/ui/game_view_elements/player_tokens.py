@@ -34,7 +34,7 @@ class PlayerTokens:
         for i in range(len(self.players)):
             token = self.canvas.create_arc(
                 115+indent, 115+indent, 605-indent, 605-indent,
-                start=self.service.player_positions[i],
+                start=self.service.player_positions_radii[i],
                 extent=-self.size,
                 outline=self.player_colors[i],
                 width=10,
@@ -48,7 +48,8 @@ class PlayerTokens:
 
         Args:
             player (int): The index of the current player.
-            new_position (int): The current segment of the token.
+            new_position (int): The token's new position.
+            starting_positions (list): The tokens' starting positions.
         """
 
         self.canvas.delete(self.tokens[player])

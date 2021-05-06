@@ -141,3 +141,9 @@ def quit_game_dialog():
         "Quit Game",
         "Are you sure you want to quit this game?"
     )
+
+def show_player_victorious_dialog(player: str):
+    return messagebox.showinfo(
+        "The game has ended",
+        f"Congratulations, {player}, you are victorious!"
+    )

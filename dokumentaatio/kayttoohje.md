@@ -104,8 +104,8 @@ Painikkeet:
 - "Player's answer was correct": pelaaja saa kategoriapisteen, mikäli kategoriassa ei vielä ole pistettä.
 - "Player's answer was incorrect": pelaaja menettää kategoriapisteen, mikäli kategoriassa on piste.
 
-Pelin etenemisen ja päättymisen logiikan toteutus on vielä kesken. Pelin on kuitenkin tarkoitus päättyä, kun yksi pelaajista pääsee aloitusruudun yli kaikkien kategoriapisteiden kera. Esimerkiksi alla olevassa kuvassa pelaaja nimeltä "samushka" on voittanut pelin.
+Peli päättyy, kun yksi pelaajista pääsee aloitusruutuun tai sen yli kaikkien kategoriapisteiden kera. Esimerkiksi alla olevassa kuvassa pelaaja nimeltä "samushka" on voittanut pelin.
 
 ![Game End](screenshots/game_end.png)
 
-Pelin päätyttyä pelinäkymä sulkeutuu ja sovellus palaa pelin asetusten näkymään.
+Pelin päätyttyä sovellus ilmoittaa, kuka voitti, ja antaa mahdollisuuden palata pelin asetusten näkymään.

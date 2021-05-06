@@ -26,13 +26,13 @@ class GameBoard:
         self.categories = self.service.categories
         self.segments = self.service.calculate_number_of_segments()
         self.size = self.service.calculate_segment_size()
-        self.category_places = self.service.list_all_category_segments()
+        self.category_places = self.service.category_places
         self._draw_segments()
         self._draw_center()
 
     def _draw_segments(self):
         """Draws the segments dynamically based on given information.
-        The unique category is drawn first, then the rest are drawn by a nested loop."""
+        The unique category is drawn first, then the rest are drawn by two loops."""
 
         board_segment(self.canvas, 0, self.size, self.colors[0])
         segment_counter = 1

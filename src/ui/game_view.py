@@ -9,7 +9,7 @@ from ui.game_view_elements.player_tokens import PlayerTokens
 from ui.rules_view import rules_view
 from ui.statistics_view import StatisticsView
 from ui.settings_view import settings_view
-from ui.dialogs import quit_game_dialog
+from ui.dialogs import quit_game_dialog, show_player_victorious_dialog
 from ui.widgets import (
     display_textbox,
     button,
@@ -140,13 +140,16 @@ class GameView:
     def _build_cast_button(self):
         """Builds a button for casting the die."""
 
-        cast_btn = button(self.window, "Cast", lambda: self._cast_die(cast_btn))
+        cast_btn = button(self.window, "Cast", lambda: self._handle_die_cast(cast_btn))
         cast_btn.place(x=917,y=420, anchor="center")
 
-    def _cast_die(self, cast_btn):
-        """Selects a random number from the die, builds the corresponding die face image,
+    def _handle_die_cast(self, cast_btn):
+        """Builds a die image based on the current die face,
         removes the die cast button, shows the question, highlights the category,
         and moves the player's token to the correct position on the game board.
+
+        However, if the current player meets the victory condition,
+        calls another method which handles ending the game.
 
         Args:
             cast_btn (widget): The button for casting the die.
@@ -154,15 +157,19 @@ class GameView:
 
         current_turn = self.service.current_turn
         die_face = self.service.get_die_face()
-        starting_positions = self.service.player_positions
+        starting_positions = self.service.player_positions_radii
+        player_starting_laps = self.service.laps[current_turn]
 
         cast_btn.destroy()
         self._build_die(die_face[0])
+
+        positions = self.service.update_player_positions_radii(current_turn, die_face[1])
+        self.player_tokens.move_token(current_turn, positions[current_turn], starting_positions)
         self._show_question()
         self.category_board.highlight_category(self.service.current_category_index)
 
-        positions = self.service.update_player_positions(current_turn, die_face[1])
-        self.player_tokens.move_token(current_turn, positions[current_turn], starting_positions)
+        if self.service.check_victory_condition(player_starting_laps) is True:
+            self._handle_game_end()
 
     def _show_question(self):
         """Shows the current category and question,
@@ -238,15 +245,29 @@ class GameView:
         self.scoreboard.highlight_player(self.service.current_turn)
         self._build_cast_button()
 
+    def _handle_game_end(self):
+        """Shows a congratulatory dialog with a button.
+        After the user clicks the button, calls another method
+        which handles the view change."""
+
+        player_name = self.service.players[self.service.current_turn]
+        if show_player_victorious_dialog(player_name) == 'ok':
+            self._open_settings_view()
+
     def _quit_game(self):
         """Shows a dialog with confirmation buttons.
-        If the user clicks 'yes', closes the current window
-        and initializes a new window from the SettingsView class."""
+        If the user clicks 'yes', calls another method
+        which handles the view change."""
 
         if quit_game_dialog() == 'yes':
-            self.service.remove_game_active_status()
-            self.window.destroy()
-            settings_view.initialize_window()
+            self._open_settings_view()
+
+    def _open_settings_view(self):
+        """Closes the current window and initializes a new one."""
+
+        self.service.remove_game_active_status()
+        self.window.destroy()
+        settings_view.initialize_window()
 
     def _open_statistics_view(self):
         """Opens a new window on top of the current one."""
