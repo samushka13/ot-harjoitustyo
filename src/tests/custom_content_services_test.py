@@ -5,7 +5,7 @@ from services.custom_content_services import CustomContentServices
 from entities.user import User
 from entities.question import Question
 from config import TEST_DATABASE_FILENAME as test_database
-from ui.widgets import get_listbox
+from ui.widgets import listbox
 
 
 class TestCustomContentServices(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestCustomContentServices(unittest.TestCase):
         self.database.add_user(self.user.username, self.user.password)
         self.database.add_logged_in_user(self.user.username)
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.database.save_item_to_database(
+        self.database.save_question_item(
             self.question.user_id,
             self.question.category,
             self.question.difficulty,
@@ -93,18 +93,18 @@ class TestCustomContentServices(unittest.TestCase):
             ),
             None,
         )
-        self.assertEqual(self.database.get_question(1, 1), 1)
+        self.assertEqual(self.database.get_question_if_owned_by_user(1, 1), 1)
 
     def test_check_owner(self):
         self.assertEqual(self.service.check_owner(1), True)
         self.assertEqual(self.service.check_owner(2), False)
 
     def test_determine_question_ids(self):
-        listbox = get_listbox()
+        listbox_widget = listbox()
         for entry in self.service.get_listbox_items():
-            listbox.insert(tk.END, entry)
-            listbox.select_set(0)
-        self.assertEqual(self.service.determine_question_ids(listbox), ["1."])
+            listbox_widget.insert(tk.END, entry)
+            listbox_widget.select_set(0)
+        self.assertEqual(self.service.determine_question_ids(listbox_widget), ["1."])
 
     def test_count_questions(self):
         self.assertEqual(self.service.count_questions(), 1)
@@ -114,7 +114,7 @@ class TestCustomContentServices(unittest.TestCase):
 
     def test_delete_all(self):
         question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.database.save_item_to_database(
+        self.database.save_question_item(
             question.user_id,
             question.category,
             question.difficulty,
@@ -122,11 +122,11 @@ class TestCustomContentServices(unittest.TestCase):
             question.answer,
         )
         self.assertEqual(self.service.delete_all(), None)
-        self.assertEqual(self.database.get_question(1, 1), 0)
+        self.assertEqual(self.database.get_question_if_owned_by_user(1, 1), 0)
 
     def test_get_item_for_editing(self):
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.database.save_item_to_database(
+        self.database.save_question_item(
             self.question.user_id,
             self.question.category,
             self.question.difficulty,
@@ -149,4 +149,4 @@ class TestCustomContentServices(unittest.TestCase):
             ),
             None,
         )
-        self.assertEqual(self.database.get_item_for_editing(1)[3], "The updated answer.")
+        self.assertEqual(self.database.get_question_item_parameters(1)[3], "The updated answer.")

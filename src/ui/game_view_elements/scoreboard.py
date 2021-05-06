@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import DISABLED
-from ui.widgets import get_display_textbox
+from ui.widgets import display_textbox
 from ui.stylings import TEXT_FONT, BACKGROUND
 
 class Scoreboard:
@@ -16,7 +16,7 @@ class Scoreboard:
     """
 
     def __init__(self, service, window, canvas, player_colors, category_colors, points):
-        """Class constructor that initiates a new scoreboard for the game view window.
+        """Class constructor that initializes a new scoreboard for the game view window.
         The board is drawn on a tkinter canvas widget.
 
         Args:
@@ -38,24 +38,23 @@ class Scoreboard:
         self.draw_player_points(points)
 
     def _draw_player_names(self, window):
-        """Draw the player names on the scoreboard with a drawing loop."""
+        """Draw the player names on the scoreboard with a loop."""
 
         y_increase = 0
         for i in range(len(self.players)):
-            player = get_display_textbox(window, 1, 25, TEXT_FONT)
+            player = display_textbox(window, 1, 25, TEXT_FONT)
             player.place(x=40, y=30+y_increase, anchor="w")
             player.insert(tk.END, self.players[i])
             player.config(state=DISABLED, fg=self.player_colors[i])
             y_increase += 25
 
     def draw_player_points(self, points):
-        """Draws the player points on the scoreboard with a drawing loop."""
+        """Draws the player points on the scoreboard with a loop."""
 
         point = 0
         y_increase = 0
         i = 0
         for i in range(len(self.players)):
-            j = 0
             x_increase = 0
             for j in range(len(self.categories)):
                 if points[point][2] == 1:

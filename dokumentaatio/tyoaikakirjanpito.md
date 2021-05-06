@@ -31,4 +31,5 @@
 |  2.5. |  1  | Pelisession testit toteutettu.                                      |
 |  2.5. |  1  | Käyttöohje lisätty. Dokumentaatiota päivitetty.                     |
 |  3.5. |  1  | Refaktorointia.                                                     |
-|  yht. | 80  |                                                                     |
+|  6.5. |  1  | Docstringit päivitetty. Siistimistä.                                |
+|  yht. | 81  |                                                                     |

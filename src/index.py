@@ -2,8 +2,7 @@ from ui.login_view import login_view
 
 
 def main():
-    """Runs the app by initiating a LoginView class entity
-    and calling one of its methods to initialize an actual window."""
+    """Calls a LoginView class entity method which initializes a window."""
 
     login_view.initialize_window()
 

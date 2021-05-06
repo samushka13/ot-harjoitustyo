@@ -1,4 +1,4 @@
-from ui.widgets import get_board_segment
+from ui.widgets import board_segment
 from ui.stylings import BACKGROUND
 
 class GameBoard:
@@ -11,7 +11,7 @@ class GameBoard:
     """
 
     def __init__(self, service, canvas, category_colors):
-        """Class constructor that initiates new game board for the game view window.
+        """Class constructor that initializes new game board for the game view window.
         The board is drawn on a tkinter canvas widget.
 
         Args:
@@ -34,14 +34,14 @@ class GameBoard:
         """Draws the segments dynamically based on given information.
         The unique category is drawn first, then the rest are drawn by a nested loop."""
 
-        get_board_segment(self.canvas, 0, self.size, self.colors[0])
+        board_segment(self.canvas, 0, self.size, self.colors[0])
         segment_counter = 1
         while segment_counter < self.segments:
             i = 0
             while len(self.categories[1:]) >= i+1:
                 if segment_counter in self.category_places[i]:
                     distance = self.size * segment_counter
-                    get_board_segment(self.canvas, distance, self.size, self.colors[i+1])
+                    board_segment(self.canvas, distance, self.size, self.colors[i+1])
                 i += 1
             segment_counter += 1
 

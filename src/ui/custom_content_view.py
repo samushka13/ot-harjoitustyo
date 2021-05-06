@@ -17,12 +17,12 @@ from ui.stylings import (
     Y,
 )
 from ui.widgets import (
-    get_title_label,
-    get_basic_label,
-    get_basic_button,
-    get_combobox,
-    get_edit_textbox,
-    get_listbox,
+    title_label,
+    basic_label,
+    button,
+    combobox,
+    edit_textbox,
+    listbox,
 )
 
 
@@ -60,48 +60,48 @@ class CustomContentView:
     def _build_create_widgets(self):
         """Builds the left-side widgets of the parent window."""
 
-        get_title_label(self.window, "Create"
+        title_label(self.window, "Create"
         ).grid(column=0, row=0, columnspan=2)
 
-        get_basic_label(self.window, "Category"
+        basic_label(self.window, "Category"
         ).grid(column=0, row=1, columnspan=2)
         self.category_combobox = self._build_category_combobox()
         self.category_combobox.focus()
 
-        get_basic_label(self.window, "Difficulty"
+        basic_label(self.window, "Difficulty"
         ).grid(column=0, row=3, columnspan=2)
         self.difficulty_combobox = self._build_difficulty_combobox()
 
-        get_basic_label(self.window, "Question"
+        basic_label(self.window, "Question"
         ).grid(column=0, row=5, columnspan=2)
-        self.question_entry = get_edit_textbox(self.window, 6, 50)
+        self.question_entry = edit_textbox(self.window, 6, 50)
         self.question_entry.grid(column=0, row=6, columnspan=2)
 
-        get_basic_label(self.window, "Answer"
+        basic_label(self.window, "Answer"
         ).grid(column=0, row=7, columnspan=2)
-        self.answer_entry = get_edit_textbox(self.window, 4, 50)
+        self.answer_entry = edit_textbox(self.window, 4, 50)
         self.answer_entry.grid(column=0, row=8, columnspan=2)
 
-        get_basic_button(self.window, "Save", self._handle_save
+        button(self.window, "Save", self._handle_save
         ).grid(column=0, row=9, pady=Y)
-        get_basic_button(self.window, "Clear", self._clear_entries
+        button(self.window, "Clear", self._clear_entries
         ).grid(column=1, row=9, pady=Y)
-        get_basic_button(self.window, "Back to Settings", self._open_settings_view
+        button(self.window, "Back to Settings", self._open_settings_view
         ).grid(column=0, row=11, columnspan=2, pady=Y)
 
     def _build_browse_widgets(self):
         """Builds the right-side widgets of the parent window."""
 
-        get_title_label(self.window, "Browse"
+        title_label(self.window, "Browse"
         ).grid(column=2, row=0, columnspan=3)
 
         self.listbox = self._build_listbox()
 
-        get_basic_button(self.window, "Edit", self._handle_edit
+        button(self.window, "Edit", self._handle_edit
         ).grid(column=2, row=11)
-        get_basic_button(self.window, "Delete selected", self._handle_delete_item
+        button(self.window, "Delete selected", self._handle_delete_item
         ).grid(column=3, row=11)
-        get_basic_button(self.window, "Delete all", self._handle_delete_all
+        button(self.window, "Delete all", self._handle_delete_all
         ).grid(column=4, row=11)
 
     def _build_listbox(self):
@@ -111,13 +111,13 @@ class CustomContentView:
             A listbox with all question items in the database.
         """
 
-        listbox = get_listbox()
+        question_listbox = listbox()
         for entry in self.service.get_listbox_items():
-            listbox.insert(tk.END, entry)
-            listbox.select_set(0)
-        listbox.grid(column=2, row=1, columnspan=3, rowspan=9, padx=X)
+            question_listbox.insert(tk.END, entry)
+            question_listbox.select_set(0)
+        question_listbox.grid(column=2, row=1, columnspan=3, rowspan=9, padx=X)
 
-        return listbox
+        return question_listbox
 
     def _build_category_combobox(self):
         """Builds a combobox widget.
@@ -126,7 +126,7 @@ class CustomContentView:
             A combobox with all categories in the database.
         """
 
-        category_combobox = get_combobox(self.window, 43)
+        category_combobox = combobox(self.window, 43)
         category_combobox['values'] = self.service.get_categories()
         category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
 
@@ -139,7 +139,7 @@ class CustomContentView:
             A combobox with the default difficulties.
         """
 
-        difficulty_combobox = get_combobox(self.window, 43)
+        difficulty_combobox = combobox(self.window, 43)
         difficulty_combobox['values'] = self.service.get_difficulties()
         difficulty_combobox.state(['readonly'])
         difficulty_combobox.set(self.service.get_difficulties()[1])

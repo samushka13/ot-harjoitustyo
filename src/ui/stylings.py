@@ -8,7 +8,7 @@ def get_window_settings(window, name, size):
     """Provides basic settings for windows of all views.
 
     Args:
-        window (widget): The parent window of the widget.
+        window (Tk): The parent window of the widget.
         name (str): The name of the window.
         size (str): The size of the window.
     """
@@ -41,7 +41,7 @@ SETTINGS_WINDOW_SIZE = "920x720"
 CUSTOM_CONTENT_WINDOW_SIZE = "1280x720"
 EDIT_QUESTION_WINDOW_SIZE = "480x600"
 BOARD_WINDOW_SIZE = "1280x720"
-RULES_WINDOW_SIZE = "740x660"
+RULES_WINDOW_SIZE = "730x620"
 STATISTICS_WINDOW_SIZE = "360x300"
 
 # ------------------------------------------------------

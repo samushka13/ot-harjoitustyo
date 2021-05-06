@@ -19,7 +19,7 @@ class TestGameServices(unittest.TestCase):
         # ---------------------------------------------------------------------
         self.database = DatabaseServices(test_database)
         self.question = Question(1, "TV Shows", "Easy", "Question?", "Answer!")
-        self.database.save_item_to_database(
+        self.database.save_question_item(
             self.question.user_id,
             self.question.category,
             self.question.difficulty,
@@ -27,7 +27,7 @@ class TestGameServices(unittest.TestCase):
             self.question.answer,
         )
         self.question_2 = Question(2, "Movies", "Easy", "What?", "Yeah!")
-        self.database.save_item_to_database(
+        self.database.save_question_item(
             self.question_2.user_id,
             self.question_2.category,
             self.question_2.difficulty,

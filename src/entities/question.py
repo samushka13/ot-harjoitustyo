@@ -2,22 +2,22 @@ class Question:
     """Class that describes an individual question item.
 
     Attributes:
-        user_id: An integer value of the user's id.
-        category: String value of the item's category.
-        difficulty: String value of the item's difficulty.
-        question: String value of the item's question.
-        answer: String value of the item's answer.
+        user_id (int): The user's id.
+        category (str): The question item's category.
+        difficulty (str): The question item's difficulty.
+        question (str): The question item's question.
+        answer (str): The question item's answer.
     """
 
     def __init__(self, user_id, category, difficulty, question, answer):
-        """Class constructor that initiates a new question item.
+        """Class constructor that initializes a new question item.
 
         Args:
-            user_id: An integer value of the user's id.
-            category: String value of the item's category.
-            difficulty: String value of the item's difficulty.
-            question: String value of the item's question.
-            answer: String value of the item's answer.
+            user_id (int): The user's id.
+            category (str): The question item's category.
+            difficulty (str): The question item's difficulty.
+            question (str): The question item's question.
+            answer (str): The question item's answer.
         """
 
         self.user_id = user_id

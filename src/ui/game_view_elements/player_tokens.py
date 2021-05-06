@@ -10,7 +10,7 @@ class PlayerTokens:
     """
 
     def __init__(self, service, canvas, player_colors):
-        """Class constructor that initiates new tokens for the game view window.
+        """Class constructor that initializes new tokens for the game view window.
         The tokens are drawn on a tkinter canvas widget.
 
         Args:

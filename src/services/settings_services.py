@@ -2,7 +2,7 @@ from repositories.database_services import database_services as default_database
 
 
 class SettingsServices:
-    """Class that describes all services related to game settings.
+    """Class that describes all settings-related services.
 
     Attributes:
         database: Value of the current database.
@@ -25,13 +25,13 @@ class SettingsServices:
 
     def get_default_players(self):
         """Provides a list of default player names.
+        The first item is the current user's username.
 
-        The UI only accommodates six players,
+        The UI currently only accommodates six players,
         so increasing the number here would require changes in the UI as well.
 
         Returns:
-            A list of the default player names.
-            The first name is the current user's username.
+            default_players (list): The default player names as string values.
         """
 
         default_players = [
@@ -52,7 +52,7 @@ class SettingsServices:
         so increasing the number here would require changes in the UI as well.
 
         Returns:
-            A list of the default player colors.
+            default_player_colors (list): The player colors as string values.
         """
 
         default_player_colors = [
@@ -82,7 +82,7 @@ class SettingsServices:
         if all twelve categories are selected in game settings.
 
         Returns:
-            A list of the default board sizes.
+            board_sizes (list): The default board sizes as tuples.
         """
 
         board_sizes = [
@@ -100,11 +100,12 @@ class SettingsServices:
         """Calls a database class method that fetches all existing categories.
 
         Returns:
-            The result of the method call, which consists of
-            a list of string values of the categories.
+            categories (list): The category names as string values.
         """
 
-        return self.database.get_categories()
+        categories = self.database.get_categories()
+
+        return categories
 
     def get_default_category_colors(self):
         """Provides a list of default category colors.
@@ -114,7 +115,7 @@ class SettingsServices:
         for the added colors to be actually shown.
 
         Returns:
-            A list of the default category colors.
+            self.category_colors (list): The category colors as string values.
         """
 
         self.category_colors = [
@@ -142,7 +143,7 @@ class SettingsServices:
         Therefore, changing this is not recommended.
 
         Returns:
-            A list of the default difficulty names.
+            self.difficulty_names (list): The difficulty names as string values.
         """
 
         self.difficulty_names = [
@@ -155,12 +156,13 @@ class SettingsServices:
 
     def collect_player_settings(self, added_players):
         """Provides a list of player names from user inputs.
+        Removes all empty and generic default values.
 
         Args:
-            added_players: A list of string values describing the selected players.
+            added_players (list): The selected player names as string values.
 
         Returns:
-            A list of string values of player names.
+            self.players (list): The selected player names as string values.
         """
 
         self.players = []
@@ -176,19 +178,22 @@ class SettingsServices:
         when the UI accommodates such a feature.
 
         Returns:
-            A list of values of player colors.
+            player_colors (list): The player colors as string values.
         """
 
-        return self.get_default_player_colors()
+        player_colors = self.get_default_player_colors()
+
+        return player_colors
 
     def collect_category_settings(self, added_categories):
         """Provides a list of category names from user inputs.
+        Removes all empty and generic default values.
 
         Args:
-            added_categories: A list of string values describing the selected categories.
+            added_categories (list): The selected categories as string values.
 
         Returns:
-            A list of string values of category names.
+            self.categories (list): The string values of the selected category names.
         """
 
         self.categories = []
@@ -204,19 +209,21 @@ class SettingsServices:
         when the UI accommodates such a feature.
 
         Returns:
-            A list of values of category colors.
+            category_colors (list): The category colors as string values.
         """
 
-        return self.get_default_category_colors()
+        category_colors = self.get_default_category_colors()
+
+        return category_colors
 
     def collect_board_size_settings(self, selected_board_size):
         """Provides the board size from user input.
 
         Args:
-            selected_board_size: A string value describing the board size.
+            selected_board_size (str): The name of the selected board size.
 
         Returns:
-            An integer value describing the board size.
+            self.board_size (int): The selected board size.
         """
 
         for i in range(0, len(self.get_default_board_sizes())):
@@ -228,6 +235,9 @@ class SettingsServices:
     def handle_session_save(self, players, categories, board_size):
         """Calls database class methods which ensure that no other game session is active
         and then save the current game session variables to the database.
+
+        The difficulty is saved as an empty string value, as difficulty selection is
+        currently not supported.
 
         Args:
             players (list): The selected players.
@@ -249,7 +259,7 @@ class SettingsServices:
         """Checks if enough players were added.
 
         Returns:
-            True, if it was, or False, if not.
+            True, if so, or False, if not.
         """
 
         return bool(len(self.players) > 0)
@@ -258,7 +268,7 @@ class SettingsServices:
         """Checks if the added player names are unique.
 
         Returns:
-            True, if they are, or False, if they aren't.
+            True, if so, or False, if not.
         """
 
         return bool(len(set(self.players)) == len(self.players))
@@ -267,7 +277,7 @@ class SettingsServices:
         """Checks if enough categories were added.
 
         Returns:
-            True, if it was, or False, if not.
+            True, if so, or False, if not.
         """
 
         return bool(len(self.categories) >= 2)

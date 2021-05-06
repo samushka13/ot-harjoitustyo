@@ -1,12 +1,11 @@
 import tkinter as tk
 from services.login_services import login_services
 from ui.settings_view import settings_view
-from ui.stylings import (
-    get_window_settings,
-    LOGIN_WINDOW_NAME,
-    LOGIN_WINDOW_SIZE,
-    X,
-    Y,
+from ui.widgets import (
+    title_label,
+    basic_label,
+    button,
+    entry,
 )
 from ui.dialogs import (
     show_invalid_username_dialog,
@@ -16,14 +15,15 @@ from ui.dialogs import (
     show_registration_error_dialog,
     show_users_dialog,
     show_no_users_dialog,
-    whats_new_dialog,
 )
-from ui.widgets import (
-    get_title_label,
-    get_basic_label,
-    get_basic_button,
-    get_basic_entry,
+from ui.stylings import (
+    get_window_settings,
+    LOGIN_WINDOW_NAME,
+    LOGIN_WINDOW_SIZE,
+    X,
+    Y,
 )
+
 
 class LoginView:
     """Class that describes the UI of the login view.
@@ -40,8 +40,8 @@ class LoginView:
             service: The current services class entity.
         """
 
-        self.window = None
         self.service = service
+        self.window = None
         self.username_input = None
         self.password_input = None
 
@@ -71,7 +71,7 @@ class LoginView:
     def _build_title(self):
         """Builds the title of the view."""
 
-        get_title_label(
+        title_label(
             self.window,
             "Login or Create Username"
         ).grid(column=0, row=0, columnspan=2, padx=X)
@@ -80,15 +80,15 @@ class LoginView:
         """Builds the username subtitle and entry field (with focus).
 
         Returns:
-            The widget for username input.
+            username_entry (widget): The username input field.
         """
 
-        get_basic_label(
+        basic_label(
             self.window,
             "Username",
         ).grid(column=0, row=1, columnspan=2, pady=Y)
 
-        username_entry = get_basic_entry(self.window, 30)
+        username_entry = entry(self.window, 30)
         username_entry.grid(column=0, row=2, columnspan=2)
         username_entry.focus()
 
@@ -98,15 +98,15 @@ class LoginView:
         """Builds the password subtitle and entry field (with focus).
 
         Returns:
-            The widget for password input.
+            password_entry (widget): The password input field.
         """
 
-        get_basic_label(
+        basic_label(
             self.window,
             "Password",
         ).grid(column=0, row=3, columnspan=2, pady=Y)
 
-        password_entry = get_basic_entry(self.window, 30, "*")
+        password_entry = entry(self.window, 30, "*")
         password_entry.grid(column=0, row=4, columnspan=2)
 
         return password_entry
@@ -114,13 +114,13 @@ class LoginView:
     def _build_action_buttons(self):
         """Builds the action buttons of the parent view."""
 
-        get_basic_button(
+        button(
             self.window,
             "Proceed",
             self._handle_login,
         ).grid(column=0, row=5, padx=X, pady=Y, sticky="e")
 
-        get_basic_button(
+        button(
             self.window,
             "Users",
             self._show_users,
@@ -212,11 +212,9 @@ class LoginView:
             current_user (str): The current user's username.
         """
 
-        # This dialog will be removed in the final release.
-        if whats_new_dialog() == 'ok':
-            self.service.handle_login(current_user)
-            self.window.destroy()
-            settings_view.initialize_window()
+        self.service.handle_login(current_user)
+        self.window.destroy()
+        settings_view.initialize_window()
 
 
 login_view = LoginView()

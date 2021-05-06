@@ -2,7 +2,7 @@ from repositories.database_services import database_services as default_database
 
 
 class LoginServices:
-    """Class that describes login-related services.
+    """Class that describes all login-related services.
 
     Attributes:
         database: The current database.
@@ -23,6 +23,7 @@ class LoginServices:
 
         Args:
             username (str): The user's username.
+
         Returns:
             True, if the username is long enough, or False, if it's not.
         """
@@ -33,8 +34,9 @@ class LoginServices:
         """Checks if the input credentials already exist.
 
         Args:
-            username: String value of the user's username.
-            password: String value of the user's password.
+            username (str): The user's username.
+            password (str): The user's password.
+
         Returns:
             True, if the credentials exist, or False, if they don't.
         """
@@ -45,7 +47,8 @@ class LoginServices:
         """Checks if the username doesn't match the password.
 
         Args:
-            username: String value of the user's username.
+            username (str): The user's username.
+
         Returns:
             True, if the username and password doesn't match, or False, if they do.
         """
@@ -56,8 +59,8 @@ class LoginServices:
         """Calls a DatabaseServices method which adds the new user to the database.
 
         Args:
-            username: String value of the user's username.
-            password: String value of the user's password.
+            username (str): The user's username.
+            password (str): The user's password.
         """
 
         self.database.add_user(username, password)
@@ -66,9 +69,10 @@ class LoginServices:
         """Checks if the newly added user is in the database.
 
         Args:
-            new_user: String value of the user's username.
+            new_user (str): The new user's username.
+
         Returns:
-            True, if the user is in the database, or False, if not.
+            True, if the new user is in the database, or False, if not.
         """
 
         return bool(new_user in self.database.get_users())
@@ -83,11 +87,10 @@ class LoginServices:
         return bool(len(self.list_all_users()) > 0)
 
     def list_all_users(self):
-        """Calls a DatabaseServices class method which returns
-        all users in a formatted list.
+        """Calls a DatabaseServices class method which returns a list of users.
 
         Returns:
-            users: A sorted list of all users.
+            users (list): A sorted, formatted list of all users.
         """
 
         users = '\n'.join(sorted(self.database.get_users()))
@@ -98,7 +101,7 @@ class LoginServices:
         """Destroys the current view and initializes a new one.
 
         Args:
-            current_user: String value of the user's username.
+            current_user (str): The current user's username.
         """
 
         self.database.remove_logged_in_users()

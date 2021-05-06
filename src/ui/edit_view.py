@@ -8,11 +8,11 @@ from ui.stylings import (
     Y,
 )
 from ui.widgets import (
-    get_basic_label,
-    get_title_label,
-    get_basic_button,
-    get_edit_textbox,
-    get_combobox,
+    basic_label,
+    title_label,
+    button,
+    edit_textbox,
+    combobox,
 )
 from ui.dialogs import (
     show_save_error_dialog,
@@ -62,45 +62,45 @@ class EditView:
     def _build_widgets(self):
         """Builds the widgets of the parent window."""
 
-        get_title_label(self.window, "Edit"
+        title_label(self.window, "Edit"
         ).grid(column=0, row=0, columnspan=2, padx=X)
 
-        get_basic_label(self.window, "Category"
+        basic_label(self.window, "Category"
         ).grid(column=0, row=1, columnspan=2, padx=X, pady=Y)
 
-        self.category_combobox = get_combobox(self.window, 43)
+        self.category_combobox = combobox(self.window, 43)
         self.category_combobox['values'] = self.service.get_categories()
         self.category_combobox.state(['readonly'])
         self.category_combobox.set(self.service.get_item_for_editing(self.selected)[0])
         self.category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
 
-        get_basic_label(self.window, "Difficulty",
+        basic_label(self.window, "Difficulty",
         ).grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
 
-        self.difficulty_combobox = get_combobox(self.window, 43)
+        self.difficulty_combobox = combobox(self.window, 43)
         self.difficulty_combobox['values'] = self.service.get_difficulties()
         self.difficulty_combobox.state(['readonly'])
         self.difficulty_combobox.set(self.service.get_item_for_editing(self.selected)[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
 
-        get_basic_label(self.window, "Question",
+        basic_label(self.window, "Question",
         ).grid(column=0, row=5, columnspan=2, padx=X, pady=Y)
 
-        self.question_entry = get_edit_textbox(self.window, 6, 50)
+        self.question_entry = edit_textbox(self.window, 6, 50)
         self.question_entry.grid(column=0, row=6, columnspan=2, padx=X)
         self.question_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[2])
 
-        get_basic_label(self.window, "Answer",
+        basic_label(self.window, "Answer",
         ).grid(column=0, row=7, columnspan=2, padx=X, pady=Y)
 
-        self.answer_entry = get_edit_textbox(self.window, 4, 50)
+        self.answer_entry = edit_textbox(self.window, 4, 50)
         self.answer_entry.grid(column=0, row=8, columnspan=2, padx=X)
         self.answer_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[3])
 
-        get_basic_button(self.window, "Save", self._handle_update
+        button(self.window, "Save", self._handle_update
         ).grid(column=0, row=10)
 
-        get_basic_button(self.window, "Cancel", self._open_custom_content_view
+        button(self.window, "Cancel", self._open_custom_content_view
         ).grid(column=1, row=10)
 
     def _handle_update(self):

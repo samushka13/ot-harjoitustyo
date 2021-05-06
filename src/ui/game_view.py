@@ -11,9 +11,9 @@ from ui.statistics_view import StatisticsView
 from ui.settings_view import settings_view
 from ui.dialogs import quit_game_dialog
 from ui.widgets import (
-    get_display_textbox,
-    get_basic_button,
-    get_canvas,
+    display_textbox,
+    button,
+    canvas,
 )
 from ui.stylings import (
     get_window_settings,
@@ -65,17 +65,17 @@ class GameView:
         separates the scoreboard from the question, and a second one
         that separates the question from the categories."""
 
-        self.right_side = get_canvas(self.window, 720, 560)
+        self.right_side = canvas(self.window, 720, 560)
         self.right_side.place(x=280, y=360, anchor="center")
 
         self.right_side.create_line(30, 190, 530, 190)
         self.right_side.create_line(30, 530, 530, 530)
 
-        self.left_side = get_canvas(self.window, 720, 720)
+        self.left_side = canvas(self.window, 720, 720)
         self.left_side.place(x=920, y=360, anchor="center")
 
     def _build_scoreboard(self, player_colors, category_colors):
-        """Builds the scoreboard."""
+        """Builds the scoreboard and highlights a player."""
 
         self.scoreboard = Scoreboard(
             self.service,
@@ -118,20 +118,20 @@ class GameView:
         """Builds buttons for showing rules and statistics,
         and quitting the current game session."""
 
-        get_basic_button(self.window, "Quit", self._quit_game,
+        button(self.window, "Quit", self._quit_game,
         ).place(x=1260, y=30, anchor="e")
 
-        get_basic_button(self.window, "Rules", self._open_rules_view,
+        button(self.window, "Rules", self._open_rules_view,
         ).place(x=1260, y=655, anchor="e")
 
-        get_basic_button(self.window, "Statistics", self._open_statistics_view,
+        button(self.window, "Statistics", self._open_statistics_view,
         ).place(x=1260, y=690, anchor="e")
 
     def _build_die(self, die_face):
         """Builds the die on the parent canvas.
 
         Args:
-            die_face = Path of the die face image asset.
+            die_face (path) = The file path of the die face image asset.
         """
 
         self.img = ImageTk.PhotoImage(Image.open(die_face))
@@ -140,13 +140,17 @@ class GameView:
     def _build_cast_button(self):
         """Builds a button for casting the die."""
 
-        cast_btn = get_basic_button(self.window, "Cast", lambda: self._cast_die(cast_btn))
+        cast_btn = button(self.window, "Cast", lambda: self._cast_die(cast_btn))
         cast_btn.place(x=917,y=420, anchor="center")
 
     def _cast_die(self, cast_btn):
         """Selects a random number from the die, builds the corresponding die face image,
         removes the die cast button, shows the question, highlights the category,
-        and moves the player's token to the correct position on the game board."""
+        and moves the player's token to the correct position on the game board.
+
+        Args:
+            cast_btn (widget): The button for casting the die.
+        """
 
         current_turn = self.service.current_turn
         die_face = self.service.get_die_face()
@@ -155,7 +159,7 @@ class GameView:
         cast_btn.destroy()
         self._build_die(die_face[0])
         self._show_question()
-        self.category_board.highlight_category(self.service.current_category)
+        self.category_board.highlight_category(self.service.current_category_index)
 
         positions = self.service.update_player_positions(current_turn, die_face[1])
         self.player_tokens.move_token(current_turn, positions[current_turn], starting_positions)
@@ -165,11 +169,11 @@ class GameView:
         and builds a button for showing the correct answer."""
 
         self.service.get_category_for_player()
-        self.question_textbox = get_display_textbox(self.window, 7, 45)
+        self.question_textbox = display_textbox(self.window, 7, 45)
         self.question_textbox.place(x=30, y=285, anchor="w")
         self.question_textbox.insert(tk.END, self.service.get_question_for_player())
         self.question_textbox.config(state=DISABLED)
-        self.show_answer_btn = get_basic_button(
+        self.show_answer_btn = button(
             self.window,
             "Show answer",
             self._show_confirmation_buttons,
@@ -180,19 +184,19 @@ class GameView:
         """Shows the correct answer and buttons for confirming
         whwther the player's answer was correct."""
 
-        self.answer_textbox = get_display_textbox(self.window, 3, 45)
+        self.answer_textbox = display_textbox(self.window, 3, 45)
         self.answer_textbox.place(x=30, y=420, anchor="w")
         self.answer_textbox.insert(tk.END, self.service.get_answer_for_player())
         self.answer_textbox.config(state=DISABLED)
 
-        self.answer_correct_btn = get_basic_button(
+        self.answer_correct_btn = button(
             self.window,
             "Player's answer was correct",
             self._handle_correct_answer,
         )
         self.answer_correct_btn.place(x=30, y=490, anchor="w")
 
-        self.answer_incorrect_btn = get_basic_button(
+        self.answer_incorrect_btn = button(
             self.window,
             "Player's answer was incorrect",
             self._handle_incorrect_answer,
@@ -219,7 +223,7 @@ class GameView:
         highlights the current player, and rebuilds the die cast button.
 
         Args:
-            points (list): The players' points.
+            points (list): The players' points as integer values.
         """
 
         self.scoreboard.draw_player_points(points)
@@ -237,7 +241,7 @@ class GameView:
     def _quit_game(self):
         """Shows a dialog with confirmation buttons.
         If the user clicks 'yes', closes the current window
-        and initiates a new SettingsView instance."""
+        and initializes a new window from the SettingsView class."""
 
         if quit_game_dialog() == 'yes':
             self.service.remove_game_active_status()

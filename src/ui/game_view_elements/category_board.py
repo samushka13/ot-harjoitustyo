@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import DISABLED
-from ui.widgets import get_display_textbox
+from ui.widgets import display_textbox
 from ui.stylings import TEXT_FONT
 
 class CategoryBoard:
@@ -14,7 +14,7 @@ class CategoryBoard:
     """
 
     def __init__(self, service, window, canvas, category_colors):
-        """Class constructor that initiates a new category board for the game view window.
+        """Class constructor that initializes a new category board for the game view window.
         The board is drawn on a tkinter canvas widget.
 
         Args:
@@ -37,7 +37,7 @@ class CategoryBoard:
         x_increase = 0
         y_increase = 0
         for i in range(len(self.categories)):
-            category = get_display_textbox(self.window, 1, 25, TEXT_FONT)
+            category = display_textbox(self.window, 1, 25, TEXT_FONT)
             category.place(x=40+x_increase, y=560+y_increase, anchor="w")
             category.insert(tk.END, self.categories[i])
             category.config(state=DISABLED, fg=self.category_colors[i])

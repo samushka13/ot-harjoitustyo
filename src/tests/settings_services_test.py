@@ -3,7 +3,7 @@ from repositories.database_services import DatabaseServices
 from services.settings_services import SettingsServices
 from entities.user import User
 from entities.question import Question
-from ui.widgets import get_combobox
+from ui.widgets import combobox
 from config import TEST_DATABASE_FILENAME as test_database
 
 
@@ -27,7 +27,7 @@ class TestSettingsServices(unittest.TestCase):
         self.database.add_user(self.user.username, self.user.password)
         self.database.add_logged_in_user(self.user.username)
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.database.save_item_to_database(
+        self.database.save_question_item(
             1,
             self.question.category,
             self.question.difficulty,
@@ -61,10 +61,10 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.get_default_difficulties()[0], "Easy")
 
     def test_collect_player_settings(self):
-        entry_field_1 = get_combobox()
-        entry_field_2 = get_combobox()
-        entry_field_3 = get_combobox()
-        entry_field_4 = get_combobox()
+        entry_field_1 = combobox()
+        entry_field_2 = combobox()
+        entry_field_3 = combobox()
+        entry_field_4 = combobox()
         entry_field_1.set("samushka")
         entry_field_2.set("Add player")
         entry_field_3.set("")
@@ -84,9 +84,9 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.collect_player_color_settings()[0], "red")
 
     def test_collect_category_settings(self):
-        entry_field_1 = get_combobox()
-        entry_field_2 = get_combobox()
-        entry_field_3 = get_combobox()
+        entry_field_1 = combobox()
+        entry_field_2 = combobox()
+        entry_field_3 = combobox()
         entry_field_1.set("Movies")
         entry_field_2.set("Add category")
         entry_field_3.set("TV")
@@ -104,7 +104,7 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.collect_category_color_settings()[0], "black")
 
     def test_collect_board_size_settings(self):
-        selected_board_size = get_combobox()
+        selected_board_size = combobox()
         selected_board_size.set("Medium")
         self.assertEqual(self.service.collect_board_size_settings(selected_board_size), 5)
 

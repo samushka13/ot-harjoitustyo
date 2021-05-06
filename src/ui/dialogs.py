@@ -1,33 +1,9 @@
 from tkinter import messagebox
 
-# ------------------------------------------------------
-# "What's new?"
-# ------------------------------------------------------
 
-def whats_new_dialog():
-    return messagebox.showinfo(
-        "What's new",
-
-"""These are currently working:
-
-- All login-related stuff.
-- All settings-related stuff.
-- All stuff related to custom content.
-- Most stuff related to game sessions.
-- Most database-related stuff.
-
-Total test coverage: 100 %.
-However, the level of integration testing can still be increased.
-
-What to expect in the next release?
-
-- More integration tests.
-- Finalized game board logic (i.e. matching question categories with player position).
-- Possibly a nicer-looking UI.""")
-
-# ------------------------------------------------------
-# LoginView dialogs.
-# ------------------------------------------------------
+# -------------------------------------------------------------------------
+# Login:
+# -------------------------------------------------------------------------
 
 def show_invalid_username_dialog():
     return messagebox.showinfo(
@@ -72,9 +48,9 @@ def show_no_users_dialog():
             "There are currently no users on this device.",
         )
 
-# ------------------------------------------------------
-# SettingsView dialogs.
-# ------------------------------------------------------
+# -------------------------------------------------------------------------
+# Settings:
+# -------------------------------------------------------------------------
 
 def show_player_number_error_dialog():
     return messagebox.showinfo(
@@ -97,9 +73,9 @@ def show_category_number_error_dialog():
         \n\nIf the lists are empty, try creating some questions in the Custom Content view.\n"
     )
 
-# ------------------------------------------------------
-# CustomContentView dialogs.
-# ------------------------------------------------------
+# -------------------------------------------------------------------------
+# Custom Content:
+# -------------------------------------------------------------------------
 
 def show_save_error_dialog():
     return messagebox.showinfo(
@@ -156,9 +132,9 @@ def show_delete_all_confirmation_dialog():
         \n\nQuestions created by others will remain.\n"
     )
 
-# ------------------------------------------------------
-# GameView dialogs.
-# ------------------------------------------------------
+# -------------------------------------------------------------------------
+# Game Sessions:
+# -------------------------------------------------------------------------
 
 def quit_game_dialog():
     return messagebox.askquestion(
