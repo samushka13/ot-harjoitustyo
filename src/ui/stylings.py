@@ -1,3 +1,4 @@
+import platform
 from ui.bind_keys import bind_keys_to_widgets
 
 # ------------------------------------------------------
@@ -54,9 +55,18 @@ BACKGROUND = "white smoke"
 # Fonts:
 # ------------------------------------------------------
 
-TITLE_FONT = ('Helvetica', 16, 'bold')
-TEXT_FONT = ('Helvetica', 14)
-BOARD_TEXT_FONT = ('Helvetica', 18, 'bold')
+if platform.system() == 'Darwin':
+    TITLE_FONT = ('Helvetica', 16, 'bold')
+    TEXT_FONT = ('Helvetica', 14)
+    BOARD_TEXT_FONT = ('Helvetica', 18, 'bold')
+if platform.system() == 'Windows':
+    TITLE_FONT = ('Segoe UI', 16, 'bold')
+    TEXT_FONT = ('Segoe UI', 14)
+    BOARD_TEXT_FONT = ('Segoe UI', 18, 'bold')
+if platform.system() == 'Linux':
+    TITLE_FONT = ('Ubuntu Monospace', 16, 'bold')
+    TEXT_FONT = ('Ubuntu Monospace', 14)
+    BOARD_TEXT_FONT = ('Ubuntu Monospace', 18, 'bold')
 
 # ------------------------------------------------------
 # Paddings:
