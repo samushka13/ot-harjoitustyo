@@ -31,4 +31,5 @@
 |  6.5. |  1  | Docstringit päivitetty. Siistimistä.                                |
 |  6.5. |  2  | Pelisession logiikka valmis.                                        |
 |  7.5. |  1  | Pelisession testit valmiit.                                         |
-|  yht. | 82  |                                                                     |
+|  7.5. |  2  | Dokumentaation päivitystä.                                          |
+|  yht. | 84  |                                                                     |

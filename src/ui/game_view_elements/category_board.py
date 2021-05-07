@@ -71,7 +71,7 @@ class CategoryBoard:
                 outline="",
             )
 
-    def remove_previous_highlight(self):
+    def remove_previous_highlighter(self):
         """Deletes the previous highlighter widget."""
 
         self.canvas.delete(self.highlighter)

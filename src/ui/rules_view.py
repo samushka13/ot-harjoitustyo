@@ -29,12 +29,12 @@ class RulesView:
     def _build_widgets(self):
         """Builds the widgets of the parent window."""
 
-        title = display_textbox(self.window, 1, 85, TITLE_FONT)
+        title = display_textbox(self.window, 1, 60, TITLE_FONT)
         title.place(x=30, y=30)
         title.insert(tk.END, "Trivioboros")
         title.config(state=DISABLED)
 
-        rules = display_textbox(self.window, 40, 85, TEXT_FONT)
+        rules = display_textbox(self.window, 40, 87, TEXT_FONT)
         rules.place(x=30, y=80)
         rules.insert(tk.END, self._game_rules_text())
         rules.config(state=DISABLED)

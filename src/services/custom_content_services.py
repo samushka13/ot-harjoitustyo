@@ -18,6 +18,17 @@ class CustomContentServices:
 
         self.database = database
 
+    def get_current_user_id(self):
+        """Provides the id of the currently logged in user.
+
+        Returns:
+            current_user_id (int): The current user's id number.
+        """
+
+        current_user_id = self.database.get_logged_in_user()[0][0]
+
+        return current_user_id
+
     def get_listbox_items(self):
         """Provides question items for the browsing listbox by calling
         a DatabaseServices class method and then formatting the items appropriately.
@@ -61,17 +72,6 @@ class CustomContentServices:
         difficulties = settings_services.get_default_difficulties()
 
         return difficulties
-
-    def get_current_user_id(self):
-        """Provides the id of the currently logged in user.
-
-        Returns:
-            user_id (int): The user's id.
-        """
-
-        user_id = self.database.get_logged_in_user()[0][0]
-
-        return user_id
 
     def check_input_validity(self, category, difficulty, question, answer):
         """Checks that the user input contains no empty values.

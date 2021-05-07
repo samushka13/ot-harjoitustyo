@@ -51,9 +51,6 @@ class TestCustomContentServices(unittest.TestCase):
             ["Easy", "Intermediate", "Advanced Triviliast"],
         )
 
-    def test_get_current_user_id(self):
-        self.assertEqual(self.service.get_current_user_id(), 1)
-
     def test_check_input_validity(self):
         self.assertEqual(
             self.service.check_input_validity(

@@ -197,8 +197,8 @@ class GameServices:
             self.current_question (str): The current question.
         """
 
-        self.current_question = self.database.get_question_for_player(
-            self.categories[self.current_category_index].replace("'", "''"))
+        category = self.categories[self.current_category_index].replace("'", "''")
+        self.current_question = self.database.get_question_for_player(category)
 
         return self.current_question
 
@@ -210,8 +210,8 @@ class GameServices:
             answer (str): The current answer.
         """
 
-        answer = self.database.get_answer_for_player(
-            self.current_question.replace("'", "''"))
+        question = self.current_question.replace("'", "''")
+        answer = self.database.get_answer_for_player(question)
 
         return answer
 

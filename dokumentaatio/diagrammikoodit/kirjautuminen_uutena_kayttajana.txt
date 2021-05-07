@@ -1,0 +1,33 @@
+title Login with a new, valid username
+
+LoginView->LoginView: _handle_login_event()
+activate LoginView
+LoginView->+LoginServices: check_username_length(username)
+LoginServices-->-LoginView: True
+LoginView->+LoginServices: check_username_and_password(username, password)
+LoginServices->+DatabaseServices: get_credentials()
+DatabaseServices-->-LoginServices: credentials
+LoginServices-->-LoginView: False
+LoginView->+LoginServices: check_credentials_not_matching(username)
+LoginServices->+DatabaseServices: get_credentials()
+DatabaseServices-->-LoginServices: credentials
+LoginServices-->-LoginView: False
+LoginView->+LoginServices: register_new_user(username, password)
+LoginServices-->+DatabaseServices: add_user(username, password)
+DatabaseServices-->-LoginServices:
+LoginServices-->-LoginView:
+LoginView->+LoginServices: check_registration_success(username)
+LoginServices->+DatabaseServices: get_users()
+DatabaseServices-->-LoginServices: users
+LoginServices-->-LoginView: True
+LoginView->LoginView: _handle_successful_registration(username)
+deactivate LoginView
+LoginView->LoginView: _handle_view_change(username)
+activate LoginView
+LoginView->+LoginServices: handle_login(current_user)
+LoginServices->+DatabaseServices: remove_logged_in_users()
+DatabaseServices-->-LoginServices:
+LoginServices->+DatabaseServices: add_logged_in_user(current_user)
+DatabaseServices-->-LoginServices:
+LoginServices-->-LoginView:
+LoginView->SettingsView: settings_view.initialize_window()

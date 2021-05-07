@@ -82,7 +82,7 @@ class CustomContentView:
         self.answer_entry = edit_textbox(self.window, 4, 50)
         self.answer_entry.grid(column=0, row=8, columnspan=2)
 
-        button(self.window, "Save", self._handle_save
+        button(self.window, "Save", self._handle_save_event
         ).grid(column=0, row=9, pady=Y)
         button(self.window, "Clear", self._clear_entries
         ).grid(column=1, row=9, pady=Y)
@@ -147,7 +147,7 @@ class CustomContentView:
 
         return difficulty_combobox
 
-    def _handle_save(self):
+    def _handle_save_event(self):
         """Collects input values, calls CustomContentServices class methods
         which handle these values, and accommodates the UI accordingly."""
 

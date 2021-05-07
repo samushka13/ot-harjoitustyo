@@ -5,14 +5,14 @@ class SettingsServices:
     """Class that describes all settings-related services.
 
     Attributes:
-        database: Value of the current database.
+        database (class): The current database.
     """
 
     def __init__(self, database=default_database):
         """Class constructor that creates a new settings service.
 
         Args:
-            database: Value of the current database.
+            database (class): The current database.
         """
 
         self.database = database

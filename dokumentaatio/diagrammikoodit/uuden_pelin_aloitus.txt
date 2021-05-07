@@ -1,0 +1,32 @@
+title Starting a new game (valid inputs)
+
+SettingsView->SettingsView: _handle_game_start_event()
+activate SettingsView
+SettingsView->+SettingsServices: collect_player_settings(players)
+SettingsServices-->-SettingsView: players
+SettingsView->+SettingsServices: collect_player_color_settings()
+SettingsServices->SettingsServices: get_default_player_colors()
+SettingsServices-->-SettingsView: player_colors
+SettingsView->+SettingsServices: collect_category_settings(categories)
+SettingsServices-->-SettingsView: categories
+SettingsView->+SettingsServices: collect_category_color_settings()
+SettingsServices->SettingsServices: get_default_category_colors()
+SettingsServices-->-SettingsView: category_colors
+SettingsView->+SettingsServices: collect_board_size_settings(board_size)
+SettingsServices->SettingsServices: get_default_board_sizes()
+SettingsServices-->-SettingsView: board_size
+SettingsView->+SettingsServices: check_player_number_validity()
+SettingsServices-->-SettingsView: True
+SettingsView->+SettingsServices: check_player_names_validity()
+SettingsServices-->-SettingsView: True
+SettingsView->+SettingsServices: check_category_number_validity()
+SettingsServices-->-SettingsView: True
+SettingsView->+SettingsServices: handle_session_save(players, categories, board_size)
+SettingsServices->+DatabaseServices: remove_game_active_status()
+DatabaseServices-->-SettingsServices: 
+SettingsServices->+DatabaseServices: save_session_variables(difficulty, board_size, players, categories)
+DatabaseServices-->-SettingsServices: 
+SettingsServices-->-SettingsView:
+SettingsView->SettingsView: _open_game_view(player_colors, category_colors)
+deactivate SettingsView
+SettingsView->*GameView: GameView(player_colors, category_colors).initialize_window()

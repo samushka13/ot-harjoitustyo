@@ -117,7 +117,7 @@ class LoginView:
         button(
             self.window,
             "Proceed",
-            self._handle_login,
+            self._handle_login_event,
         ).grid(column=0, row=5, padx=X, pady=Y, sticky="e")
 
         button(
@@ -126,7 +126,7 @@ class LoginView:
             self._show_users,
         ).grid(column=1, row=5, padx=X, pady=Y, sticky="w")
 
-    def _handle_login(self):
+    def _handle_login_event(self):
         """Checks credentials with the help of LoginServices
         and accommodates the UI accordingly."""
 

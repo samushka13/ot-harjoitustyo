@@ -1,0 +1,52 @@
+title A player turn (correct answer, gets a point, doesn't win)
+
+GameView->GameView: _handle_die_cast()
+activate GameView
+GameView->+GameServices: get_die_face()
+GameServices->GameServices: get_die_faces()
+GameServices-->-GameView: die_face
+GameView->GameView: _build_die(die_face[0])
+GameView->+GameServices: update_player_positions_radii(current_turn, die_face[1])
+GameServices->GameServices: count_laps(player, player_positions_radii, new_position)
+GameServices->GameServices: _update_player_positions_indices(player, number)
+GameServices-->-GameView: player_positions_radii
+GameView->+PlayerTokens: move_token(current_turn, positions[current_turn], starting_positions)
+PlayerTokens-->-GameView: 
+GameView->+GameServices: check_victory_condition(player_starting_laps)
+GameServices-->-GameView: False
+deactivate GameView
+GameView->GameView: _handle_question_phase()
+activate GameView
+GameView->+GameServices: get_category_for_player()
+GameServices-->-GameView: category
+GameView->+CategoryBoard: highlight_category(current_category_index)
+CategoryBoard-->-GameView: 
+GameView->+GameServices: get_question_for_player()
+GameServices->+DatabaseServices: get_question_for_player(category)
+DatabaseServices-->-GameServices: question['question']
+GameServices-->-GameView: current_question
+GameView->GameView: _show_confirmation_buttons()
+GameView->+GameServices: get_answer_for_player()
+GameServices->+DatabaseServices: get_answer_for_player(question)
+DatabaseServices-->-GameServices: answer['answer']
+GameServices-->-GameView: answer
+deactivate GameView
+GameView->GameView: _handle_correct_answer()
+activate GameView
+GameView->+GameServices: add_point_to_player()
+GameServices-->-GameView: player_points
+deactivate GameView
+GameView->GameView: _handle_turn_end(points)
+activate GameView
+GameView->+Scoreboard: draw_player_points(points)
+Scoreboard-->-GameView: 
+GameView->+Scoreboard: remove_previous_highlighter()
+Scoreboard-->-GameView: 
+GameView->+CategoryBoard: remove_previous_highlighter()
+CategoryBoard-->-GameView: 
+GameView->+GameServices: update_current_turn()
+GameServices-->-GameView: current_turn
+GameView->+Scoreboard: highlight_player(current_turn)
+Scoreboard-->-GameView: 
+GameView->GameView: _build_cast_button()
+deactivate GameView

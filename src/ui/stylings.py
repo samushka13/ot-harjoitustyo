@@ -42,7 +42,7 @@ SETTINGS_WINDOW_SIZE = "920x720"
 CUSTOM_CONTENT_WINDOW_SIZE = "1280x720"
 EDIT_QUESTION_WINDOW_SIZE = "480x600"
 BOARD_WINDOW_SIZE = "1280x720"
-RULES_WINDOW_SIZE = "730x620"
+RULES_WINDOW_SIZE = "740x620"
 STATISTICS_WINDOW_SIZE = "360x300"
 
 # ------------------------------------------------------
@@ -64,9 +64,9 @@ if platform.system() == 'Windows':
     TEXT_FONT = ('Segoe UI', 14)
     BOARD_TEXT_FONT = ('Segoe UI', 18, 'bold')
 if platform.system() == 'Linux':
-    TITLE_FONT = ('Ubuntu Monospace', 16, 'bold')
-    TEXT_FONT = ('Ubuntu Monospace', 14)
-    BOARD_TEXT_FONT = ('Ubuntu Monospace', 18, 'bold')
+    TITLE_FONT = ('Saira Semi Condensed', 13, 'bold')
+    TEXT_FONT = ('Saira Semi Condensed', 10)
+    BOARD_TEXT_FONT = ('Saira Semi Condensed', 12, 'bold')
 
 # ------------------------------------------------------
 # Paddings:

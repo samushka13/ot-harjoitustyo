@@ -89,7 +89,7 @@ class SettingsView:
         button(
             self.window,
             "Start Game",
-            self._handle_game_start
+            self._handle_game_start_event
         ).grid(column=2, row=14, padx=X)
 
         button(
@@ -160,7 +160,7 @@ class SettingsView:
 
         return board_size_combobox
 
-    def _handle_game_start(self):
+    def _handle_game_start_event(self):
         """Calls SettingsServices class methods which collect and
         validate the selected settings and accommodates the UI accordingly."""
 
@@ -199,7 +199,7 @@ class SettingsView:
 
         from ui.game_view import GameView
         self.window.destroy()
-        GameView().initialize_window(player_colors, category_colors)
+        GameView(player_colors, category_colors).initialize_window()
 
     def _handle_logout(self):
         """Calls SettingsServices class methods which logs out all users,

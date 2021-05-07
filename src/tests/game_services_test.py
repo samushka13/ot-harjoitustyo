@@ -4,6 +4,7 @@ from repositories.database_services import DatabaseServices
 from services.game_services import GameServices
 from entities.question import Question
 from entities.game import Game
+from entities.player import Player
 
 
 class TestGameServices(unittest.TestCase):
@@ -18,7 +19,7 @@ class TestGameServices(unittest.TestCase):
         # some stuff is added to the database to ease test formulation.
         # ---------------------------------------------------------------------
         self.database = DatabaseServices(test_database)
-        self.question = Question(1, "TV Shows", "Easy", "Question?", "Answer!")
+        self.question = Question(1, "TV", "Easy", "Question?", "Answer!")
         self.database.save_question_item(
             self.question.user_id,
             self.question.category,
@@ -42,7 +43,8 @@ class TestGameServices(unittest.TestCase):
             self.question_3.question,
             self.question_3.answer,
         )
-        self.game = Game(1, "Easy", 1, ["samushka", "player 2"], ["TV Shows", "Movies", "Sports"])
+        self.player = Player("samushka", "red", [(0,0,0), (0,1,0)], [0], [360])
+        self.game = Game(1, "Easy", 1, [self.player.name, "player 2"], ["TV", "Movies", "Sports"])
         self.database.save_session_variables(
           self.game.difficulty,
           self.game.board_size,
@@ -63,7 +65,7 @@ class TestGameServices(unittest.TestCase):
 
     def test_categories_set_correctly(self):
         self.assertEqual(len(self.service.categories), 3)
-        self.assertEqual(self.service.categories[0], "TV Shows")
+        self.assertEqual(self.service.categories[0], "TV")
 
     def test_calculate_segment_size(self):
         self.assertEqual(self.service.calculate_segment_size(), 120)

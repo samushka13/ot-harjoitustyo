@@ -81,45 +81,44 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 
 ## Jatkokehitysideoita
 
-- Pelin asetuksissa voi valita 
-  - pelaajien värit vapaasti (tai jopa omat kuvakkeet),
-  - vaikeustason (Easy / Intermediate / Advanced Trivialist / Hardcore Madness),
-  - kysymysten vaikeustason pelaajittain,
-  - vaikeustason kategorioittain,
-  - kategoriaksi "random", jolloin kategoria arvotaan pelisession aikana jokaista kysymystä varten,
-  - noppien lukumäärän (1-2),
-  - kategoriapisteiden lukumäärän (1 = pikapeli, 5 = maraton)
-  - kysymysten kategorioille haluamansa värit,
-  - mukaan vain esimerkiksi monivalintakysymyksiä,
-  - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset,
-  - pelin asetukset valmiista pohjista (valmiiksi annetut ja/tai käyttäjän luomat),
-  - kysymyksiä vain joko omista tai [Open Trivia Databasen](https://opentdb.com/api_config.php) kysymyksistä, tai molemmista.
+Pelin asetuksissa voi valita 
+- pelaajien värit vapaasti (tai jopa omat kuvakkeet),
+- vaikeustason (Easy / Intermediate / Advanced Trivialist / Hardcore Madness),
+- kysymysten vaikeustason pelaajittain,
+- vaikeustason kategorioittain,
+- kategoriaksi "random", jolloin kategoria arvotaan pelisession aikana jokaista kysymystä varten,
+- noppien lukumäärän (1-2),
+- kategoriapisteiden lukumäärän (1 = pikapeli, 5 = maraton)
+- kysymysten kategorioille haluamansa värit,
+- mukaan vain esimerkiksi monivalintakysymyksiä,
+- "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset,
+- pelin asetukset valmiista pohjista (valmiiksi annetut ja/tai käyttäjän luomat),
+- kysymyksiä vain joko omista tai [Open Trivia Databasen](https://opentdb.com/api_config.php) kysymyksistä, tai molemmista.
 
-- Omien kysymysten
-  - selaamiseen hakukenttä ja kategoriasuodattimet,
-  - kategorioiden muokkaus ja poistaminen,
-  - luokittelu avoimiin kysymyksiin, monivalintoihin ja kyllä-tai-ei-kysymyksiin,
-  - lisäämiseen huomautus, mikäli täsmälleen sama kysymys on jo kategoriassa olemassa.
-  - poistamisilmoitukseen listaus käyttäjistä, joiden kysymyksiä ei voitu poistaa,
-  - oheen tietoa kysymyksistä, kuten kuinka monta kysymystä käyttäjät ovat yhteensä luoneet,
-  - tuonti toisesta tietokannasta tai muusta tietolähteestä (esim. csv-tiedosto tai OpenTriviaDB API).
+Omien kysymysten
+- selaamiseen hakukenttä ja kategoriasuodattimet,
+- kategorioiden muokkaus ja poistaminen,
+- luokittelu avoimiin kysymyksiin, monivalintoihin ja kyllä-tai-ei-kysymyksiin,
+- lisäämiseen huomautus, mikäli täsmälleen sama kysymys on jo kategoriassa olemassa.
+- poistamisilmoitukseen listaus käyttäjistä, joiden kysymyksiä ei voitu poistaa,
+- oheen tietoa kysymyksistä, kuten kuinka monta kysymystä käyttäjät ovat yhteensä luoneet,
+- tuonti toisesta tietokannasta tai muusta tietolähteestä (esim. csv-tiedosto tai OpenTriviaDB API).
 
-- Pelisessioon
-  - mekanismi, joka välttää kysymästä samaa kysymystä uudelleen, ellei ole aivan pakko,
-  - tuomarimoodi, joka mahdollistaa esimerkiksi virheellisesti annettujen pisteiden muokkamisen,
-  - näyttävämpi pelilauta,
-  - voitosta ilmoittava näkymä voittaneen pelaajan väreillä jne.,
-  - kattavammat tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
+Pelisessioon
+- mekanismi, joka välttää kysymästä samaa kysymystä uudelleen, ellei ole aivan pakko,
+- tuomarimoodi, joka mahdollistaa esimerkiksi virheellisesti annettujen pisteiden muokkamisen,
+- näyttävämpi pelilauta,
+- voitosta ilmoittava näkymä voittaneen pelaajan väreillä jne.,
+- kattavammat tilastot (sekä kesken pelin että pelin päätyttyä), joista selviää sekä yhteensä että pelaajittain mm. kysyttyjen kysymysten sekä oikeiden ja väärien vastausten määrät.
 
 Muita ideoita
-  - Pelaajan poistaminen kesken pelin.
-  - Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
-  - Pääkäyttäjäroolin (admin) lisääminen, jotta profiileja ja kysymyksiä voi tarvittaessa poistaa.
-  - Oman profiilin poistaminen (mahdollisuus kuitenkin säilyttää kysymykset - vaatii admin-toteutuksen).
-  - Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
-  - Pelin asetuksissa näkyy kategorioiden perässä niiden sisältämät kysymysmäärät.
-  - Pelin asetuksissa näkyy peliin valittujen kategorioiden sisältämät kysymykset yhteensä.
-  - "Resume game" -toiminnon lisääminen.
-  - Näkymien kehittäminen näyttävämmiksi.
-  - Näkymien ja widgettien kehittäminen kooltaan responsiivisiksi.
-  - UI:n kehittäminen huomioimaan erinäisiä reunatapauksia (esim. ilmoitus käyttäjälle, mikäli tämä yrittää poistaa kaikki omat kysymyksensä, mutta omia kysymyksiä ei ole yhtäkään)
+- Pääkäyttäjäroolin (admin) lisääminen, jotta profiileja ja kysymyksiä voi tarvittaessa poistaa.
+- Oman profiilin poistaminen (mahdollisuus kuitenkin säilyttää kysymykset - vaatii admin-toteutuksen).
+- Useamman käyttäjän samanaikainen kirjautuminen ja tietojen synkkautuminen.
+- Pelin asetuksissa näkyy kategorioiden perässä niiden sisältämät kysymysmäärät.
+- Pelin asetuksissa näkyy peliin valittujen kategorioiden sisältämät kysymykset yhteensä.
+- Pelin asetukset pysyvät muistissa, vaikka näkymä vaihtuisi välissä.
+- "Resume game" -toiminnon lisääminen.
+- Pelaajan poistaminen kesken pelin.
+- Näkymien ja widgettien kehittäminen näyttävämmiksi ja kooltaan responsiivisiksi.
+- UI:n kehittäminen huomioimaan erinäisiä reunatapauksia (esim. ilmoitus käyttäjälle, mikäli tämä yrittää poistaa kaikki omat kysymyksensä, mutta omia kysymyksiä ei ole yhtäkään).
