@@ -16,6 +16,8 @@ Huomioithan, että peli on originaali konsepti, joten mahdollisesta matkimisesta
 
 [Arkkitehtuurikuvaus](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+[Testausdokumentti](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/testausdokumentti.md)
+
 [Työaikakirjanpito](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
 ### Pika-asennus
