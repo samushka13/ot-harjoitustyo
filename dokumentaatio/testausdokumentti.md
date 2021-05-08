@@ -21,7 +21,7 @@ Tietojen pysyväistallennuksesta vastaavaa luokkaa *DatabaseServices* ei ole tes
 
 Kuten alla olevasta kuvasta näkyy, testien haarautumakattavuus sovelluslogiikan ja tietokantapalveluiden osalta on 100 %. Käyttöliittymästä ja konfiguraatioista vastaavat koodit on jätetty testien ulkopuolelle. 
 
-![Testikattavuusraportti](kaaviot/coverage_report.png)
+![Testikattavuusraportti](screenshots/coverage_report.png)
 
 Vaikka haarautumakattavuus onkin täydellinen, testausta voisi silti parantaa. Esimerkiksi yksittäisen pelivuoron kulkuun liittyviä toimintoja voisi testata erilaisissa tilanteissa vieläkin kattavammin integraatiotestein. Käytännössä tällä ei kuitenkaan saavutettaisi merkittävää hyötyä.
 
