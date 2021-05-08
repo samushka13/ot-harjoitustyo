@@ -1,8 +1,8 @@
 import unittest
+from config import TEST_DATABASE_FILENAME as test_database
 from repositories.database_services import DatabaseServices
 from services.login_services import LoginServices
 from entities.user import User
-from config import TEST_DATABASE_FILENAME as test_database
 
 
 class TestLoginServices(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestLoginServices(unittest.TestCase):
         self.database = DatabaseServices(test_database)
         self.service = LoginServices(self.database)
         # ---------------------------------------------------------------------
-        # Finally some stuff is added to the database to ease test formulation.
+        # Finally, entities and attributes are initialized to ease testing.
         # ---------------------------------------------------------------------
         self.user = User("samushka", "13")
         self.database.add_user(self.user.username, self.user.password)

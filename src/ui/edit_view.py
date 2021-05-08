@@ -70,7 +70,6 @@ class EditView:
 
         self.category_combobox = combobox(self.window, 43)
         self.category_combobox['values'] = self.service.get_categories()
-        self.category_combobox.state(['readonly'])
         self.category_combobox.set(self.service.get_item_for_editing(self.selected)[0])
         self.category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
 

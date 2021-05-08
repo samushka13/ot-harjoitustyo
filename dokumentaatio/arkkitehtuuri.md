@@ -8,27 +8,29 @@ Sovelluksen arkkitehtuuri on kolmitasoinen:
 
 Yllä olevassa kuvassa
 
-- "ui" = käyttöliittymästä vastaava koodi.
-- "services" = sovelluslogiikasta vastaava koodi.
-- "repository" = tietojen tallennuksesta vastaava koodi.
+- "ui" = käyttöliittymästä vastaava koodi,
+- "services" = sovelluslogiikasta vastaava koodi,
+- "repository" = tietojen tallennuksesta vastaava koodi,
 - "entities" = sovelluksen käyttämien tietokohteiden koodi.
+
+Sovellus noudattaa tiukasti kolmikerroksista arkkitehtuuria, jossa käyttöliittymäluokkien ("ui") logiikka rajoittuu puhtaasti käyttöliittymän muokkaamiseen palveluluokkien ("services", palvelut) antamien tietojen pohjalta. Palveluluokat puolestaan kutsuvat tarvittaessa niiden yhteiskäytössä olevaa tietokantapalveluluokkaa ("repository"), joka hallinnoi käyttäjien, kysymysten ja pelisessioiden tietojen säilöntää. 
 
 ## Käyttöliittymä
 
-Käyttöliittymä ("ui") on eristetty sovelluslogiikasta ("services", palvelut) ja tietojen pysyväistallennuksesta ("repository", tallennus). Käyttöliittymä kutsuu tarvittaessa eri palveluluokkia ja niiden metodeja, muttei koskaan tallennusluokkaa tai sen metodeja. Käyttöliittymä on toteutettu [tkinter](https://docs.python.org/3/library/tkinter.html)-pakkausta hyödyntäen.
+Käyttöliittymä on toteutettu [tkinter](https://docs.python.org/3/library/tkinter.html)-pakkausta hyödyntäen. Kuten edellä jo todettiin, käyttöliittymä on eristetty sovelluslogiikasta ja tietojen pysyväistallennuksesta. Käyttöliittymä kutsuu tarvittaessa eri palveluluokkia ja niiden metodeja, muttei koskaan tallennusluokkaa tai sen metodeja. 
 
 Käyttöliittymä koostuu neljästä erillisestä päänäkymästä, jotka ovat
 
-- "Login or Create Username", jota kuvastaa luokka LoginView,
-- "Game Settings", jota kuvastaa luokka SettingsView,
-- "Custom Content", jota kuvastaa luokka CustomContentView,
-- "Game Session", jota kuvastaa luokka GameView.
+- "Login or Create Username", jota kuvastaa luokka *LoginView*,
+- "Game Settings", jota kuvastaa luokka *SettingsView*,
+- "Custom Content", jota kuvastaa luokka *CustomContentView*,
+- "Game Session", jota kuvastaa luokka *GameView*.
 
 Lisäksi
 
-- "Custom Content" sisältää erillisen "Edit"-alanäkymän, jota kuvastaa luokka EditView,
-- "Game Settings" ja "Game Session" sisältävät erillisen "Rules"-alanäkymän, jota kuvastaa luokka RulesView,
-- "Game Session" sisältää erillisen "Statistics"-alanäkymän, jota kuvastaa luokka StatisticsView.
+- "Custom Content" sisältää erillisen "Edit"-alanäkymän, jota kuvastaa luokka *EditView*,
+- "Game Settings" ja "Game Session" sisältävät erillisen "Rules"-alanäkymän, jota kuvastaa luokka *RulesView*,
+- "Game Session" sisältää erillisen "Statistics"-alanäkymän, jota kuvastaa luokka *StatisticsView*.
 
 Kaikki pää- ja alanäkymät on siis toteutettu omina luokkinaan. Pääsääntöisesti vain yksi näistä näkyy käyttäjälle kerrallaan, poikkeuksena "Rules"- ja "Statistics"-alanäkymät, jotka ilmestyvät olemassa olevan näkymän päälle omina ikkunoinaan.
 
@@ -36,14 +38,14 @@ Kaikki pää- ja alanäkymät on siis toteutettu omina luokkinaan. Pääsäänt�
 
 Sovelluksen logiikkakerroksen muodostavia palveluluokkia on yhteensä neljä:
 
-- "LoginServices" vastaa kirjautumiseen ("LoginView") liittyvistä palveluista,
-- "SettingsServices" vastaa pelin asetuksiin ("SettingsView") liittyvistä palveluista,
-- "CustomContentServices" vastaa käyttäjän luomien sisältöjen hallintaan ("CustomContentView" ja "EditView") liittyvistä palveluista,
-- "GameServices" vastaa pelisessioon ("GameView" ja "StatisticsView") liittyvistä palveluista.
+- "LoginServices" vastaa kirjautumiseen (*LoginView*) liittyvistä palveluista,
+- "SettingsServices" vastaa pelin asetuksiin (*SettingsView*) liittyvistä palveluista,
+- "CustomContentServices" vastaa käyttäjän luomien sisältöjen hallintaan (*CustomContentView* ja *EditView*) liittyvistä palveluista,
+- "GameServices" vastaa pelisessioon (*GameView* ja *StatisticsView*) liittyvistä palveluista.
 
-Kukin edellä luetelluista luokista käsittelee siis vain sille kuuluvilta käyttöliittymäluokilta tulevia kutsuja. "RulesView"-luokkaa ei palvella sovelluslogiikkakerroksella lainkaan, sillä sen sisältö on staattinen.
+Kukin edellä luetelluista luokista käsittelee siis vain sille kuuluvilta käyttöliittymäluokilta tulevia kutsuja. Luokkaa *RulesView* ei palvella sovelluslogiikkakerrokselta lainkaan, sillä sen sisältö on staattinen.
 
-Kun tietoja tarvitsee tallentaa, palveluluokat kutsuvat "repository"-kerroksen tallennusluokkaa. Palvelut eivät siis koskaan ole suoraan tekemisissä pysyväistallennuksen kanssa, mikä mahdollistaa esimerkiksi tallennusmuodon vaihtamisen moduulimaisesti tarvittaessa.
+Kun tietoja tarvitsee tallentaa, palveluluokat kutsuvat "repository"-kerroksen tallennusluokkaa. Palvelut eivät siis koskaan ole suoraan tekemisissä pysyväistallennuksen kanssa, mikä mahdollistaa tarvittaessa esimerkiksi tallennusmuodon vaihtamisen moduulimaisesti.
 
 ## Tietojen pysyväistallennus
 
@@ -53,15 +55,11 @@ Tietojen pysyväistallennuksesta vastaa luokka "DatabaseServices", joka on kaikk
 - "Questions" = kysymyksiin liittyvä tieto,
 - "Games" = aloitettuihin pelisessioihin liittyvä tieto.
 
-Kuten edellä jo viitattiin, vain "DatabaseServices"-luokka on suoraan tekemisissä tietokannan kanssa, minkä ansiosta tallennusmuoto on tarvittaessa vaihdettavissa moduulimaisesti.
-
-Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimet voi tarvittaessa konfiguroida tiedostossa config.py, joka löytyy projektin juurihakemistosta ("src").
+Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimet voi tarvittaessa muuttaa [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka löytyy projektin juurihakemiston yläpuoleisesta kansiosta.
 
 ## Päätoiminnallisuudet
 
-Tässä osiossa kuvataan neljä sovelluksen päätoiminnallisuutta. Sovellus on verrattain laaja, joten monia tärkeitäkin toiminnallisuuksia jää väistämättä tarkastelun ulkopuolelle. Tässä kuvatut toiminnallisuudet antanevat kuitenkin riittävän hyvän kuvan sovelluksen toiminnasta kokonaisuutena. Sovellus noudattaa nimittäin tiukasti kolmikerroksista arkkitehtuuria, jossa käyttöliittymäluokkien logiikka rajoittuu puhtaasti käyttöliittymän muokkaamiseen palveluluokkien antamien tietojen pohjalta. Palveluluokat puolestaan kutsuvat tarvittaessa niiden yhteiskäytössä olevaa tietokantapalveluluokkaa, joka hallinnoi käyttäjien, kysymysten ja pelisessioiden tietojen säilöntää. 
-
-Yksinkertaistuksen vuoksi alla olevista kuvauksista on jätetty pois joitakin käyttöliittymän rakentumiseen liittyviä metodikutsuja sekä luokan *DatabaseServices* sisällä tapahtuvat varsinaiset tietojen pysyväistallennukseen liittyvät tietokantakutsut.
+Tässä osiossa kuvataan neljä sovelluksen päätoiminnallisuutta. Sovellus on verrattain laaja, joten monia tärkeitäkin toiminnallisuuksia jää tarkastelun ulkopuolelle. Tässä kuvatut toiminnallisuudet antanevat kuitenkin riittävän hyvän kuvan sovelluksen toiminnasta kokonaisuutena. Yksinkertaistuksen vuoksi alla olevista kuvauksista on kuitenkin jätetty pois joitakin käyttöliittymän rakentumiseen liittyviä metodikutsuja sekä luokan *DatabaseServices* sisällä tapahtuvat varsinaiset tietojen pysyväistallennukseen liittyvät tietokantakutsut.
 
 ### Kirjautuminen uutena käyttäjänä
 
@@ -117,14 +115,16 @@ Alla oleva sekvenssikaavio kuvaa yksittäisen pelivuoron kulkua tilanteessa, jos
 
 ![Pelivuoron kulku](kaaviot/pelivuoron_kulku.png)
 
-1. Kun pelaaja painaa *Cast*-painiketta, *GameView* kutsuu *GameServices*-luokkaa saadakseen tiedon nopan silmäluvusta nopan piirtämistä varten. *GameView* saa toisella kutsulla myös tiedon pelinappuloiden uusista sijainneista piirtämistä varten (*player_positions_radii*). *GameServices* päivittää uudet sijainnit myös indeksiarvoina (*player_positions_indices*), jotta se tietää, millä kategoriasegmenteillä nappulat kulloinkin ovat. Tämän jälkeen tarkastetaan, täyttikö pelaaja ehdot pelin voittamiselle. Tässä tapauksessa ei. Mikäli näin kuitenkin olisi, sovellus ilmoittaisi asiasta käyttäjälle, peli päättyisi ja käyttäjälle annettaisiin mahdollisuus siirtyä pelin asetuksiin.
+1. Kun pelaaja painaa painiketta *Cast*, *GameView* kutsuu luokkaa *GameServices* saadakseen tiedon nopan silmäluvusta (*get_die_face*) ja pelinappuloiden uusista sijainneista piirtämistä varten (*player_positions_radii*). *GameServices* päivittää uudet sijainnit myös indeksiarvoina (*player_positions_indices*), jotta se tietää, millä kategoriasegmenteillä nappulat kulloinkin ovat. Tämän jälkeen tarkastetaan, täyttikö pelaaja ehdot pelin voittamiselle (*check_victory_condition*). Tässä tapauksessa ei. Mikäli näin kuitenkin olisi, sovellus ilmoittaisi asiasta käyttäjälle, peli päättyisi ja käyttäjälle annettaisiin mahdollisuus siirtyä pelin asetuksiin.
 
-2. Kun nopanheittoon liittyvät toimenpiteet on tehty, *GameView* siirtyy pelivuoron kysymysvaiheeseen (*_handle_question_phase*). *GameView* kysyy *GameServices*-luokalta tiedon nykyisestä kategoriasta, jotta se osaa korostaa sen kategoriataulusta (*CategoryBoard*). Tämän jälkeen *GameView* kysyy *GameServices*-luokalta tiedon pelaajalta kysyttävästä kysymyksestä. *GameServices* välittää kysymyksen *DatabaseServices*-luokalle, joka palauttaa kysymyksen *GameServices*-luokan kautta *GameView*-luokalle. Sama prosessi toistetaan oikean vastauksen hakemiseksi.
+2. Kun nopanheittoon ja nappuloiden siirtelyyn liittyvät toimenpiteet on tehty, *GameView* siirtyy pelivuoron kysymysvaiheeseen (*_handle_question_phase*). *GameView* kysyy luokalta *GameServices* tiedon sekä nykyisestä kategoriasta, jotta se osaa korostaa sen kategoriataulusta (*CategoryBoard*), että pelaajalta kysyttävästä kysymyksestä. *GameServices* välittää kysymyksen luokalle *DatabaseServices*, joka palauttaa kysymyksen luokan *GameServices* kautta luokalle *GameView*. Sama prosessi toistetaan oikean vastauksen hakemiseksi (*get_answer_for_player*).
 
-3. Kun käyttäjä on painikkeella vahvistanut pelaajan vastauksen oikeellisuuden, *GameView* siirtyy käsittelemään oikeaa vastausta. *GameView* kutsuu *GameServices*-luokan metodia *add_point_to_player*, joka päivittää pelaajan pisteet (väärän vastauksen kohdalla metodi olisi *remove_point_from_player*, muutoin prosessi olisi täsmälleen sama). *GameServices* palauttaa tiedon pisteistä, minkä jälkeen siirrytään vuoron lopetusvaiheeseen.
+3. Kun käyttäjä on painikkeella vahvistanut pelaajan vastauksen oikeellisuuden, *GameView* siirtyy käsittelemään oikeaa vastausta. *GameView* kutsuu luokan *GameServices* metodia *add_point_to_player*, joka päivittää pelaajan pisteet (väärän vastauksen kohdalla metodi olisi *remove_point_from_player*, muutoin prosessi olisi täsmälleen samanlainen). *GameServices* palauttaa tiedon pisteistä, minkä jälkeen siirrytään vuoron lopetusvaiheeseen.
 
-4. Vuoron lopetusvaiheessa *GameView* piirrättää pistetaulun (*Scoreboard*) uudelleen saamiensa tietojen pohjalta ja poistattaa edelliset korostimet sekä piste- että kategoriataululta. Tämän jälkeen *GameServices* päivittää tiedon pelaajan vuoron vaihtumisesta ja *GameView* piirrättää sen perusteella uuden korostimen pistetaululle. Lopuksi *GameView* piirtää nopanheittopainikkeen uudelleen, ja uusi vuoro alkaa. 
+4. Vuoron lopetusvaiheessa *GameView* piirtää pistetaulun (*Scoreboard*) uudelleen saamiensa tietojen pohjalta ja poistaa edelliset korostimet sekä piste- että kategoriataululta. Tämän jälkeen *GameServices* päivittää tiedon pelaajan vuoron vaihtumisesta ja *GameView* piirtää sen perusteella uuden korostimen pistetaululle. Lopuksi *GameView* piirtää nopanheittopainikkeen uudelleen, ja uusi vuoro alkaa. 
 
-## Sovelluksen rakenteeseen jääneet parannuskohteet
+## Sovelluksen rakenteelliset parannuskohteet
 
-Sovelluksen pelisessioon liittyvissä luokissa *GameView* ja *GameServices* on hieman liikaa attribuutteja. *GameView*-luokan osalta tämä johtuu lähinnä tkinter-widgetteihin liittyvistä kankeuksista. *GameServices*-luokan attribuutteja tulisi jakaa enemmän *Player*-olioiden vastuulle, mutta tähän ei enää oikein aika riittänyt. Pylint ilmoittaa myös toisteisesta koodista joissain tiedostoissa, mutta tämä koskee lähinnä testausluokkia ja importteja.
+Sovelluksen pelisessioon liittyvissä luokissa *GameView* ja *GameServices* on hieman liikaa attribuutteja. Luokan *GameView* osalta tämä johtuu lähinnä [tkinter](https://docs.python.org/3/library/tkinter.html)-widgetteihin liittyvistä kankeuksista. Luokan *GameServices* attribuuttien hallintaa puolestaan tulisi jakaa enemmän *Player*-olioiden vastuulle, mutta tähän ei enää aika riittänyt projektin aikataulun puitteissa.
+
+Pylint ilmoittaa myös toisteisesta koodista muutamissa tiedostoissa, mutta tämä koskee lähinnä testausluokkia ja importteja. Myös luokissa *CustomContentView* ja *EditView* on joitakin toisteisia osia, mutta ne koettiin järkevämpänä pitää erillään, jotta kyseisten näkymien käyttöliittymäelementtejä voi jatkokehityskaaren aikana muuttaa toisistaan riippumatta.

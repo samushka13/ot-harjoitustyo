@@ -32,4 +32,6 @@
 |  6.5. |  2  | Pelisession logiikka valmis.                                        |
 |  7.5. |  1  | Pelisession testit valmiit.                                         |
 |  7.5. |  2  | Dokumentaation päivitystä.                                          |
-|  yht. | 84  |                                                                     |
+|  8.5. |  1  | Testausdokumentti lisätty.                                          |
+|  8.5. |  2  | Koodin, testien ja dokumentaation kiillottelua.                     |
+|  yht. | 87  |                                                                     |

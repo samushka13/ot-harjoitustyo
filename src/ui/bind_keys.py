@@ -2,8 +2,8 @@ def bind_keys_to_widgets(window):
     """This function specifies keys to be binded with specific widgets."""
 
     window.bind_class("Button", "<Return>", invoke_binding)
-    window.bind_class("Text", "<Tab>", invoke_binding)
-    window.bind_class("Text", "<Shift-Tab>", invoke_binding)
+    window.bind_class("Text", "<Tab>", focus_next_widget)
+    window.bind_class("Text", "<Shift-Tab>", focus_previous_widget)
 
 def invoke_binding(window):
     """This function invokes the aforementined key bindings."""

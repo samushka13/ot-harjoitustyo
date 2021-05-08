@@ -25,7 +25,6 @@ class GameServices:
         self.current_turn = 0
         self.current_category_index = None
         self.current_question = None
-        self.category_places = self.get_category_places()
         self.laps = [0, 0, 0, 0, 0, 0]
         self.player_positions_radii = [360, 360, 360, 360, 360, 360]
         self.player_positions_indices = [0, 0, 0, 0, 0, 0]
@@ -61,11 +60,11 @@ class GameServices:
         as it represents the unique starting segment.
 
         Returns:
-            self.category_places (list): Lists of category segments as integers.
+            category_places (list): Lists of category segments as integers.
             Each nested list describes the positions of one of the categories on the game board.
         """
 
-        self.category_places = []
+        category_places = []
         i = 0
         while i < len(self.categories[1:]):
             j = 0
@@ -76,9 +75,9 @@ class GameServices:
                 k += len(self.categories[1:])
                 j += 1
             i += 1
-            self.category_places.append(category_segments)
+            category_places.append(category_segments)
 
-        return self.category_places
+        return category_places
 
     def update_player_positions_radii(self, player, number):
         """Keeps track of the players' positions on the game board,
@@ -178,12 +177,13 @@ class GameServices:
             category (str): The current category.
         """
 
+        category_places = self.get_category_places()
         if self.player_positions_indices[self.current_turn] == 0:
             self.current_category_index = 0
         else:
-            for nested_list in self.category_places:
+            for nested_list in category_places:
                 if self.player_positions_indices[self.current_turn] in nested_list:
-                    self.current_category_index = self.category_places.index(nested_list)+1
+                    self.current_category_index = category_places.index(nested_list)+1
 
         category = self.categories[self.current_category_index]
 
@@ -288,12 +288,12 @@ class GameServices:
         """
 
         if self.laps[self.current_turn] > player_starting_laps:
-            player_points = []
-            for i in range(len(self.player_points)):
-                if self.player_points[i][0] == self.current_turn:
-                    player_points.append(self.player_points[i])
-            for i in range(len(player_points)):
-                if player_points[i] != (self.current_turn, i, 1):
+            current_player_points = []
+            for i, player_points in enumerate(self.player_points):
+                if player_points[0] == self.current_turn:
+                    current_player_points.append(player_points)
+            for i, current_player_point in enumerate(current_player_points):
+                if current_player_point != (self.current_turn, i, 1):
                     return False
             return True
 

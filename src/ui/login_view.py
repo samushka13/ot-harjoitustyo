@@ -71,9 +71,7 @@ class LoginView:
     def _build_title(self):
         """Builds the title of the view."""
 
-        title_label(
-            self.window,
-            "Login or Create Username"
+        title_label(self.window, "Login or Create Username"
         ).grid(column=0, row=0, columnspan=2, padx=X)
 
     def _build_username_widgets(self):
@@ -83,9 +81,7 @@ class LoginView:
             username_entry (widget): The username input field.
         """
 
-        basic_label(
-            self.window,
-            "Username",
+        basic_label(self.window, "Username",
         ).grid(column=0, row=1, columnspan=2, pady=Y)
 
         username_entry = entry(self.window, 30)
@@ -101,9 +97,7 @@ class LoginView:
             password_entry (widget): The password input field.
         """
 
-        basic_label(
-            self.window,
-            "Password",
+        basic_label(self.window, "Password",
         ).grid(column=0, row=3, columnspan=2, pady=Y)
 
         password_entry = entry(self.window, 30, "*")
@@ -114,16 +108,10 @@ class LoginView:
     def _build_action_buttons(self):
         """Builds the action buttons of the parent view."""
 
-        button(
-            self.window,
-            "Proceed",
-            self._handle_login_event,
+        button(self.window, "Proceed", self._handle_login_event,
         ).grid(column=0, row=5, padx=X, pady=Y, sticky="e")
 
-        button(
-            self.window,
-            "Users",
-            self._show_users,
+        button(self.window, "Users", self._show_users,
         ).grid(column=1, row=5, padx=X, pady=Y, sticky="w")
 
     def _handle_login_event(self):
@@ -198,12 +186,12 @@ class LoginView:
         Closing the dialog provides focus on the username entry widget."""
 
         if self.service.check_for_users() is True:
-            dialog = show_users_dialog(self.service.list_all_users())
+            show_users_dialog(self.service.list_all_users())
         else:
-            dialog = show_no_users_dialog()
-        if dialog == 'ok':
-            self.window.focus()
-            self.username_input.focus()
+            show_no_users_dialog()
+
+        self.window.focus()
+        self.username_input.focus()
 
     def _handle_view_change(self, current_user):
         """Destroys the current window and initializes a new one.

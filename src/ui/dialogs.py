@@ -115,7 +115,7 @@ def show_delete_error_dialog(number: int):
     if number == 1:
         dialog = messagebox.showinfo(
         "Delete Error",
-        f"{number} questions were not deleted, as they belong to a different username."
+        f"{number} question was not deleted, as it belongs to a different username."
     )
     else:
         dialog = messagebox.showinfo(
@@ -142,7 +142,7 @@ def quit_game_dialog():
         "Are you sure you want to quit this game?"
     )
 
-def show_player_victorious_dialog(player: str):
+def show_player_victory_dialog(player: str):
     return messagebox.showinfo(
         "The game has ended",
         f"Congratulations, {player}, you are victorious!"

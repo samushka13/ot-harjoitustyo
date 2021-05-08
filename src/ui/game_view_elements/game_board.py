@@ -26,7 +26,7 @@ class GameBoard:
         self.categories = self.service.categories
         self.segments = self.service.calculate_number_of_segments()
         self.size = self.service.calculate_segment_size()
-        self.category_places = self.service.category_places
+        self.category_places = self.service.get_category_places()
         self._draw_segments()
         self._draw_center()
 
@@ -49,4 +49,4 @@ class GameBoard:
         """Draws a circle onto the center of the canvas
         to help form the game board's shape."""
 
-        self.canvas.create_oval(100, 100, 620, 620, fill=BACKGROUND, width=4)
+        self.canvas.create_oval(85, 85, 635, 635, fill=BACKGROUND, width=4)

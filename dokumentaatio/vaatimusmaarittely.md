@@ -12,7 +12,7 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 
 ## Käyttöliittymä ja toiminnallisuudet
 
-### Kirjautuminen / Rekisteröityminen (KAIKKI TEHTY)
+### Kirjautuminen / Rekisteröityminen
 
 - Käyttäjä voi kirjautua sovellukseen (lokaalilla) käyttäjätunnuksella ja salasanalla.
   - Tiedot syötetään lomakkeelle.
@@ -23,7 +23,7 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 - Käyttäjä voi nähdä listan rekisteröityneistä käyttäjistä asianmukaisen painikkeen avulla.
 - Kun käyttäjä on kirjautunut onnistuneesti, tätä tervehditään asianmukaisesti, minkä jälkeen siirrytään näkymään "Pelin asetukset".
   
-### Pelin asetukset (KAIKKI TEHTY)
+### Pelin asetukset
 
 - Käyttäjä voi kirjautua ulos asianmukaisen painikkeen avulla, jolloin sovellus siirtyy näkymään "Kirjautuminen / Rekisteröityminen".
 - Käyttäjä voi siirtyä näkymään "Omat kysymykset ja kategoriat" asianmukaisen painikkeen avulla.
@@ -35,7 +35,7 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
   - Mikäli pelin asetukset eivät täytä ehtoja (vähintään yksi pelaaja ja kaksi kategoriaa), sovellus ilmoittaa siitä käyttäjälle.
 
-### Omat kysymykset ja kategoriat (KAIKKI TEHTY)
+### Omat kysymykset ja kategoriat
 
 - Käyttäjä voi luoda uuden kysymyksen syöttämällä asianmukaisiin tekstikenttiin
   - kategorian (joko olemassa oleva tai uusi),
@@ -53,9 +53,9 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - Mikäli käyttäjä valitsee useamman kysymyksen poistettavaksi, sovellus poistaa vain ne, jotka kuuluvat käyttäjälle, ja ilmoittaa, montako kysymystä jäi poistamatta.
 - Käyttäjä voi milloin tahansa palata takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
 
-### Pelisessio (OSITTAIN TEHTY)
+### Pelisessio
 
-- Pelinäkymän tulee sisältää (KAIKKI TEHTY)
+- Pelinäkymän tulee sisältää
   - pelilauta,
   - noppa ja painike sen heittämiseen,
   - pistetaulu, josta näkee pelaajien pisteet ja vuorossa olevan pelaajan,
@@ -63,21 +63,21 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - tila kysymykselle ja vastauksille,
   - painikkeen, jolla voi näyttää vastauksen,
   - painikkeet, joilla voi valita, vastasiko pelaaja oikein vai väärin.
-- Kysymys esitetään kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
-- Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti. (TEHTY)
-- Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla. (TEHTY)
-- Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla. (TEHTY)
-- Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla. (TEHTY)
-  - Käyttäjältä pyydetään tällöin vahvistus. (TEHTY)
+- Kysymys on eistettävä kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
+- Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti.
+- Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla.
+- Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla.
+- Käyttäjän on pystyttävä lopettamaan peli ja siirtymään takaisin näkymään "Pelin asetukset" asianmukaisen painikkeen avulla.
+  - Käyttäjältä pyydetään tällöin vahvistus.
 - Kun yksi pelaajista voittaa, peli päättyy.
   - Käyttäjälle ilmoitetaan tyyliin "Pelaaja 1 voitti!".
   - Käyttäjä voi siirtyä asianmukaisella painikkeella näkymään "Pelin asetukset".
 
 ## Toimintaympäristön rajoitteet
 
-- Sovelluksen tulee toimia *ainakin* Linux- ja OSX-käyttöjärjestelmissä.
-  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä HY:n Tietojenkäsittelytieteen laitoksen Linux-koneilla asianmukaisia ohjeita noudattamalla.
 - Käyttäjien, sisältöjen ja pelisessioiden tiedot talletetaan tietokantaan, josta niitä myös luetaan.
+- Sovelluksen tulee toimia *ainakin* Linux- ja macOS-käyttöjärjestelmissä.
+  - HUOM: Sovellus täytyy pystyä suorittamaan, kääntämään ja testaamaan komentoriviltä HY:n Tietojenkäsittelytieteen laitoksen Linux-koneilla asianmukaisia ohjeita noudattamalla.
 
 ## Jatkokehitysideoita
 

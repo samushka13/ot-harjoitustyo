@@ -6,10 +6,13 @@ from ui.game_view_elements.scoreboard import Scoreboard
 from ui.game_view_elements.category_board import CategoryBoard
 from ui.game_view_elements.game_board import GameBoard
 from ui.game_view_elements.player_tokens import PlayerTokens
+from ui.settings_view import settings_view
 from ui.rules_view import rules_view
 from ui.statistics_view import StatisticsView
-from ui.settings_view import settings_view
-from ui.dialogs import quit_game_dialog, show_player_victorious_dialog
+from ui.dialogs import (
+    quit_game_dialog,
+    show_player_victory_dialog,
+)
 from ui.widgets import (
     display_textbox,
     button,
@@ -20,6 +23,7 @@ from ui.stylings import (
     BOARD_WINDOW_NAME,
     BOARD_WINDOW_SIZE,
 )
+
 
 class GameView:
     """Class that describes the UI of the game view.
@@ -51,8 +55,8 @@ class GameView:
         self.player_tokens = None
         self.player_colors = player_colors
         self.category_colors = category_colors
-        self.die_face = None
-        self.ouroboros = None
+        self.die_img = None
+        self.ouroboros_img = Image.open(r'src/assets/ouroboros.png')
 
     def initialize_window(self):
         """Initializes the window with appropriate settings and widgets."""
@@ -122,19 +126,18 @@ class GameView:
 
         self._build_die(self.service.get_die_faces()[5][0])
 
-    #     self._draw_ouroboros()
+        self._draw_ouroboros()
 
-    # def _draw_ouroboros(self):
-    #     """Draws an image of ouroboros onto the game board.
-    #     The image is rotated based on the segment size,
-    #     so that the head of the ouroboros is at the center of
-    #     the unique starting segment."""
+    def _draw_ouroboros(self):
+        """Draws an image of ouroboros onto the game board.
+        The image is rotated based on the segment size,
+        so that the head of the ouroboros is at the center of
+        the unique starting segment."""
 
-    #     self.ouroboros = Image.open(r'src/assets/ouroboros.png')
-    #     self.ouroboros = self.ouroboros.rotate(-self.service.calculate_segment_size()/2)
-    #     self.ouroboros = self.ouroboros.resize((800,800), Image.ANTIALIAS)
-    #     self.ouroboros = ImageTk.PhotoImage(self.ouroboros)
-    #     self.right_side.create_image(360, 360, anchor="center", image=self.ouroboros)
+        self.ouroboros_img = self.ouroboros_img.rotate(-self.service.calculate_segment_size()/2)
+        self.ouroboros_img = self.ouroboros_img.resize((800,800), Image.ANTIALIAS)
+        self.ouroboros_img = ImageTk.PhotoImage(self.ouroboros_img)
+        self.right_side.create_image(360, 360, anchor="center", image=self.ouroboros_img)
 
     def _build_right_side_buttons(self):
         """Builds buttons for showing rules and statistics,
@@ -156,22 +159,18 @@ class GameView:
             die_face (path) = The file path of the die face image asset.
         """
 
-        self.die_face = ImageTk.PhotoImage(Image.open(die_face))
-        self.right_side.create_image(360, 340, anchor="center", image=self.die_face)
+        self.die_img = ImageTk.PhotoImage(Image.open(die_face))
+        self.right_side.create_image(360, 340, anchor="center", image=self.die_img)
 
     def _build_cast_button(self):
         """Builds a button for casting the die."""
 
-        cast_btn = button(self.window, "Cast", lambda: self._cast_die_and_move_token(cast_btn))
+        cast_btn = button(self.window, "Cast", lambda: self._handle_die_cast_event(cast_btn))
         cast_btn.place(x=917,y=420, anchor="center")
 
-    def _cast_die_and_move_token(self, cast_btn):
-        """Removes the cast button, builds a die image based on the provided die face
-        and moves the player's token to the correct position on the game board.
-
-        If the current player meets the victory condition, a method is called
-        to handle the game ending. Otherwise, another method is called to
-        handle the question phase of the current player's turn.
+    def _handle_die_cast_event(self, cast_btn):
+        """Removes the cast button and builds a die image based on the provided die face.
+        Then calls another method that handles player token movement.
 
         Args:
             cast_btn (widget): The button for casting the die.
@@ -180,11 +179,24 @@ class GameView:
         cast_btn.destroy()
         die_face = self.service.get_die_face()
         self._build_die(die_face[0])
+        self._handle_player_token_movement(die_face[1])
+
+    def _handle_player_token_movement(self, number):
+        """Moves the player's token to the correct position on the game board.
+        Then calls another method that checks if the player meets the victory condition.
+
+        If the current player meets the victory condition, a method is called
+        to handle the game ending. Otherwise, another method is called to
+        handle the question phase of the current player's turn.
+
+        Args:
+            number (int): The number declared by the die.
+        """
 
         current_turn = self.service.current_turn
         starting_positions = self.service.player_positions_radii
         player_starting_laps = self.service.laps[current_turn]
-        positions = self.service.update_player_positions_radii(current_turn, die_face[1])
+        positions = self.service.update_player_positions_radii(current_turn, number)
         self.player_tokens.move_token(current_turn, positions[current_turn], starting_positions)
 
         if self.service.check_victory_condition(player_starting_laps) is True:
@@ -202,11 +214,7 @@ class GameView:
         self.question_textbox.place(x=30, y=285, anchor="w")
         self.question_textbox.insert(tk.END, self.service.get_question_for_player())
         self.question_textbox.config(state=DISABLED)
-        self.show_answer_btn = button(
-            self.window,
-            "Show answer",
-            self._show_confirmation_buttons,
-        )
+        self.show_answer_btn = button(self.window, "Show answer", self._show_confirmation_buttons)
         self.show_answer_btn.place(x=280, y=420, anchor="center")
 
     def _show_confirmation_buttons(self):
@@ -256,15 +264,15 @@ class GameView:
         """
 
         self.scoreboard.draw_player_points(points)
+        self.scoreboard.remove_previous_highlighter()
+        self.category_board.remove_previous_highlighter()
+        self.service.update_current_turn()
+        self.scoreboard.highlight_player(self.service.current_turn)
         self.question_textbox.destroy()
         self.answer_textbox.destroy()
         self.show_answer_btn.destroy()
         self.answer_correct_btn.destroy()
         self.answer_incorrect_btn.destroy()
-        self.scoreboard.remove_previous_highlighter()
-        self.category_board.remove_previous_highlighter()
-        self.service.update_current_turn()
-        self.scoreboard.highlight_player(self.service.current_turn)
         self._build_cast_button()
 
     def _handle_game_end(self):
@@ -273,13 +281,13 @@ class GameView:
         which handles the view change."""
 
         player_name = self.service.players[self.service.current_turn]
-        if show_player_victorious_dialog(player_name) == 'ok':
-            self._open_settings_view()
+        show_player_victory_dialog(player_name)
+        self._open_settings_view()
 
     def _quit_game(self):
-        """Shows a dialog with confirmation buttons.
-        If the user clicks 'yes', calls another method
-        which handles the view change."""
+        """Shows a dialog with confirmation buttons. If the user selects 'yes',
+        calls a services class method which removes the game's active status
+        and then another method which handles the view change."""
 
         if quit_game_dialog() == 'yes':
             self._open_settings_view()

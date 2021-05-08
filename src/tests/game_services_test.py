@@ -15,34 +15,20 @@ class TestGameServices(unittest.TestCase):
         DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Questions")
         DatabaseServices(test_database).database.execute("DROP TABLE IF EXISTS Games")
         # ---------------------------------------------------------------------
-        # Then the services and test database are initialized and
-        # some stuff is added to the database to ease test formulation.
+        # Then the database and other entities are initialized to ease testing.
         # ---------------------------------------------------------------------
         self.database = DatabaseServices(test_database)
         self.question = Question(1, "TV", "Easy", "Question?", "Answer!")
-        self.database.save_question_item(
-            self.question.user_id,
-            self.question.category,
-            self.question.difficulty,
-            self.question.question,
-            self.question.answer,
-        )
-        self.question_2 = Question(2, "Movies", "Easy", "What?", "Yeah!")
-        self.database.save_question_item(
-            self.question_2.user_id,
-            self.question_2.category,
-            self.question_2.difficulty,
-            self.question_2.question,
-            self.question_2.answer,
-        )
-        self.question_3 = Question(2, "Sports", "Easy", "What?", "Yeah!")
-        self.database.save_question_item(
-            self.question_3.user_id,
-            self.question_3.category,
-            self.question_3.difficulty,
-            self.question_3.question,
-            self.question_3.answer,
-        )
+        self.question_2 = Question(1, "Movies", "Easy", "What?", "Yeah!")
+        self.question_3 = Question(1, "Sports", "Easy", "What?", "Yeah!")
+        for question in [self.question, self.question_2, self.question_3]:
+            self.database.save_question_item(
+                question.user_id,
+                question.category,
+                question.difficulty,
+                question.question,
+                question.answer,
+            )
         self.player = Player("samushka", "red", [(0,0,0), (0,1,0)], [0], [360])
         self.game = Game(1, "Easy", 1, [self.player.name, "player 2"], ["TV", "Movies", "Sports"])
         self.database.save_session_variables(
@@ -53,17 +39,11 @@ class TestGameServices(unittest.TestCase):
         )
         self.service = GameServices(self.database)
 
-    def test_difficulty_set_correctly(self):
+    def test_settings_are_correct(self):
         self.assertEqual(self.service.difficulty, "Easy")
-
-    def test_players_set_correctly(self):
         self.assertEqual(len(self.service.players), 2)
         self.assertEqual(self.service.players[0], "samushka")
-
-    def test_board_size_set_correctly(self):
         self.assertEqual(self.service.board_size, 1)
-
-    def test_categories_set_correctly(self):
         self.assertEqual(len(self.service.categories), 3)
         self.assertEqual(self.service.categories[0], "TV")
 
@@ -105,27 +85,18 @@ class TestGameServices(unittest.TestCase):
     def test_get_die_face(self):
         self.assertEqual(self.service.get_die_face()[1] in range(1,7), True)
 
-    def test_get_question_for_player_flow_when_category_index_is_0(self):
-        self.service.player_positions_indices = [0,0,0,0,0,0]
-        self.service.current_category_index = 0
-        category = self.service.get_category_for_player()
-        question = self.service.get_question_for_player()
-        answer = self.service.get_answer_for_player()
-        self.assertEqual(category == self.game.categories[0], True)
-        self.assertEqual(question == self.question.question, True)
-        self.assertEqual(answer == self.question.answer, True)
-        self.assertEqual(self.service.current_category_index, 0)
-
-    def test_get_question_for_player_flow_when_category_index_is_2(self):
-        self.service.player_positions_indices = [2,0,0,0,0,0]
-        self.service.current_category_index = 2
-        category = self.service.get_category_for_player()
-        question = self.service.get_question_for_player()
-        answer = self.service.get_answer_for_player()
-        self.assertEqual(category == self.game.categories[2], True)
-        self.assertEqual(question == self.question_3.question, True)
-        self.assertEqual(answer == self.question_3.answer, True)
-        self.assertEqual(self.service.current_category_index, 2)
+    def test_get_question_for_player_flow_with_different_categories(self):
+        questions = [self.question, self.question_2, self.question_3]
+        for i in range(len(self.game.categories)):
+            self.service.player_positions_indices = [i,0,0,0,0,0]
+            self.service.current_category_index = i
+            category = self.service.get_category_for_player()
+            question = self.service.get_question_for_player()
+            answer = self.service.get_answer_for_player()
+            self.assertEqual(category == self.game.categories[i], True)
+            self.assertEqual(question == questions[i].question, True)
+            self.assertEqual(answer == questions[i].answer, True)
+            self.assertEqual(self.service.current_category_index, i)
 
     def test_update_current_turn(self):
         self.assertEqual(self.service.current_turn, 0)
@@ -162,13 +133,13 @@ class TestGameServices(unittest.TestCase):
         self.service.laps[self.service.current_turn] = 1
         self.assertEqual(self.service.check_victory_condition(0), False)
 
-    def test_check_victory_condition_with_all_points_but_not_crossing_the_finish_line(self):
+    def test_check_victory_condition_with_enough_points_but_not_crossing_the_finish_line(self):
         self.service.player_points = [(0,0,1), (0,1,1), (0,2,1), (1,0,0), (1,1,0), (1,2,0)]
         self.service.current_turn = 0
         self.service.laps[self.service.current_turn] = 0
         self.assertEqual(self.service.check_victory_condition(0), False)
 
-    def test_check_victory_condition_with_all_points_and_crossing_the_finish_line(self):
+    def test_check_victory_condition_with_enough_points_and_crossing_the_finish_line(self):
         self.service.player_points = [(0,0,1), (0,1,1), (0,2,1), (1,0,0), (1,1,0), (1,2,0)]
         self.service.current_turn = 0
         self.service.laps[self.service.current_turn] = 1

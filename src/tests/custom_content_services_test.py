@@ -1,10 +1,10 @@
 import unittest
 import tkinter as tk
+from config import TEST_DATABASE_FILENAME as test_database
 from repositories.database_services import DatabaseServices
 from services.custom_content_services import CustomContentServices
 from entities.user import User
 from entities.question import Question
-from config import TEST_DATABASE_FILENAME as test_database
 from ui.widgets import listbox
 
 
@@ -21,11 +21,12 @@ class TestCustomContentServices(unittest.TestCase):
         self.database = DatabaseServices(test_database)
         self.service = CustomContentServices(self.database)
         # ---------------------------------------------------------------------
-        # Finally some stuff is added to the database to ease test formulation.
+        # Finally, entities and attributes are initialized to ease testing.
         # ---------------------------------------------------------------------
         self.user = User("samushka", "13")
         self.database.add_user(self.user.username, self.user.password)
         self.database.add_logged_in_user(self.user.username)
+        self.question_invalid = Question(1, "", "", "", "")
         self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
         self.database.save_question_item(
             self.question.user_id,
@@ -34,7 +35,6 @@ class TestCustomContentServices(unittest.TestCase):
             self.question.question,
             self.question.answer,
         )
-        self.question_invalid = Question(2, "", "", "", "")
 
     def test_get_listbox_items(self):
         self.assertEqual(

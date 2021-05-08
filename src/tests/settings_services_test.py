@@ -1,10 +1,10 @@
 import unittest
+from config import TEST_DATABASE_FILENAME as test_database
 from repositories.database_services import DatabaseServices
 from services.settings_services import SettingsServices
 from entities.user import User
 from entities.question import Question
 from ui.widgets import combobox
-from config import TEST_DATABASE_FILENAME as test_database
 
 
 class TestSettingsServices(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestSettingsServices(unittest.TestCase):
         self.database = DatabaseServices(test_database)
         self.service = SettingsServices(self.database)
         # ---------------------------------------------------------------------
-        # Finally some stuff is added to the database to ease test formulation.
+        # Finally, entities and attributes are initialized to ease testing.
         # ---------------------------------------------------------------------
         self.user = User("samushka", "13", 1)
         self.database.add_user(self.user.username, self.user.password)

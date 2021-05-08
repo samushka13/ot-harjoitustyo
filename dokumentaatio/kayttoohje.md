@@ -18,7 +18,9 @@
 
 ### Konfigurointi
 
-Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimet voi tarvittaessa konfiguroida tiedostossa [config.py](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/config.py), joka löytyy projektin juurihakemistosta ("src").
+Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimiä voi tarvittaessa muokata [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka löytyy projektin juurihakemiston yläpuoleisesta kansiosta.
+
+Nimet on oltava mallia "tiedoston_nimi.db", eli konfiguraatiotiedostossa tulee muokata käytännössä vain yhtäsuuruusmerkkien ja pisteiden välisiä alueita. Mikäli tiedoston nimi on kirjoitettu virheellisesti, sovellus luo tietokantatiedostot oletusarvoisilla nimillä "trivioboros.db" ja "trivioboros_tests.db".
 
 Mikäli sovelluksen käyttöliittymän ikkunat näyttävät pienehköiltä, kannattaa kokeilla näytön resoluution muuttamista. Valitettavasti sovellus ei taivu ikkunan koon muuttamiseen, sillä erityisesti pelinäkymän kohdalla tämä olisi tuottanut huomattavan määrän toteutuksellisia haasteita.
 

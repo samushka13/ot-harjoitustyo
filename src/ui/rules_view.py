@@ -39,12 +39,8 @@ class RulesView:
         rules.insert(tk.END, self._game_rules_text())
         rules.config(state=DISABLED)
 
-        button(
-            self.window,
-            "Got it!",
-            command=self._close_window,
+        button(self.window, "Got it!", self._close_window,
         ).place(x=370, y=580, anchor="center")
-
 
     def _game_rules_text(self):
         """Provides the text content for the game rules view.
