@@ -16,13 +16,15 @@
 
        poetry run invoke start
 
+Mikäli käynnistäessä tulee vastaan virheilmoitus siitä, ettei moduulia [requests](https://pypi.org/project/requests/) löydy, se täytyy käydä asentamassa oheisen linkin ohjeiden mukaisesti tai komennolla "pip3 install requests". Mikäli asennuksen jälkeen sovellusta käynnistäessä tulee uudelleen vastaan sama virheilmoitus, paketin asennus kannattaa tehdä virtuaaliympäristössä, eli komennon "poetry shell" jälkeen.
+
 ### Järjestelmävaatimukset
 
 Mikäli pelisessioon valitaan kategoria "Random (Open Trivia DB)", joka hakee tietoja kutsumalla [Open Trivia Database API:a](https://opentdb.com/api_config.php), internet-yhteys on välttämätön. Omilla kategorioilla pelatessa internet-yhteyttä ei tarvita.
 
 ### Konfigurointi
 
-Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimiä voi tarvittaessa muokata [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka löytyy projektin juurihakemiston yläpuoleisesta kansiosta.
+Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti projektin juurihakemistoon, jossa esimerkiksi README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimiä voi tarvittaessa muokata [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka sekin löytyy projektin juurihakemistosta.
 
 Nimet on oltava mallia "tiedoston_nimi.db", eli konfiguraatiotiedostossa tulee muokata käytännössä vain yhtäsuuruusmerkkien ja pisteiden välisiä alueita. Mikäli tiedoston nimi on kirjoitettu virheellisesti, sovellus luo tiedoston oletusarvoisella nimellä "trivioboros.db" tai "trivioboros_tests.db" riippuen siitä, kummasta tiedostosta on kyse.
 

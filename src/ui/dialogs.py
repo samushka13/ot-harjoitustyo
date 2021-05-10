@@ -165,6 +165,11 @@ def show_delete_all_information_dialog(number: int):
         "Nothing to delete",
         "No questions were deleted, as they belong to other usernames."
     )
+    elif number == 1:
+        dialog = messagebox.showinfo(
+        "Delete Succesful",
+        f"{number} question was deleted."
+    )
     else:
         dialog = messagebox.showinfo(
         "Delete Succesful",

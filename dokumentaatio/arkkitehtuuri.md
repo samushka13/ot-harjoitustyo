@@ -56,7 +56,7 @@ Tietojen pysyväistallennuksesta vastaa luokka "DatabaseServices", joka on kaikk
 - "Questions" = kysymyksiin liittyvä tieto,
 - "Games" = aloitettuihin pelisessioihin liittyvä tieto.
 
-Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimet voi tarvittaessa muuttaa [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka löytyy projektin juurihakemiston yläpuoleisesta kansiosta.
+Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti projektin juurihakemistoon, jossa esimerkiksi README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimiä voi tarvittaessa muokata [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka sekin löytyy projektin juurihakemistosta.
 
 ## Päätoiminnallisuudet
 
