@@ -115,8 +115,8 @@ class LoginView:
         ).grid(column=1, row=5, padx=X, pady=Y, sticky="w")
 
     def _handle_login_event(self):
-        """Checks credentials with the help of LoginServices
-        and accommodates the UI accordingly."""
+        """Calls various services class methods which check the
+        input credentials, and accommodates the UI accordingly."""
 
         username = self.username_input.get()
         password = self.password_input.get()

@@ -2,7 +2,7 @@ import tkinter as tk
 from services.custom_content_services import custom_content_services
 from ui.edit_view import EditView as edit_view
 from ui.dialogs import (
-    show_save_error_dialog,
+    show_invalid_input_lengths,
     show_save_successful_dialog,
     show_delete_confirmation_dialog,
     show_delete_all_confirmation_dialog,
@@ -155,8 +155,8 @@ class CustomContentView:
         difficulty = self.difficulty_combobox.get()
         question = self.question_entry.get("1.0",'end-1c')
         answer = self.answer_entry.get("1.0",'end-1c')
-        if self.service.check_input_validity(category, difficulty, question, answer) is False:
-            show_save_error_dialog()
+        if self.service.check_input_length_validity(category, question, answer) is False:
+            show_invalid_input_lengths()
             self.window.focus()
             self.category_combobox.focus()
         else:
@@ -165,8 +165,6 @@ class CustomContentView:
             self._clear_entries()
             self._build_create_widgets()
             self._build_browse_widgets()
-            self.window.focus()
-            self.category_combobox.focus()
 
     def _clear_entries(self):
         """Clears all entry widgets to default values."""

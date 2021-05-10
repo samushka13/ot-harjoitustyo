@@ -132,10 +132,11 @@ class GameView:
         """Draws an image of ouroboros onto the game board.
         The image is rotated based on the segment size,
         so that the head of the ouroboros is at the center of
-        the unique starting segment."""
+        the unique starting segment. The image is also resized
+        automatically so the method can basically handle images of any size."""
 
         self.ouroboros_img = self.ouroboros_img.rotate(-self.service.calculate_segment_size()/2)
-        self.ouroboros_img = self.ouroboros_img.resize((800,800), Image.ANTIALIAS)
+        self.ouroboros_img = self.ouroboros_img.resize((790,790), Image.ANTIALIAS)
         self.ouroboros_img = ImageTk.PhotoImage(self.ouroboros_img)
         self.right_side.create_image(360, 360, anchor="center", image=self.ouroboros_img)
 
@@ -153,13 +154,16 @@ class GameView:
         ).place(x=1260, y=690, anchor="e")
 
     def _build_die(self, die_face):
-        """Builds the die on the parent canvas.
+        """Builds the die on the parent canvas. The image is resized
+        automatically so the method can basically handle images of any size.
 
         Args:
-            die_face (path) = The file path of the die face image asset.
+            die_face (path) = The relative file path of the die face image asset.
         """
 
-        self.die_img = ImageTk.PhotoImage(Image.open(die_face))
+        self.die_img = Image.open(die_face)
+        self.die_img = self.die_img.resize((120,120), Image.ANTIALIAS)
+        self.die_img = ImageTk.PhotoImage(self.die_img)
         self.right_side.create_image(360, 340, anchor="center", image=self.die_img)
 
     def _build_cast_button(self):
@@ -214,10 +218,10 @@ class GameView:
         self.question_textbox.place(x=30, y=285, anchor="w")
         self.question_textbox.insert(tk.END, self.service.get_question_for_player())
         self.question_textbox.config(state=DISABLED)
-        self.show_answer_btn = button(self.window, "Show answer", self._show_confirmation_buttons)
+        self.show_answer_btn = button(self.window, "Show answer", self._show_answer)
         self.show_answer_btn.place(x=280, y=420, anchor="center")
 
-    def _show_confirmation_buttons(self):
+    def _show_answer(self):
         """Shows the correct answer and buttons for confirming
         whwther the player's answer was correct."""
 

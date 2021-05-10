@@ -1,4 +1,6 @@
 import random
+import html
+import requests
 from repositories.database_services import database_services as default_database
 
 
@@ -25,6 +27,7 @@ class GameServices:
         self.current_turn = 0
         self.current_category_index = None
         self.current_question = None
+        self.otdb_question_item = None
         self.laps = [0, 0, 0, 0, 0, 0]
         self.player_positions_radii = [360, 360, 360, 360, 360, 360]
         self.player_positions_indices = [0, 0, 0, 0, 0, 0]
@@ -171,7 +174,11 @@ class GameServices:
         return die_face
 
     def get_category_for_player(self):
-        """Provides a category for the player.
+        """Provides a category for the player based on
+        the player token's current position.
+
+        Calls the Open Trivia Database API for a question item,
+        if the current category is not a custom category.
 
         Returns:
             category (str): The current category.
@@ -187,31 +194,87 @@ class GameServices:
 
         category = self.categories[self.current_category_index]
 
+        if "Open Trivia" in category:
+            self._get_otdb_question_item_category()
+
         return category
 
+    def _get_otdb_question_item_category(self):
+        """Calls the Open Trivia API to get a random question item and
+        provides its category. 
+
+        Returns:
+            category (str): The current category.
+        """
+
+        self.otdb_question_item = requests.get("https://opentdb.com/api.php?amount=1")
+        question_type = html.unescape(self.otdb_question_item.json()['results'][0]['type'])
+        self.check_otdb_question_item_type(question_type)
+
+        category = html.unescape(self.otdb_question_item.json()['results'][0]['category'])
+
+        return category
+
+    def check_otdb_question_item_type(self, question_type):
+        """If the question type is 'true or false',
+        a new call is made to get a bit more challenging question.
+
+        Args:
+            question_type (str): The type of the requested question.
+        """
+
+        if question_type == 'boolean':
+            self.otdb_question_item = requests.get(
+                "https://opentdb.com/api.php?amount=1&type=multiple"
+            )
+
     def get_question_for_player(self):
-        """Provides a question from the selected category by
-        calling a database services class method.
+        """Provides a question from the current category by calling
+        a database services class method or using the question item
+        from the Open Trivia Database API, depending on the category.
 
         Returns:
             self.current_question (str): The current question.
         """
 
         category = self.categories[self.current_category_index].replace("'", "''")
-        self.current_question = self.database.get_question_for_player(category)
+
+        if "Open Trivia" in category:
+            self.current_question = self._get_otdb_question_item_question()
+        else:
+            self.current_question = self.database.get_question_for_player(category)
 
         return self.current_question
 
+    def _get_otdb_question_item_question(self):
+        """Provides the question of an Open Trivia Database question item.
+        Also, formats the question so that the question's actual category is shown.
+
+        Returns:
+            formatted_question (str): The current question and its category.
+        """
+
+        category = html.unescape(self.otdb_question_item.json()['results'][0]['category'])
+        question = html.unescape(self.otdb_question_item.json()['results'][0]['question'])
+        formatted_question = f"{category}\n\n{question}"
+
+        return formatted_question
+
     def get_answer_for_player(self):
-        """Provides an answer to the selected question by
-        calling a database services class method.
+        """Provides an answer to the current question by calling
+        a database services class method or using the question item
+        from the Open Trivia Database API, depending on the category.
 
         Returns:
             answer (str): The current answer.
         """
 
-        question = self.current_question.replace("'", "''")
-        answer = self.database.get_answer_for_player(question)
+        category = self.categories[self.current_category_index].replace("'", "''")
+
+        if "Open Trivia" in category:
+            answer = html.unescape(self.otdb_question_item.json()['results'][0]['correct_answer'])
+        else:
+            answer = self.database.get_answer_for_player(self.current_question.replace("'", "''"))
 
         return answer
 

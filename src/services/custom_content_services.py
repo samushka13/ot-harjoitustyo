@@ -73,20 +73,24 @@ class CustomContentServices:
 
         return difficulties
 
-    def check_input_validity(self, category, difficulty, question, answer):
-        """Checks that the user input contains no empty values.
+    def check_input_length_validity(self, category, question, answer):
+        """Checks that the user inputs are within the set limits.
 
         Args:
             category (str): The content of the category input field.
-            difficulty (str): The content of the difficulty input field.
             question (str): The content of the question input field.
             answer (str): The content of the answer input field.
 
         Returns:
-            True, if inputs are valid, and False, if they're not.
+            True, if input lengths are valid, and False, if they're not.
         """
 
-        return bool("" not in (category, difficulty, question, answer))
+        return all([
+            bool("" not in (category, question, answer)),
+            bool(len(category) <= 30),
+            bool(len(question) <= 300),
+            bool(len(answer) <= 100),
+        ])
 
     def format_question(self, question):
         """Ensures that a question ends with a question mark.
@@ -181,7 +185,7 @@ class CustomContentServices:
         return questions
 
     def delete_items(self, items):
-        """Calls the above method to count the questions in the database
+        """Calls another method to count the questions in the database
         before and after the deletion of items which, in turn, is handled
         by calling a DatabaseServices class method.
 

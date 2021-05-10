@@ -1,4 +1,5 @@
 import unittest
+import html
 from config import TEST_DATABASE_FILENAME as test_database
 from repositories.database_services import DatabaseServices
 from services.game_services import GameServices
@@ -18,10 +19,12 @@ class TestGameServices(unittest.TestCase):
         # Then the database and other entities are initialized to ease testing.
         # ---------------------------------------------------------------------
         self.database = DatabaseServices(test_database)
-        self.question = Question(1, "TV", "Easy", "Question?", "Answer!")
-        self.question_2 = Question(1, "Movies", "Easy", "What?", "Yeah!")
-        self.question_3 = Question(1, "Sports", "Easy", "What?", "Yeah!")
-        for question in [self.question, self.question_2, self.question_3]:
+        self.questions = [
+            Question(1, "TV", "Easy", "Question?", "Answer!"),
+            Question(1, "Movies", "Easy", "What?", "Yeah!"),
+            Question(1, "Sports", "Easy", "What?", "Yeah!")
+        ]
+        for question in self.questions:
             self.database.save_question_item(
                 question.user_id,
                 question.category,
@@ -30,12 +33,14 @@ class TestGameServices(unittest.TestCase):
                 question.answer,
             )
         self.player = Player("samushka", "red", [(0,0,0), (0,1,0)], [0], [360])
-        self.game = Game(1, "Easy", 1, [self.player.name, "player 2"], ["TV", "Movies", "Sports"])
+        self.game = Game(
+            1, "Easy", 1, ["samushka", "player 2"], ["TV", "Movies", "Random (Open Trivia DB)"],
+        )
         self.database.save_session_variables(
-          self.game.difficulty,
-          self.game.board_size,
-          self.game.players,
-          self.game.categories,
+            self.game.difficulty,
+            self.game.board_size,
+            self.game.players,
+            self.game.categories,
         )
         self.service = GameServices(self.database)
 
@@ -86,17 +91,28 @@ class TestGameServices(unittest.TestCase):
         self.assertEqual(self.service.get_die_face()[1] in range(1,7), True)
 
     def test_get_question_for_player_flow_with_different_categories(self):
-        questions = [self.question, self.question_2, self.question_3]
         for i in range(len(self.game.categories)):
             self.service.player_positions_indices = [i,0,0,0,0,0]
             self.service.current_category_index = i
             category = self.service.get_category_for_player()
             question = self.service.get_question_for_player()
             answer = self.service.get_answer_for_player()
-            self.assertEqual(category == self.game.categories[i], True)
-            self.assertEqual(question == questions[i].question, True)
-            self.assertEqual(answer == questions[i].answer, True)
             self.assertEqual(self.service.current_category_index, i)
+            if i in (0,1):
+                self.assertEqual(category == self.game.categories[i], True)
+                self.assertEqual(question == self.questions[i].question, True)
+                self.assertEqual(answer == self.questions[i].answer, True)
+            else:
+                self.assertEqual(category is not None, True)
+                self.assertEqual(question is not None, True)
+                self.assertEqual(answer is not None, True)
+
+    def test_check_otdb_question_item_type(self):
+        self.service.check_otdb_question_item_type('boolean')
+        self.assertEqual(
+            html.unescape(self.service.otdb_question_item.json()['results'][0]['type']),
+            'multiple',
+        )
 
     def test_update_current_turn(self):
         self.assertEqual(self.service.current_turn, 0)

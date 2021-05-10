@@ -15,7 +15,7 @@ from ui.widgets import (
     combobox,
 )
 from ui.dialogs import (
-    show_save_error_dialog,
+    show_invalid_input_lengths,
     show_save_successful_dialog,
 )
 
@@ -96,13 +96,13 @@ class EditView:
         self.answer_entry.grid(column=0, row=8, columnspan=2, padx=X)
         self.answer_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[3])
 
-        button(self.window, "Save", self._handle_update
+        button(self.window, "Save", self._handle_question_item_update
         ).grid(column=0, row=10)
 
         button(self.window, "Cancel", self._open_custom_content_view
         ).grid(column=1, row=10)
 
-    def _handle_update(self):
+    def _handle_question_item_update(self):
         """Collects input values, calls CustomContentServices class methods
         which handle these values, and accommodates the UI accordingly."""
 
@@ -110,8 +110,8 @@ class EditView:
         difficulty = self.difficulty_combobox.get()
         question = self.question_entry.get("1.0",'end-1c')
         answer = self.answer_entry.get("1.0",'end-1c')
-        if self.service.check_input_validity(category, difficulty, question, answer) is False:
-            show_save_error_dialog()
+        if self.service.check_input_length_validity(category, question, answer) is False:
+            show_invalid_input_lengths()
             self.window.focus()
             self.category_combobox.focus()
         else:

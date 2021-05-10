@@ -2,9 +2,9 @@ title Adding a custom question (valid inputs)
 
 CustomContentView->CustomContentView: _handle_save_event()
 activate CustomContentView
-CustomContentView->+CustomContentServices: check_input_validity(category, difficulty, question, answer)
+CustomContentView->+CustomContentServices: check_input_length_validity(category, question, answer)
 CustomContentServices-->-CustomContentView: True
-CustomContentView->+CustomContentServices: handle_save_item(category, difficulty, question, answer)
+CustomContentView->+CustomContentServices: handle_save_item(category, question, answer)
 CustomContentServices->CustomContentServices: format_question(question)
 CustomContentServices->CustomContentServices: format_answer(answer)
 CustomContentServices->+DatabaseServices: save_question_item(user_id, category, difficulty, question, answer)

@@ -30,10 +30,11 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
 - Käyttäjä voi nähdä säännöt asianmukaisen painikkeen avulla.
 - Käyttäjä voi muokata pelin asetuksia valitsemalla
   - pelaajien lukumäärän ja nimet (1-6, kirjautunut käyttäjä ensimmäisenä),
-  - kysymysten kategoriat (2-12, useita vaihtoehtoja),
+  - kysymysten kategoriat (2-12, useita vaihtoehtoja ml. "Random" [Open Trivia Databasesta](https://opentdb.com/api_config.php)),
   - pelilaudan koon (6 vaihtoehtoa, keskikoko valittuna valmiiksi)
+- Käyttäjä voi nähdä lisätietoa Open Trivia Databasesta asianmukaisen painikkeen avulla.
 - Käyttäjä voi aloittaa pelin asianmukaisella painikkeella, jolloin siirrytään näkymään "Pelisessio".
-  - Mikäli pelin asetukset eivät täytä ehtoja (vähintään yksi pelaaja ja kaksi kategoriaa), sovellus ilmoittaa siitä käyttäjälle.
+  - Mikäli pelin asetukset eivät täytä ehtoja (vähintään yksi pelaaja ja kaksi kategoriaa sekä internet-yhteys, mikäli Open Trivia Databasen kategorioita valittuna), sovellus ilmoittaa siitä käyttäjälle.
 
 ### Omat kysymykset ja kategoriat
 
@@ -63,7 +64,7 @@ Sovelluksella on rekisteröitymistä vaativa käyttäjärooli.
   - tila kysymykselle ja vastauksille,
   - painikkeen, jolla voi näyttää vastauksen,
   - painikkeet, joilla voi valita, vastasiko pelaaja oikein vai väärin.
-- Kysymys on eistettävä kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
+- Kysymys on esstettävä kategoriasta, jolla pelaajan pelinappula laudalla sijaitsee.
 - Pistetaulun on reagoitava pisteiden muutoksiin pelaajien vastausten mukaisesti.
 - Käyttäjä voi tarkastella pelisession tilastoja asianmukaisen painikkeen avulla.
 - Käyttäjä voi tarkastella pelin sääntöjä asianmukaisen painikkeen avulla.
@@ -86,14 +87,13 @@ Pelin asetuksissa voi valita
 - vaikeustason (Easy / Intermediate / Advanced Trivialist / Hardcore Madness),
 - kysymysten vaikeustason pelaajittain,
 - vaikeustason kategorioittain,
-- kategoriaksi "random", jolloin kategoria arvotaan pelisession aikana jokaista kysymystä varten,
 - noppien lukumäärän (1-2),
 - kategoriapisteiden lukumäärän (1 = pikapeli, 5 = maraton)
 - kysymysten kategorioille haluamansa värit,
 - mukaan vain esimerkiksi monivalintakysymyksiä,
 - "Random"-pelimuodon, jolloin sovellus arpoo käyttäjälle asetukset,
 - pelin asetukset valmiista pohjista (valmiiksi annetut ja/tai käyttäjän luomat),
-- kysymyksiä vain joko omista tai [Open Trivia Databasen](https://opentdb.com/api_config.php) kysymyksistä, tai molemmista.
+- eri kategorioita [Open Trivia Databasesta](https://opentdb.com/api_config.php).
 
 Omien kysymysten
 - selaamiseen hakukenttä ja kategoriasuodattimet,
@@ -102,7 +102,7 @@ Omien kysymysten
 - lisäämiseen huomautus, mikäli täsmälleen sama kysymys on jo kategoriassa olemassa.
 - poistamisilmoitukseen listaus käyttäjistä, joiden kysymyksiä ei voitu poistaa,
 - oheen tietoa kysymyksistä, kuten kuinka monta kysymystä käyttäjät ovat yhteensä luoneet,
-- tuonti toisesta tietokannasta tai muusta tietolähteestä (esim. csv-tiedosto tai OpenTriviaDB API).
+- tuonti toisesta tietokannasta tai muusta tietolähteestä (esim. csv-tiedosto).
 
 Pelisessioon
 - mekanismi, joka välttää kysymästä samaa kysymystä uudelleen, ellei ole aivan pakko,

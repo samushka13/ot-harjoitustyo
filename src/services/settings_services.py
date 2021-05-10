@@ -1,3 +1,4 @@
+import requests
 from repositories.database_services import database_services as default_database
 
 
@@ -98,12 +99,16 @@ class SettingsServices:
 
     def get_categories(self):
         """Calls a database class method that fetches all existing categories.
+        The list is appended with a string pointing to the Open Trivia DB questions
+        as well as an empty string that helps the user clear a selection.
 
         Returns:
             categories (list): The category names as string values.
         """
 
-        categories = self.database.get_categories()
+        categories = sorted(self.database.get_categories())
+        categories.append("Random (Open Trivia DB)")
+        categories.append("")
 
         return categories
 
@@ -119,7 +124,7 @@ class SettingsServices:
         """
 
         self.category_colors = [
-            "black",
+            "white",
             "red",
             "gold",
             "green",
@@ -198,7 +203,7 @@ class SettingsServices:
 
         self.categories = []
         for category in added_categories:
-            if category.get() != "" and category.get() != "Add category":
+            if category.get() not in ("", "Add category"):
                 self.categories.append(category.get())
 
         return self.categories
@@ -281,6 +286,13 @@ class SettingsServices:
         """
 
         return bool(len(self.categories) >= 2)
+
+    def check_internet_connection(self):
+        try:
+            requests.get("https://www.google.com/", timeout=2)
+            return True
+        except (requests.ConnectionError, requests.Timeout):
+            return False
 
     def logout_users(self):
         """Calls a DatabaseServices class method to remove all logged in users

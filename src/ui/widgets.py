@@ -259,7 +259,7 @@ def board_segment(board, distance: float, extent: float, fill):
         start=360-distance,
         extent=-extent,
         fill=fill,
-        width=4,
+        width=3,
     )
 
     return segment

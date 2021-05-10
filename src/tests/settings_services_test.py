@@ -49,12 +49,12 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.get_default_board_sizes()[5][1], 30)
 
     def test_get_categories(self):
-        self.assertEqual(len(self.service.get_categories()), 1)
-        self.assertEqual(self.service.get_categories()[0], "Category")
+        self.assertEqual(len(self.service.get_categories()), 3)
+        self.assertEqual(self.service.get_categories()[1], "Random (Open Trivia DB)")
 
     def test_get_default_category_colors(self):
         self.assertEqual(len(self.service.get_default_category_colors()), 12)
-        self.assertEqual(self.service.get_default_category_colors()[0], "black")
+        self.assertEqual(self.service.get_default_category_colors()[0], "white")
 
     def test_get_default_difficulties(self):
         self.assertEqual(len(self.service.get_default_difficulties()), 3)
@@ -101,7 +101,7 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_collect_category_color_settings(self):
         self.assertEqual(len(self.service.collect_category_color_settings()), 12)
-        self.assertEqual(self.service.collect_category_color_settings()[0], "black")
+        self.assertEqual(self.service.collect_category_color_settings()[0], "white")
 
     def test_collect_board_size_settings(self):
         selected_board_size = combobox()
@@ -123,6 +123,9 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_check_category_number_validity(self):
         self.assertEqual(self.service.check_category_number_validity(), False)
+
+    def test_check_internet_connection(self):
+        self.assertEqual(self.service.check_internet_connection(), True)
 
     def test_handle_logout(self):
         self.assertEqual(len(self.database.get_logged_in_user()), 1)

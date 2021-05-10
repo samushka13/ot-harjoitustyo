@@ -6,5 +6,6 @@ def main():
 
     login_view.initialize_window()
 
+
 if __name__ == "__main__":
     main()

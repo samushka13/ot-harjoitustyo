@@ -48,6 +48,14 @@ def show_no_users_dialog():
             "There are currently no users on this device.",
         )
 
+def show_no_internet_connection_dialog():
+    return messagebox.showinfo(
+            "No internet connection",
+            "It seems that this device is not connected to the internet.\
+            \n\nYou can still play, just without any Open Trivia DB categories.\
+            \n\nIf you don't have any other categories, now might be a good time to create some.\n",
+        )
+
 # -------------------------------------------------------------------------
 # Settings:
 # -------------------------------------------------------------------------
@@ -73,21 +81,37 @@ def show_category_number_error_dialog():
         \n\nIf the lists are empty, try creating some questions in the Custom Content view.\n"
     )
 
+def show_about_otdb_dialog():
+    return messagebox.showinfo(
+            "About Open Trivia DB",
+            """
+Open Trivia Database is a free to use, user-contributed \
+trivia question database available at https://opentdb.com/.
+
+All questions provided by the Open Trivia DB API are available under the \
+Creative Commons Attribution-ShareAlike 4.0 International License, \
+and thus so are all such questions used in this program as well.
+""",
+        )
+
 # -------------------------------------------------------------------------
 # Custom Content:
 # -------------------------------------------------------------------------
 
-def show_save_error_dialog():
+def show_invalid_input_lengths():
     return messagebox.showinfo(
-        "Save Error",
-        "Ensure that all fields have text in them."
+        "Invalid input lengths",
+        "Ensure that the text input lengths are within the following limits:\
+        \n\nCategory: 1-30 characters\n\
+        \nQuestion: 1-300 characters\n\
+        \nAnswer: 1-100 characters\n"
     )
 
 def show_save_successful_dialog():
     return messagebox.showinfo(
         "Hooray!",
         "Question saved successfully. \
-         \n\nCreate more to improve the gaming experience.\n"
+        \n\nCreate more to improve the gaming experience.\n"
     )
 
 def show_edit_error_dialog():

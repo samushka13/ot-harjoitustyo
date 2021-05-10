@@ -4,10 +4,10 @@
 
 Sovelluslogiikkakerroksen palveluluokkien testauksesta vastaa eri testiluokat seuraavasti:
 
-- Kirjautumiseen liittyvät palvelut <-> [TestLoginServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/login_services_test.py).
-- Pelin asetuksiin liittyvät palvelut <-> [TestSettingsServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/settings_services_test.py).
-- Omien sisältöjen hallintaan liittyvät palvelut <-> [TestCustomContentServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/custom_content_services_test.py).
-- Pelisessioon liittyvät palvelut <-> [TestGameServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/game_services_test.py).
+- kirjautumiseen liittyvät palvelut <-> [TestLoginServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/login_services_test.py),
+- pelin asetuksiin liittyvät palvelut <-> [TestSettingsServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/settings_services_test.py),
+- omien sisältöjen hallintaan liittyvät palvelut <-> [TestCustomContentServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/custom_content_services_test.py),
+- pelisessioon liittyvät palvelut <-> [TestGameServices](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/tests/game_services_test.py).
 
 Kaikki testiluokat on alustettu kolmenlaisilla toimenpiteillä:
 

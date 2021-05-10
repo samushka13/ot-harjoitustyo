@@ -8,12 +8,13 @@ Sovelluksen arkkitehtuuri on kolmitasoinen:
 
 Yllä olevassa kuvassa
 
-- "ui" = käyttöliittymästä vastaava koodi,
-- "services" = sovelluslogiikasta vastaava koodi,
-- "repository" = tietojen tallennuksesta vastaava koodi,
-- "entities" = sovelluksen käyttämien tietokohteiden koodi.
+- "[ui](https://github.com/samushka13/ot-harjoitustyo/tree/master/src/ui)" = käyttöliittymästä vastaava koodi,
+- "[services](https://github.com/samushka13/ot-harjoitustyo/tree/master/src/services)" = sovelluslogiikasta vastaava koodi,
+- "[repository](https://github.com/samushka13/ot-harjoitustyo/tree/master/src/repositories)" = tietojen tallennuksesta vastaava koodi,
+- "[entities](https://github.com/samushka13/ot-harjoitustyo/tree/master/src/entities)" = sovelluksen käyttämien tietokohteiden koodi.
+- "[Open Trivia Database API](https://opentdb.com/api_config.php)" = ulkoisen tietokannan rajapinta.
 
-Sovellus noudattaa tiukasti kolmikerroksista arkkitehtuuria, jossa käyttöliittymäluokkien ("ui") logiikka rajoittuu puhtaasti käyttöliittymän muokkaamiseen palveluluokkien ("services", palvelut) antamien tietojen pohjalta. Palveluluokat puolestaan kutsuvat tarvittaessa niiden yhteiskäytössä olevaa tietokantapalveluluokkaa ("repository"), joka hallinnoi käyttäjien, kysymysten ja pelisessioiden tietojen säilöntää. 
+Sovellus noudattaa tiukasti kolmikerroksista arkkitehtuuria, jossa käyttöliittymäluokkien ("ui") logiikka rajoittuu puhtaasti käyttöliittymän muokkaamiseen palveluluokkien ("services", palvelut) antamien tietojen pohjalta. Palveluluokat puolestaan kutsuvat tarvittaessa niiden yhteiskäytössä olevaa tietokantapalveluluokkaa ("repository"), joka hallinnoi käyttäjien, kysymysten ja pelisessioiden tietojen säilöntää. Lisäksi palveluluokista kaksi kutsuu tarvittaessa ulkoista rajapintaa ("Open Trivia Database API"), jonka avulla myös voidaan hakea kysymyksiä pelisessioihin.
 
 ## Käyttöliittymä
 
@@ -21,16 +22,16 @@ Käyttöliittymä on toteutettu [tkinter](https://docs.python.org/3/library/tkin
 
 Käyttöliittymä koostuu neljästä erillisestä päänäkymästä, jotka ovat
 
-- "Login or Create Username", jota kuvastaa luokka *LoginView*,
-- "Game Settings", jota kuvastaa luokka *SettingsView*,
-- "Custom Content", jota kuvastaa luokka *CustomContentView*,
-- "Game Session", jota kuvastaa luokka *GameView*.
+- "Login or Create Username", jota kuvastaa luokka [LoginView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/login_view.py),
+- "Game Settings", jota kuvastaa luokka [SettingsView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/settings_view.py),
+- "Custom Content", jota kuvastaa luokka [CustomContentView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/custom_content_view.py),
+- "Game Session", jota kuvastaa luokka [GameView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/game_view.py).
 
 Lisäksi
 
-- "Custom Content" sisältää erillisen "Edit"-alanäkymän, jota kuvastaa luokka *EditView*,
-- "Game Settings" ja "Game Session" sisältävät erillisen "Rules"-alanäkymän, jota kuvastaa luokka *RulesView*,
-- "Game Session" sisältää erillisen "Statistics"-alanäkymän, jota kuvastaa luokka *StatisticsView*.
+- "Custom Content" sisältää erillisen "Edit"-alanäkymän, jota kuvastaa luokka [EditView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/edit_view.py),
+- "Game Settings" ja "Game Session" sisältävät erillisen "Rules"-alanäkymän, jota kuvastaa luokka [RulesView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/rules_view.py),
+- "Game Session" sisältää erillisen "Statistics"-alanäkymän, jota kuvastaa luokka [StatisticsView](https://github.com/samushka13/ot-harjoitustyo/blob/master/src/ui/statistics_view.py).
 
 Kaikki pää- ja alanäkymät on siis toteutettu omina luokkinaan. Pääsääntöisesti vain yksi näistä näkyy käyttäjälle kerrallaan, poikkeuksena "Rules"- ja "Statistics"-alanäkymät, jotka ilmestyvät olemassa olevan näkymän päälle omina ikkunoinaan.
 
@@ -87,7 +88,7 @@ Alla oleva sekvenssikaavio kuvaa oman kysymyksen lisäämistä asianmukaisilla s
 
 ![Oman kysymyksen lisääminen](kaaviot/oman_kysymyksen_lisaaminen.png)
 
-1. *CustomContentView* kutsuu sisäistä metodiaan *_handle_save_event*, joka kerää käyttöliittymän kentistä käyttäjän syöttämät arvot ja lähettää ne luokalle *CustomContentServices* tarkistettaviksi kutsumalla metodia *check_input_validity* parametreinaan käyttäjän syöttämät tiedot. Mikäli syötteet eivät sisällä tyhjiä arvoja, *CustomContentServices* palauttaa arvon *True*. Tässä tapauksessa näin on. Mikäli palautunut arvo olisi *False*, sovellus ilmoittaisi käyttäjälle asiasta ja tilanne palautuisi sekvenssikaaviota edeltävään tilaan. 
+1. *CustomContentView* kutsuu sisäistä metodiaan *_handle_save_event*, joka kerää käyttöliittymän kentistä käyttäjän syöttämät arvot ja lähettää ne luokalle *CustomContentServices* tarkistettaviksi kutsumalla metodia *check_input_length_validity* parametreinaan käyttäjän syöttämät tiedot. Mikäli syötteiden pituudet ovat sallituissa rajoissa, *CustomContentServices* palauttaa arvon *True*. Tässä tapauksessa näin on. Mikäli palautunut arvo olisi *False*, sovellus ilmoittaisi käyttäjälle asiasta ja tilanne palautuisi sekvenssikaaviota edeltävään tilaan.
 
 2. Saatuaan tiedoksi arvon *True* *CustomContentView* kutsuu luokan *CustomContentServices* metodia *handle_save_item* parametreinaan jälleen käyttäjän syöttämät tiedot. *CustomContentServices* tarkistaa sisäisillä metodikutsuilla *format_question* ja *format_answer*, että käyttäjän syöttämä kysymys ja vastaus päättyvät oikeanlaiseen välimerkkiin.
 
@@ -111,13 +112,13 @@ Alla oleva sekvenssikaavio kuvaa uuden pelin aloittamista asianmukaisilla syött
 
 ### Pelivuoron kulku
 
-Alla oleva sekvenssikaavio kuvaa yksittäisen pelivuoron kulkua tilanteessa, jossa pelaaja vastaa kysymykseen oikein eikä tällä vielä ole kategoriapistettä. Kaavion tapahtumat alkavat siitä, kun edellisen pelaajan vuoro on päättynyt. Toisin kuin edellisten sekvenssien kohdalla, tähän liittyvä selostus ei erittele aivan jokaista yksityiskohtaa, jotta kuvauksen pituus pysyisi kohtuullisena.
+Alla oleva sekvenssikaavio kuvaa yksittäisen pelivuoron kulkua tilanteessa, jossa pelaaja vastaa jonkin "custom"-kategorian kysymykseen oikein eikä pelaajalla vielä ole kyseistä kategoriapistettä. Kaavion tapahtumat alkavat siitä, kun edellisen pelaajan vuoro on päättynyt. Toisin kuin edellisten sekvenssien kohdalla, tähän liittyvä selostus ei erittele aivan jokaista yksityiskohtaa, jotta kuvauksen pituus pysyisi kohtuullisena.
 
 ![Pelivuoron kulku](kaaviot/pelivuoron_kulku.png)
 
 1. Kun pelaaja painaa painiketta *Cast*, *GameView* kutsuu luokkaa *GameServices* saadakseen tiedon nopan silmäluvusta (*get_die_face*) ja pelinappuloiden uusista sijainneista piirtämistä varten (*player_positions_radii*). *GameServices* päivittää uudet sijainnit myös indeksiarvoina (*player_positions_indices*), jotta se tietää, millä kategoriasegmenteillä nappulat kulloinkin ovat. Tämän jälkeen tarkastetaan, täyttikö pelaaja ehdot pelin voittamiselle (*check_victory_condition*). Tässä tapauksessa ei. Mikäli näin kuitenkin olisi, sovellus ilmoittaisi asiasta käyttäjälle, peli päättyisi ja käyttäjälle annettaisiin mahdollisuus siirtyä pelin asetuksiin.
 
-2. Kun nopanheittoon ja nappuloiden siirtelyyn liittyvät toimenpiteet on tehty, *GameView* siirtyy pelivuoron kysymysvaiheeseen (*_handle_question_phase*). *GameView* kysyy luokalta *GameServices* tiedon sekä nykyisestä kategoriasta, jotta se osaa korostaa sen kategoriataulusta (*CategoryBoard*), että pelaajalta kysyttävästä kysymyksestä. *GameServices* välittää kysymyksen luokalle *DatabaseServices*, joka palauttaa kysymyksen luokan *GameServices* kautta luokalle *GameView*. Sama prosessi toistetaan oikean vastauksen hakemiseksi (*get_answer_for_player*).
+2. Kun nopanheittoon ja nappuloiden siirtelyyn liittyvät toimenpiteet on tehty, *GameView* siirtyy pelivuoron kysymysvaiheeseen (*_handle_question_phase*). *GameView* kutsuu luokkaa *GameServices* saadakseen tiedon sekä nykyisestä kategoriasta, jotta se osaa korostaa sen kategoriataulusta (*CategoryBoard*), että pelaajalta kysyttävästä kysymyksestä. *GameServices* välittää kutsun luokalle *DatabaseServices*, joka palauttaa kysymyksen luokan *GameServices* kautta luokalle *GameView*. Sama prosessi toistetaan oikean vastauksen hakemiseksi (*get_answer_for_player*). Mikäli kyseessä olisi Open Trivia Databasesta haettava kysymys, *GameServices* kutsuisi tietokannan sijaan ulkoista rajapintaa kysymyksen saamiseksi.
 
 3. Kun käyttäjä on painikkeella vahvistanut pelaajan vastauksen oikeellisuuden, *GameView* siirtyy käsittelemään oikeaa vastausta. *GameView* kutsuu luokan *GameServices* metodia *add_point_to_player*, joka päivittää pelaajan pisteet (väärän vastauksen kohdalla metodi olisi *remove_point_from_player*, muutoin prosessi olisi täsmälleen samanlainen). *GameServices* palauttaa tiedon pisteistä, minkä jälkeen siirrytään vuoron lopetusvaiheeseen.
 

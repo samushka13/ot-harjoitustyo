@@ -53,18 +53,16 @@ class TestCustomContentServices(unittest.TestCase):
 
     def test_check_input_validity(self):
         self.assertEqual(
-            self.service.check_input_validity(
+            self.service.check_input_length_validity(
                 self.question.category,
-                self.question.difficulty,
                 self.question.question,
                 self.question.answer,
             ),
             True,
         )
         self.assertEqual(
-            self.service.check_input_validity(
+            self.service.check_input_length_validity(
                 self.question_invalid.category,
-                self.question_invalid.difficulty,
                 self.question_invalid.question,
                 self.question_invalid.answer,
             ),
@@ -106,30 +104,7 @@ class TestCustomContentServices(unittest.TestCase):
     def test_count_questions(self):
         self.assertEqual(self.service.count_questions(), 1)
 
-    def test_delete_items(self):
-        self.assertEqual(self.service.delete_items(["1."]), 1)
-
-    def test_delete_all(self):
-        question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.database.save_question_item(
-            question.user_id,
-            question.category,
-            question.difficulty,
-            question.question,
-            question.answer,
-        )
-        self.assertEqual(self.service.delete_all(), None)
-        self.assertEqual(self.database.get_question_if_owned_by_user(1, 1), 0)
-
     def test_get_item_for_editing(self):
-        self.question = Question(1, "Category", "Difficulty", "Question?", "Answer!")
-        self.database.save_question_item(
-            self.question.user_id,
-            self.question.category,
-            self.question.difficulty,
-            self.question.question,
-            self.question.answer,
-        )
         self.assertEqual(
             self.service.get_item_for_editing(1),
             ("Category", "Difficulty", "Question?", "Answer!"),
@@ -147,3 +122,10 @@ class TestCustomContentServices(unittest.TestCase):
             None,
         )
         self.assertEqual(self.database.get_question_item_parameters(1)[3], "The updated answer.")
+
+    def test_delete_all(self):
+        self.assertEqual(self.service.delete_all(), None)
+        self.assertEqual(self.database.get_question_if_owned_by_user(1, 1), 0)
+
+    def test_delete_items(self):
+        self.assertEqual(self.service.delete_items(["1."]), 1)

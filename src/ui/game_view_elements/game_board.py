@@ -49,4 +49,4 @@ class GameBoard:
         """Draws a circle onto the center of the canvas
         to help form the game board's shape."""
 
-        self.canvas.create_oval(85, 85, 635, 635, fill=BACKGROUND, width=4)
+        self.canvas.create_oval(100, 100, 620, 620, fill=BACKGROUND, width=3)

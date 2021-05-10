@@ -12,6 +12,8 @@ from ui.dialogs import (
     show_player_number_error_dialog,
     show_player_name_error_dialog,
     show_category_number_error_dialog,
+    show_about_otdb_dialog,
+    show_no_internet_connection_dialog,
 )
 from ui.stylings import (
     get_window_settings,
@@ -88,6 +90,12 @@ class SettingsView:
 
         button(
             self.window,
+            "About Open Trivia DB",
+            show_about_otdb_dialog
+        ).grid(column=1, row=14, padx=X)
+
+        button(
+            self.window,
             "Start Game",
             self._handle_game_start_event
         ).grid(column=2, row=14, padx=X)
@@ -126,20 +134,23 @@ class SettingsView:
         return player_comboboxes
 
     def _build_category_comboboxes(self):
-        """Builds the category selection widgets.
+        """Builds the category selection widgets. Sets the random
+        Open Trivia DB category as default value for the first two boxes.
 
         Returns:
             category_comboboxes (list): Widgets for selecting categories.
         """
 
         category_comboboxes = []
+        categories = self.service.get_categories()
         for i in range(0,12):
             category_combobox = combobox(self.window)
-            categories = self.service.get_categories()
-            categories.append("")
             category_combobox['values'] = categories
             category_combobox.state(['readonly'])
-            category_combobox.set("Add category")
+            if i in (0,1):
+                category_combobox.set(categories[-2])
+            else:
+                category_combobox.set("Add category")
             category_combobox.grid(column=1, row=2+i)
             category_comboboxes.append(category_combobox)
 
@@ -162,7 +173,9 @@ class SettingsView:
 
     def _handle_game_start_event(self):
         """Calls SettingsServices class methods which collect and
-        validate the selected settings and accommodates the UI accordingly."""
+        validate the selected settings and accommodates the UI accordingly.
+        Internet connection is also checked so that Open Trivia DB categories
+        can be unselected before starting a new game."""
 
         players = self.service.collect_player_settings(self.players)
         player_colors = self.service.collect_player_color_settings()
@@ -170,18 +183,29 @@ class SettingsView:
         category_colors = self.service.collect_category_color_settings()
         board_size = self.service.collect_board_size_settings(self.board_size)
 
-        if self.service.check_player_number_validity() is False:
-            show_player_number_error_dialog()
-            self.window.focus()
-        elif self.service.check_player_names_validity() is False:
-            show_player_name_error_dialog()
-            self.window.focus()
-        elif self.service.check_category_number_validity() is False:
-            show_category_number_error_dialog()
-            self.window.focus()
-        else:
+        if all([
+            self.service.check_player_number_validity(),
+            self.service.check_player_names_validity(),
+            self.service.check_category_number_validity(),
+        ]) and (bool(self.service.check_internet_connection()) or all([
+            self.service.check_internet_connection() is False,
+            "Random (Open Trivia DB)" not in self.service.categories,
+        ])):
             self.service.handle_session_save(players, categories, board_size)
             self._open_game_view(player_colors, category_colors)
+        else:
+            self._handle_game_not_being_able_to_start()
+
+    def _handle_game_not_being_able_to_start(self):
+        if self.service.check_player_number_validity() is False:
+            show_player_number_error_dialog()
+        elif self.service.check_player_names_validity() is False:
+            show_player_name_error_dialog()
+        elif self.service.check_category_number_validity() is False:
+            show_category_number_error_dialog()
+        elif self.service.check_internet_connection() is False:
+            show_no_internet_connection_dialog()
+        self.window.focus()
 
     def _open_questions_view(self):
         """Destroys the current window and initializes a new one."""
