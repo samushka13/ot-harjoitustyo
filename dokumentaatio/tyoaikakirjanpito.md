@@ -35,5 +35,5 @@
 |  8.5. |  1  | Testausdokumentti lisätty.                                          |
 |  8.5. |  2  | Koodin, testien ja dokumentaation kiillottelua.                     |
 |  9.5. |  4  | Kysymysten hakeminen Open Trivia Databasesta toteutettu.            |
-| 10.5. |  2  | Dokumentaatiota päivitetty. UI:n parantelua.                        |
-|  yht. | 93  |                                                                     |
+| 10.5. |  3  | Dokumentaatiota päivitetty. Koodin ja UI:n parantelua.              |
+|  yht. | 94  |                                                                     |

@@ -41,9 +41,8 @@ class CategoryBoard:
             category.place(x=40+x_increase, y=560+y_increase, anchor="w")
             category.insert(tk.END, self.categories[i])
             category.config(state=DISABLED, fg=self.category_colors[i])
-            i += 1
             y_increase += 25
-            if i == 6:
+            if i == 5:
                 x_increase += 250
                 y_increase = 0
 

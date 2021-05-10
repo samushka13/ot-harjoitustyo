@@ -43,22 +43,26 @@ class StatisticsView:
         title.insert(tk.END, "Laps per player")
         title.config(state=DISABLED)
 
-        y_increase = 0
-        for i, player in enumerate(self.service.players):
-            player = display_textbox(self.window, 1, 25, TEXT_FONT)
-            player.place(x=30, y=90+y_increase, anchor="w")
-            player.insert(tk.END, self.service.players[i])
-            player.config(state=DISABLED)
-            laps = display_textbox(self.window, 1, 5, TEXT_FONT)
-            laps.place(x=310, y=90+y_increase, anchor="w")
-            laps.insert(tk.END, self.service.laps[i])
-            laps.config(state=DISABLED)
-            y_increase += 25
+        self._draw_player_names()
+        self._draw_player_laps()
 
-        button(self.window, "Got it!", self._close_window,
+        button(self.window, "Got it!", self.window.destroy
         ).place(x=180, y=260, anchor="center")
 
-    def _close_window(self):
-        """Closes the statistics window."""
+    def _draw_player_names(self):
+        """Draws player names."""
 
-        self.window.destroy()
+        for i, player in enumerate(self.service.players):
+            player = display_textbox(self.window, 1, 25, TEXT_FONT)
+            player.place(x=30, y=90+(i*25), anchor="w")
+            player.insert(tk.END, self.service.players[i])
+            player.config(state=DISABLED)
+
+    def _draw_player_laps(self):
+        """Draws laps traveled per player."""
+
+        for i in range(len(self.service.players)):
+            laps = display_textbox(self.window, 1, 5, TEXT_FONT)
+            laps.place(x=310, y=90+(i*25), anchor="w")
+            laps.insert(tk.END, self.service.laps[i])
+            laps.config(state=DISABLED)

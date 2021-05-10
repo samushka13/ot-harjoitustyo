@@ -48,8 +48,8 @@ class GameView:
         self.show_answer_btn = None
         self.answer_correct_btn = None
         self.answer_incorrect_btn = None
-        self.right_side = None
-        self.left_side = None
+        self.right_side_canvas = None
+        self.left_side_canvas= None
         self.scoreboard = None
         self.category_board = None
         self.player_tokens = None
@@ -68,7 +68,7 @@ class GameView:
         self._build_category_board()
         self._build_game_board()
         self._build_cast_button()
-        self._build_right_side_buttons()
+        self._build_right_side_canvas_buttons()
         self.window.mainloop()
 
     def _build_background(self):
@@ -77,14 +77,14 @@ class GameView:
         separates the scoreboard from the question, and a second one
         that separates the question from the categories."""
 
-        self.left_side = canvas(self.window, 720, 560)
-        self.left_side.place(x=280, y=360, anchor="center")
+        self.left_side_canvas = canvas(self.window, 720, 560)
+        self.left_side_canvas.place(x=280, y=360, anchor="center")
 
-        self.left_side.create_line(30, 190, 530, 190)
-        self.left_side.create_line(30, 530, 530, 530)
+        self.left_side_canvas.create_line(30, 190, 530, 190)
+        self.left_side_canvas.create_line(30, 530, 530, 530)
 
-        self.right_side = canvas(self.window, 720, 720)
-        self.right_side.place(x=920, y=360, anchor="center")
+        self.right_side_canvas = canvas(self.window, 720, 720)
+        self.right_side_canvas.place(x=920, y=360, anchor="center")
 
     def _build_scoreboard(self):
         """Builds the scoreboard and highlights a player."""
@@ -92,7 +92,7 @@ class GameView:
         self.scoreboard = Scoreboard(
             self.service,
             self.window,
-            self.left_side,
+            self.left_side_canvas,
             self.player_colors,
             self.category_colors,
             self.service.get_default_player_points()
@@ -105,7 +105,7 @@ class GameView:
         self.category_board = CategoryBoard(
             self.service,
             self.window,
-            self.left_side,
+            self.left_side_canvas,
             self.category_colors,
         )
 
@@ -114,19 +114,19 @@ class GameView:
 
         GameBoard(
             self.service,
-            self.right_side,
+            self.right_side_canvas,
             self.category_colors,
         )
 
+        self._draw_ouroboros()
+
         self.player_tokens = PlayerTokens(
             self.service,
-            self.right_side,
+            self.right_side_canvas,
             self.player_colors,
         )
 
         self._build_die(self.service.get_die_faces()[5][0])
-
-        self._draw_ouroboros()
 
     def _draw_ouroboros(self):
         """Draws an image of ouroboros onto the game board.
@@ -138,9 +138,9 @@ class GameView:
         self.ouroboros_img = self.ouroboros_img.rotate(-self.service.calculate_segment_size()/2)
         self.ouroboros_img = self.ouroboros_img.resize((790,790), Image.ANTIALIAS)
         self.ouroboros_img = ImageTk.PhotoImage(self.ouroboros_img)
-        self.right_side.create_image(360, 360, anchor="center", image=self.ouroboros_img)
+        self.right_side_canvas.create_image(360, 360, anchor="center", image=self.ouroboros_img)
 
-    def _build_right_side_buttons(self):
+    def _build_right_side_canvas_buttons(self):
         """Builds buttons for showing rules and statistics,
         and quitting the current game session."""
 
@@ -164,7 +164,7 @@ class GameView:
         self.die_img = Image.open(die_face)
         self.die_img = self.die_img.resize((120,120), Image.ANTIALIAS)
         self.die_img = ImageTk.PhotoImage(self.die_img)
-        self.right_side.create_image(360, 340, anchor="center", image=self.die_img)
+        self.right_side_canvas.create_image(360, 340, anchor="center", image=self.die_img)
 
     def _build_cast_button(self):
         """Builds a button for casting the die."""
@@ -201,6 +201,7 @@ class GameView:
         starting_positions = self.service.player_positions_radii
         player_starting_laps = self.service.laps[current_turn]
         positions = self.service.update_player_positions_radii(current_turn, number)
+
         self.player_tokens.move_token(current_turn, positions[current_turn], starting_positions)
 
         if self.service.check_victory_condition(player_starting_laps) is True:
@@ -214,10 +215,12 @@ class GameView:
 
         self.service.get_category_for_player()
         self.category_board.highlight_category(self.service.current_category_index)
+
         self.question_textbox = display_textbox(self.window, 7, 45)
         self.question_textbox.place(x=30, y=285, anchor="w")
         self.question_textbox.insert(tk.END, self.service.get_question_for_player())
         self.question_textbox.config(state=DISABLED)
+
         self.show_answer_btn = button(self.window, "Show answer", self._show_answer)
         self.show_answer_btn.place(x=280, y=420, anchor="center")
 
@@ -259,9 +262,10 @@ class GameView:
         self._handle_turn_end(points)
 
     def _handle_turn_end(self, points):
-        """Redraws the scoreboard, removes unnecessary widgets and highlighters,
+        """Redraws the scoreboard, removes previous highlighters,
         calls a services class method which updates the player turn tracker,
-        highlights the current player, and rebuilds the die cast button.
+        highlights the current player, calls another method which removes
+        unnecessary widgets and highlighters, and rebuilds the die cast button.
 
         Args:
             points (list): The players' points as integer values.
@@ -272,12 +276,17 @@ class GameView:
         self.category_board.remove_previous_highlighter()
         self.service.update_current_turn()
         self.scoreboard.highlight_player(self.service.current_turn)
+        self._destroy_question_phase_widgets()
+        self._build_cast_button()
+
+    def _destroy_question_phase_widgets(self):
+        """Removes unnecessary textboxes and buttons from the window."""
+
         self.question_textbox.destroy()
         self.answer_textbox.destroy()
         self.show_answer_btn.destroy()
         self.answer_correct_btn.destroy()
         self.answer_incorrect_btn.destroy()
-        self._build_cast_button()
 
     def _handle_game_end(self):
         """Shows a congratulatory dialog with a button.
@@ -304,11 +313,11 @@ class GameView:
         settings_view.initialize_window()
 
     def _open_statistics_view(self):
-        """Opens a new window on top of the current one."""
+        """Opens a new "Statistics" window on top of the current one."""
 
         StatisticsView(self.service).initialize_window()
 
     def _open_rules_view(self):
-        """Opens a new window on top of the current one."""
+        """Opens a new "Rules" window on top of the current one."""
 
         rules_view.initialize_window()

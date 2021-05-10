@@ -23,8 +23,8 @@ class Scoreboard:
             service (class): The current services class.
             window (window): A tkinter window.
             canvas (widget): A tkinter canvas widget.
-            player_colors (list): List of player colors.
-            category_colors (list): List of category colors.
+            player_colors (list): The player colors.
+            category_colors (list): The category colors.
             points (list): The players' points.
         """
 
@@ -51,28 +51,24 @@ class Scoreboard:
     def draw_player_points(self, points):
         """Draws the player points on the scoreboard with a loop."""
 
-        point = 0
-        y_increase = 0
-        i = 0
+        point_index = 0
         for i in range(len(self.players)):
             x_increase = 0
             for j in range(len(self.categories)):
-                if points[point][2] == 1:
+                if points[point_index][2] == 1:
                     self.canvas.create_oval(
-                        530-x_increase, 25+y_increase, 517-x_increase, 38+y_increase,
+                        530-x_increase, 25+(i*25), 517-x_increase, 38+(i*25),
                         fill=self.category_colors[j],
                         outline=self.category_colors[j],
                     )
                 else:
                     self.canvas.create_oval(
-                        530-x_increase, 25+y_increase, 517-x_increase, 38+y_increase,
+                        530-x_increase, 25+(i*25), 517-x_increase, 38+(i*25),
                         fill=BACKGROUND,
                         outline=self.category_colors[j],
                     )
-                point += 1
+                point_index += 1
                 x_increase += 20
-            i += 1
-            y_increase += 25
 
     def highlight_player(self, player):
         """Highlights the current player with a triangular pointer.

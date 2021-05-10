@@ -237,28 +237,24 @@ class SettingsServices:
 
         return self.board_size
 
-    def handle_session_save(self, players, categories, board_size):
-        """Calls database class methods which ensure that no other game session is active
-        and then save the current game session variables to the database.
+    def check_settings_validity(self):
+        """Checks the settings and Open Trivia DB connection validity
+        with various method calls. If no Open Trivia DB categories were selected,
+        a new game can be started even if the connection check returns False.
 
-        The difficulty is saved as an empty string value, as difficulty selection is
-        currently not supported.
-
-        Args:
-            players (list): The selected players.
-            categories (list): The selected categories.
-            board_size (int): The selected board size.
+        Returns:
+            True, if everything's ok, or False, if not.
         """
 
-        self.database.remove_game_active_status()
-
-        difficulty = ""
-        self.database.save_session_variables(
-            difficulty,
-            board_size,
-            players,
-            categories,
-        )
+        return all([
+            self.check_player_number_validity(),
+            self.check_player_names_validity(),
+            self.check_category_number_validity(),
+            any([
+                self.check_otdb_connection(),
+                "Random (Open Trivia DB)" not in self.categories,
+            ]),
+        ])
 
     def check_player_number_validity(self):
         """Checks if enough players were added.
@@ -303,6 +299,22 @@ class SettingsServices:
             return True
         except (requests.ConnectionError, requests.Timeout):
             return False
+
+    def handle_session_save(self, players, categories, board_size):
+        """Calls database class methods which ensure that no other game session is active
+        and then save the current game session variables to the database.
+
+        The difficulty is injected as an empty string value (""), as difficulty selection is
+        currently not supported.
+
+        Args:
+            players (list): The selected players.
+            categories (list): The selected categories.
+            board_size (int): The selected board size.
+        """
+
+        self.database.remove_game_active_status()
+        self.database.save_session_variables("", board_size, players, categories)
 
     def logout_users(self):
         """Calls a DatabaseServices class method to remove all logged in users

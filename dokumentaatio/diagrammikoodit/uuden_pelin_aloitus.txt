@@ -15,11 +15,7 @@ SettingsServices-->-SettingsView: category_colors
 SettingsView->+SettingsServices: collect_board_size_settings(board_size)
 SettingsServices->SettingsServices: get_default_board_sizes()
 SettingsServices-->-SettingsView: board_size
-SettingsView->+SettingsServices: check_player_number_validity()
-SettingsServices-->-SettingsView: True
-SettingsView->+SettingsServices: check_player_names_validity()
-SettingsServices-->-SettingsView: True
-SettingsView->+SettingsServices: check_category_number_validity()
+SettingsView->+SettingsServices: check_settings_validity()
 SettingsServices-->-SettingsView: True
 SettingsView->+SettingsServices: handle_session_save(players, categories, board_size)
 SettingsServices->+DatabaseServices: remove_game_active_status()

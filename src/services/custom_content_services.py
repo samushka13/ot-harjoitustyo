@@ -205,10 +205,20 @@ class CustomContentServices:
         return before-after
 
     def delete_all(self):
-        """Calls a DatabaseServices class method which deletes
-        all questions created by the current user."""
+        """Calls a DatabaseServices class method which deletes all questions
+        created by the current user. Also, calls another method to count the
+        questions in the database before and after the deletion.
 
+        Returns:
+            before-after (int): The difference between the total number of
+            questions in the database before and after the deletion operation.
+        """
+
+        before = self.count_questions()
         self.database.delete_all_user_question_items(self.get_current_user_id())
+        after = self.count_questions()
+
+        return before-after
 
     def get_item_for_editing(self, item):
         """Calls a DatabaseServices class method that fetches the item for editing.

@@ -8,7 +8,7 @@ from tkinter import messagebox
 def show_invalid_username_dialog():
     return messagebox.showinfo(
         "Invalid Username",
-        "Username should be 3 or more characters long.",
+        "Username length should be 3-25 characters.",
     )
 
 def show_login_error_dialog():
@@ -105,8 +105,8 @@ def show_invalid_input_lengths():
     return messagebox.showinfo(
         "Invalid input lengths",
         "Ensure that the text input lengths are within the following limits:\
-        \n\nCategory: 1-30 characters\n\
-        \nQuestion: 1-300 characters\n\
+        \n\nCategory: 1-30 characters\
+        \nQuestion: 1-300 characters\
         \nAnswer: 1-100 characters\n"
     )
 
@@ -142,12 +142,12 @@ def show_delete_error_dialog(number: int):
     if number == 1:
         dialog = messagebox.showinfo(
         "Delete Error",
-        f"{number} question was not deleted, as it belongs to a different username."
+        f"{number} question was not deleted, as it belongs to another username."
     )
     else:
         dialog = messagebox.showinfo(
         "Delete Error",
-        f"{number} questions were not deleted, as they belong to different usernames."
+        f"{number} questions were not deleted, as they belong to other usernames."
     )
 
     return dialog
@@ -158,6 +158,20 @@ def show_delete_all_confirmation_dialog():
         "Are you sure you want to delete all your questions? \
         \n\nQuestions created by others will remain.\n"
     )
+
+def show_delete_all_information_dialog(number: int):
+    if number == 0:
+        dialog = messagebox.showinfo(
+        "Nothing to delete",
+        "No questions were deleted, as they belong to other usernames."
+    )
+    else:
+        dialog = messagebox.showinfo(
+        "Delete Succesful",
+        f"{number} questions were deleted."
+    )
+
+    return dialog
 
 # -------------------------------------------------------------------------
 # Game Sessions:

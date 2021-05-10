@@ -20,8 +20,7 @@ from ui.stylings import (
     get_window_settings,
     LOGIN_WINDOW_NAME,
     LOGIN_WINDOW_SIZE,
-    X,
-    Y,
+    X, Y,
 )
 
 
@@ -84,7 +83,7 @@ class LoginView:
         basic_label(self.window, "Username",
         ).grid(column=0, row=1, columnspan=2, pady=Y)
 
-        username_entry = entry(self.window, 30)
+        username_entry = entry(self.window)
         username_entry.grid(column=0, row=2, columnspan=2)
         username_entry.focus()
 
@@ -100,7 +99,7 @@ class LoginView:
         basic_label(self.window, "Password",
         ).grid(column=0, row=3, columnspan=2, pady=Y)
 
-        password_entry = entry(self.window, 30, "*")
+        password_entry = entry(self.window, show="*")
         password_entry.grid(column=0, row=4, columnspan=2)
 
         return password_entry
@@ -140,16 +139,14 @@ class LoginView:
         provides focus on the username entry widget."""
 
         show_invalid_username_dialog()
-        self.window.focus()
-        self.username_input.focus()
+        self._refocus_on_username_input()
 
     def _handle_no_credentials_match(self):
         """Shows an appropriate dialog after which
         provides focus on the username entry widget."""
 
         show_login_error_dialog()
-        self.window.focus()
-        self.username_input.focus()
+        self._refocus_on_username_input()
 
     def _handle_successful_login(self, username):
         """Shows an appropriate dialog after which
@@ -178,6 +175,11 @@ class LoginView:
         provides focus on the username entry widget."""
 
         show_registration_error_dialog()
+        self._refocus_on_username_input()
+
+    def _refocus_on_username_input(self):
+        """Sets the username input field as the active field."""
+
         self.window.focus()
         self.username_input.focus()
 
@@ -190,8 +192,7 @@ class LoginView:
         else:
             show_no_users_dialog()
 
-        self.window.focus()
-        self.username_input.focus()
+        self._refocus_on_username_input()
 
     def _handle_view_change(self, current_user):
         """Destroys the current window and initializes a new one.

@@ -68,7 +68,7 @@ Alla oleva sekvenssikaavio kuvaa kirjautumista uutena käyttäjänä asianmukais
 
 ![Kirjautuminen uutena käyttäjänä](kaaviot/kirjautuminen_uutena_kayttajana.png)
 
-1. *LoginView* kutsuu sisäistä metodiaan *_handle_login_event*, joka kerää käyttöliittymän kentistä käyttäjän syöttämät arvot ja lähettää ne luokalle *LoginServices* kutsumalla sen metodia *check_username_length* parametrinaan käyttäjän syöttämä käyttäjänimi. *LoginServices* palauttaa arvon *True*, mikäli käyttäjänimi on riittävän pitkä. Tässä tapauksessa näin on. Mikäli arvo olisi *False*, sovellus ilmoittaisi käyttäjälle asiasta ja tilanne palautuisi sekvenssikaaviota edeltävään tilaan.
+1. *LoginView* kutsuu sisäistä metodiaan *_handle_login_event*, joka kerää käyttöliittymän kentistä käyttäjän syöttämät arvot ja lähettää ne luokalle *LoginServices* kutsumalla sen metodia *check_username_length* parametrinaan käyttäjän syöttämä käyttäjänimi. *LoginServices* palauttaa arvon *True*, mikäli käyttäjänimi on pituudeltaan sopiva. Tässä tapauksessa näin on. Mikäli arvo olisi *False*, sovellus ilmoittaisi käyttäjälle asiasta ja tilanne palautuisi sekvenssikaaviota edeltävään tilaan.
 
 2. *LoginView* kutsuu luokan *LoginServices* metodia *check_username_and_password* parametreinaan käyttäjän syöttämä käyttäjänimi ja salasana. *LoginServices* kutsuu luokan *DatabaseServices* metodia *get_credentials*, joka palauttaa listan käyttäjien tunnuksista ja salasanoista. Mikäli *LoginServices* ei löydä käyttäjän syöttämiä tietoja tältä listalta, se palauttaa arvon *False*. Tässä tapauksessa näin on. Mikäli tiedot löytyisivät, *LoginServices* palauttaisi arvon *True*, jolloin käyttäjä tulkittaisiin olemassa olevaksi käyttäjäksi ja sovellus siirtyisi suoraan käsittelemään onnistunutta kirjautumista.
 
@@ -98,13 +98,13 @@ Alla oleva sekvenssikaavio kuvaa oman kysymyksen lisäämistä asianmukaisilla s
 
 ### Pelin aloitus
 
-Alla oleva sekvenssikaavio kuvaa uuden pelin aloittamista asianmukaisilla syötteillä. Kaavion tapahtumat alkavat siitä, kun käyttäjä on jo syöttänyt kenttiin asianmukaiset tiedot ja painanut "Start Game"-painiketta.
+Alla oleva sekvenssikaavio kuvaa uuden pelin aloittamista asianmukaisilla syötteillä ilman [Open Trivia Databasesta](https://opentdb.com/) haettavia kategorioita. Kaavion tapahtumat alkavat siitä, kun käyttäjä on jo syöttänyt kenttiin asianmukaiset tiedot ja painanut "Start Game"-painiketta.
 
 ![Uuden pelin aloitus](kaaviot/uuden_pelin_aloitus.png)
 
 1. *SettingsView* kutsuu sisäistä metodiaan *_handle_save_event*, joka lähettää käyttäjän valitsemat peliasetukset luokalle *SettingsServices* asetustyyppi kerrallaan. Kaaviossa tätä kuvaavat kaikki *collect*-alkuiset metodikutsut. Koska käyttöliittymä ei vielä tue pelaajien ja kategorioiden värien valitsemista, *SettingsServices* kutsuu näiden kohdalla sisäisiä metodeitaan (kaaviossa *get_default*-alkuiset metodit) saadakseen oletusarvot tietoonsa. *SettingsServices* palauttaa kunkin peliasetuksen arvon, jotta niitä voidaan helposti käsitellä myöhemmin.
 
-2. Peliasetusten keräämisen jälkeen *SettingsView* kutsuu luokan *SettingsServices* *check*-alkuisia metodeja, jotka varmistavat, että käyttäjän valitsemat asetukset ovat ehtojen mukaiset. Tässä tapauksessa näin on. Mikäli pelaajien nimet tai pelaajien tai kategorioiden määrät eivät täyttäisi ehtoja, *SettingsServices* palauttaisi arvon *True*, sovellus ilmoittaisi asiasta käyttäjälle ja tilanne palautuisi kaaviota edeltävänä tilaan.
+2. Peliasetusten keräämisen jälkeen *SettingsView* kutsuu luokan *SettingsServices* metodia *check_settings_velidity*, joka varmistaa, että käyttäjän valitsemat asetukset ovat ehtojen mukaiset. Tässä tapauksessa näin on. Mikäli pelaajien nimet tai pelaajien tai kategorioiden määrät eivät täyttäisi ehtoja, *SettingsServices* palauttaisi arvon *False*, sovellus ilmoittaisi asiasta käyttäjälle ja tilanne palautuisi kaaviota edeltävänä tilaan. Lisäksi, mikäli peliin olisi valittu kategorioita Open Trivia Databasesta, sovellus tarkastaisi vielä kyseisen yhteyden ja ilmoittaisi käyttäjälle, mikäli yhteys ei olisi kunnossa.
 
 3. *SettingsView* kutsuu luokan *SettingsServices* metodia *handle_session_save*, joka puolestaan kutsuu luokan *DatabaseServices* metodeja *remove_game_active_status* ja *save_session_variables*. Näistä ensimmäinen poistaa varmuudeksi aiempien pelisessioiden *active*-statuksen. Jälkimmäinen puolestaan tallentaa uuden pelin tiedot tietokantaan ja asettaa pelisession aktiiviseksi.
 
@@ -126,6 +126,6 @@ Alla oleva sekvenssikaavio kuvaa yksittäisen pelivuoron kulkua tilanteessa, jos
 
 ## Sovelluksen rakenteelliset parannuskohteet
 
-Sovelluksen pelisessioon liittyvissä luokissa *GameView* ja *GameServices* on hieman liikaa attribuutteja. Luokan *GameView* osalta tämä johtuu lähinnä [tkinter](https://docs.python.org/3/library/tkinter.html)-widgetteihin liittyvistä kankeuksista. Luokan *GameServices* attribuuttien hallintaa puolestaan tulisi jakaa enemmän *Player*-olioiden vastuulle, mutta tähän ei enää aika riittänyt projektin aikataulun puitteissa.
+Sovelluksen pelisessioon liittyvissä luokissa *GameView* ja *GameServices* on hieman liikaa attribuutteja. Luokan *GameView* osalta tämä johtuu [tkinter](https://docs.python.org/3/library/tkinter.html)-widgetteihin liittyvistä tarpeista. Luokan *GameServices* attribuutteja tulisi puolestaan jakaa enemmän *Player*-olioiden vastuulle, mutta tähän ei enää aika riittänyt projektin aikataulun puitteissa.
 
-Pylint ilmoittaa myös toisteisesta koodista muutamissa tiedostoissa, mutta tämä koskee lähinnä testausluokkia ja importteja. Myös luokissa *CustomContentView* ja *EditView* on joitakin toisteisia osia, mutta ne koettiin järkevämpänä pitää erillään, jotta kyseisten näkymien käyttöliittymäelementtejä voi jatkokehityskaaren aikana muuttaa toisistaan riippumatta.
+Pylint ilmoittaa myös toisteisesta koodista muutamissa tiedostoissa, mutta tämä koskee lähinnä käyttöliittymäluokkien komponentteihin liittyviä importteja. Myös luokissa *CustomContentView* ja *EditView* on joitakin toisteisia osia, mutta ne koettiin järkevämpänä pitää sellaisina, jotta kyseisten näkymien käyttöliittymäelementtejä voi jatkokehityskaaren aikana muuttaa täysin toisistaan riippumatta.

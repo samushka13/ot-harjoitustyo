@@ -78,6 +78,8 @@ Painikkeet:
 
 ### Pelin kulku
 
+#### Aloitus
+
 Aloitustilassa peli voi näyttää esimerkiksi tältä:
 
 ![Game Start](screenshots/game_start.png)
@@ -98,6 +100,8 @@ Painikkeet:
 - "Rules": näyttää pelin säännöt.
 - "Statistics": näyttää pelisession tilastot.
 
+#### Pelivuoron kulku 1/3: Kysymys
+
 Nopan 'heittämisen' jälkeen pelivuorossa oleva pelaaja siirtyy automaattisesti nopan osoittaman silmäluvun verran pelilaudalla. Samalla näkymän vasempaan osaan ilmestyy pelilaudan ruutua vastaavasta kategoriasta haettu kysymys. 
 
 ![Game Question](screenshots/game_question.png)
@@ -105,6 +109,8 @@ Nopan 'heittämisen' jälkeen pelivuorossa oleva pelaaja siirtyy automaattisesti
 Painikkeet:
 
 - "Show answer": näyttää oikean vastauksen kysymykseen.
+
+#### Pelivuoron kulku 2/3: Vastaus
 
 Kun pelaaja on vastannut kysymykseen ja oikea vastaus on näytetty, näkymään ilmestyy painikkeet, joilla pelaajan vastaus vahvistetaan joko oikeaksi tai vääräksi.
 
@@ -115,13 +121,19 @@ Painikkeet:
 - "Player's answer was correct": pelaaja saa oikeasta vastauksesta kategoriapisteen, mikäli tällä ei vielä ole kyseistä pistettä.
 - "Player's answer was incorrect": pelaaja menettää väärästä vastauksesta kategoriapisteen, mikäli tällä on jo kyseinen piste.
 
+#### Pelivuoron kulku 3/3: Pisteytys
+
 Tässä tapauksessa pelaaja vastasi oikein, joten tämä sai pisteen kyseiseen kategoriaan. Samalla vuoro päättyy, ja tilanne näyttää seuraavanlaiselta:
 
 ![Game Turn End](screenshots/game_turn_end.png)
 
+#### Pelin eteneminen
+
 Kun peli jatkuu jonkin aikaa, se voi näyttää esimerkiksi alla olevan kuvan kaltaiselta. Kuten vasemmasta ylälaidasta huomataan, pelaajat ovat saaneet jo monia kategoriapisteitä.
 
 ![Game Progression](screenshots/game_progression.png)
+
+#### Pelin päättyminen
 
 Peli päättyy, kun yksi pelaajista pääsee aloitusruutuun tai sen yli kaikkien kategoriapisteiden kera. Esimerkiksi alla olevassa kuvassa pelaaja nimeltä "samushka" on voittanut pelin.
 

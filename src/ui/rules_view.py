@@ -39,7 +39,7 @@ class RulesView:
         rules.insert(tk.END, self._game_rules_text())
         rules.config(state=DISABLED)
 
-        button(self.window, "Got it!", self._close_window,
+        button(self.window, "Got it!", self.window.destroy,
         ).place(x=370, y=580, anchor="center")
 
     def _game_rules_text(self):
@@ -49,7 +49,7 @@ class RulesView:
             rules (str): The game rules as a multiline string value.
         """
 
-        rules = """How does the game start?
+        rules_text = """How does the game start?
 
 1. The player tokens are placed next to the unique starting segment.
 2. The highlighted player starts the game.
@@ -79,12 +79,7 @@ Notes on game difficulty:
 - Try different combinations to see what works for you!
 """
 
-        return rules
-
-    def _close_window(self):
-        """Destroys the current window."""
-
-        self.window.destroy()
+        return rules_text
 
 
 rules_view = RulesView()

@@ -1,8 +1,8 @@
 # Ohjelmistotekniikka, harjoitustyö
 
-## Trivioboros (Python)
+## Trivioboros
 
-Sovellus on Trivial Pursuitin kaltainen tietopeli, jonka pelisessiot ovat kustomoitavissa. Käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita. Sovelluksen kieli on englanti.
+Sovellus on tietopeli, jonka pelisessiot ovat laajasti kustomoitavissa. Käyttäjät voivat lisäksi luoda omia kysymyksiä ja kategorioita. Sovelluksen kieli on englanti.
 
 Sovellus on kehitetty Python-versiolla 3.9.2 ja sen toiminta on testattu Python-versiolla 3.6.9. Yhteensopivuutta tätä vanhempien Python-versioiden kanssa ei voida taata.
 

@@ -4,8 +4,7 @@ from ui.stylings import (
     get_window_settings,
     EDIT_QUESTION_WINDOW_NAME,
     EDIT_QUESTION_WINDOW_SIZE,
-    X,
-    Y,
+    X, Y,
 )
 from ui.widgets import (
     basic_label,

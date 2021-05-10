@@ -19,16 +19,16 @@ class LoginServices:
         self.database = database
 
     def check_username_length(self, username):
-        """Checks the length of the username.
+        """Checks that the username length is within the set limits.
 
         Args:
             username (str): The user's username.
 
         Returns:
-            True, if the username is long enough, or False, if it's not.
+            True, if the username length is valid, or False, if it's not.
         """
 
-        return bool(len(username) >= 3)
+        return bool(3 <= len(username) <= 25)
 
     def check_username_and_password(self, username, password):
         """Checks if the input credentials already exist.

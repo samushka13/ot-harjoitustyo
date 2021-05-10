@@ -68,8 +68,7 @@ class GameServices:
         """
 
         category_places = []
-        i = 0
-        while i < len(self.categories[1:]):
+        for i in range(len(self.categories[1:])):
             j = 0
             k = 1 + i
             category_segments = []
@@ -77,7 +76,6 @@ class GameServices:
                 category_segments.append(k)
                 k += len(self.categories[1:])
                 j += 1
-            i += 1
             category_places.append(category_segments)
 
         return category_places
@@ -136,11 +134,10 @@ class GameServices:
             new_position (int): The player token's corrected position.
         """
 
-        if new_position <= 0:
-            while new_position <= 0:
-                new_position += 360
-                self.laps[player] += 1
-            starting_position[player] = new_position
+        while new_position <= 0:
+            new_position += 360
+            self.laps[player] += 1
+        starting_position[player] = new_position
 
         return new_position
 

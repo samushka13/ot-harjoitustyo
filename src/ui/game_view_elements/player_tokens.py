@@ -30,10 +30,9 @@ class PlayerTokens:
     def _draw_tokens(self):
         """Draws the player tokens onto the game board."""
 
-        indent = 0
         for i in range(len(self.players)):
             token = self.canvas.create_arc(
-                115+indent, 115+indent, 605-indent, 605-indent,
+                115+(i*15), 115+(i*15), 605-(i*15), 605-(i*15),
                 start=self.service.player_positions_radii[i],
                 extent=-self.size,
                 outline=self.player_colors[i],
@@ -41,7 +40,6 @@ class PlayerTokens:
                 style=tk.ARC,
             )
             self.tokens.append(token)
-            indent += 15
 
     def move_token(self, player, new_position, starting_positions):
         """Removes the old token widget and draws a new one.

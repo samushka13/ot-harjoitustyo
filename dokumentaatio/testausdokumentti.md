@@ -27,7 +27,7 @@ Vaikka haarautumakattavuus onkin täydellinen, testausta voisi silti parantaa. E
 
 ## Järjestelmätestaus
 
-Sovellus on järjestelmätestattu manuaalisesti, eli kaikki [vaatimusmäärittelyn](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md) mukaiset toiminnot on testattu käytännössä erilaisilla syötteillä. Testauksen perusteella sovellus osaa ilmoittaa käyttäjälle erilaisista virhetilanteista ja tarjota mahdollisia ratkaisuja.
+Sovellus on järjestelmätestattu manuaalisesti, eli kaikki [vaatimusmäärittelyn](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md) mukaiset toiminnot on testattu käytännössä erilaisilla syötteillä ja valinnoilla. Testaukseen on myös kuulunut pelin pelaaminen normaalisti useilla erilaisilla asetuksilla kahden käyttäjän toimesta. Testauksen perusteella sovellus osaa ilmoittaa käyttäjälle erilaisista virhetilanteista ja tarjota mahdollisia ratkaisuja.
 
 Käyttöohjeen mukainen asennus ja erilaiset konfiguraatiot on testattu macOS- ja Linux-käyttöjärjestelmissä. Sovellusta on testattu sekä puhtaalta pöydältä uutena käyttäjänä, jolloin sovellus on joutunut luomaan ja alustamaan tietokantatiedostot, että palaavana käyttäjänä, jolloin tietokanta ja sinne tallennetut tiedot ovat olleet valmiina käyttöön.
 
@@ -35,5 +35,5 @@ Käyttöohjeen mukainen asennus ja erilaiset konfiguraatiot on testattu macOS- j
 
 Sovellukseen jäi vain kaksi reunatapausta, joiden yhteydessä sovellus ei toimi toivotulla tavalla. Sovellus ei nimittäin osaa esittää käyttäjälle käyttöliittymän kautta järkevää virheilmoitusta, mikäli
 
-1. käyttäjä poistaa tietokantatiedoston kesken sovelluksen käytön ja sovellus yrittää käyttää tietokantaa,
-2. konfiguraatiossa määriteltyihin tiedostoihin ei ole luku- tai kirjoitusoikeuksia.
+1. konfiguraatiossa määriteltyihin tiedostoihin ei ole luku- tai kirjoitusoikeuksia,
+2. käyttäjä poistaa jonkin sovelluksen käyttämän tiedoston (kuten tietokannan) kesken sovelluksen käytön.

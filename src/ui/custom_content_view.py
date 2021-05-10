@@ -7,14 +7,14 @@ from ui.dialogs import (
     show_delete_confirmation_dialog,
     show_delete_all_confirmation_dialog,
     show_delete_error_dialog,
+    show_delete_all_information_dialog,
     show_edit_error_dialog,
 )
 from ui.stylings import (
     get_window_settings,
     CUSTOM_CONTENT_WINDOW_NAME,
     CUSTOM_CONTENT_WINDOW_SIZE,
-    X,
-    Y,
+    X, Y,
 )
 from ui.widgets import (
     title_label,
@@ -163,8 +163,7 @@ class CustomContentView:
             self.service.handle_save_item(category, difficulty, question, answer)
             show_save_successful_dialog()
             self._clear_entries()
-            self._build_create_widgets()
-            self._build_browse_widgets()
+            self._handle_widget_rebuild()
 
     def _clear_entries(self):
         """Clears all entry widgets to default values."""
@@ -196,12 +195,9 @@ class CustomContentView:
         selected = self.service.determine_question_ids(self.listbox)
         if show_delete_confirmation_dialog(len(selected)) == "yes":
             deleted = self.service.delete_items(selected)
-            if len(selected) > (deleted):
-                show_delete_error_dialog(len(selected)-(deleted))
-            self._build_create_widgets()
-            self._build_browse_widgets()
-            self.window.focus()
-            self.listbox.focus()
+            if len(selected) > deleted:
+                show_delete_error_dialog(len(selected)-deleted)
+        self._handle_widget_rebuild()
 
     def _handle_delete_all(self):
         """Shows a confirmation dialog, and, if the user confirms,
@@ -209,11 +205,18 @@ class CustomContentView:
         Then accommodates the UI accordingly."""
 
         if show_delete_all_confirmation_dialog() == "yes":
-            self.service.delete_all()
-            self._build_create_widgets()
-            self._build_browse_widgets()
-            self.window.focus()
-            self.listbox.focus()
+            deleted = self.service.delete_all()
+            show_delete_all_information_dialog(deleted)
+        self._handle_widget_rebuild()
+
+    def _handle_widget_rebuild(self):
+        """Rebuilds the widgets of the parent window and sets focus
+        on the listbox widget."""
+
+        self._build_create_widgets()
+        self._build_browse_widgets()
+        self.window.focus()
+        self.listbox.focus()
 
     def _open_settings_view(self):
         """Destroys the current view and initialize a new one."""

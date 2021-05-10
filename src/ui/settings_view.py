@@ -19,8 +19,7 @@ from ui.stylings import (
     get_window_settings,
     SETTINGS_WINDOW_NAME,
     SETTINGS_WINDOW_SIZE,
-    X,
-    Y,
+    X, Y,
 )
 
 
@@ -42,7 +41,8 @@ class SettingsView:
         self.window = tk.Tk()
         get_window_settings(self.window, SETTINGS_WINDOW_NAME, SETTINGS_WINDOW_SIZE)
         self._build_layout()
-        self._build_widgets()
+        self._build_labels_and_entries()
+        self._build_buttons()
         self.window.mainloop()
 
     def _build_layout(self):
@@ -56,8 +56,8 @@ class SettingsView:
         for i in (0,1,2):
             self.window.grid_columnconfigure(i, weight=1)
 
-    def _build_widgets(self):
-        """Builds the widgets of the parent window."""
+    def _build_labels_and_entries(self):
+        """Builds the label and entry widgets of the parent window."""
 
         title_label(
             self.window,
@@ -68,19 +68,37 @@ class SettingsView:
             self.window,
             "Players"
         ).grid(column=0, row=1, pady=Y)
+
         self.players = self._build_player_entries()
 
         basic_label(
             self.window,
             "Categories"
         ).grid(column=1, row=1, pady=Y)
+
         self.categories = self._build_category_comboboxes()
 
         basic_label(
             self.window,
             "Board Size"
         ).grid(column=2, row=1, pady=Y)
+
         self.board_size = self._build_board_size_combobox()
+
+    def _build_buttons(self):
+        """Builds the button widgets of the parent window."""
+
+        button(
+            self.window,
+            "  Logout  ",
+            self._handle_logout
+        ).grid(column=0, row=0, padx=X)
+
+        button(
+            self.window,
+            "Custom Content",
+            self._open_questions_view
+        ).grid(column=2, row=0, padx=X)
 
         button(
             self.window,
@@ -100,20 +118,9 @@ class SettingsView:
             self._handle_game_start_event
         ).grid(column=2, row=14, padx=X)
 
-        button(
-            self.window,
-            "  Logout  ",
-            self._handle_logout
-        ).grid(column=0, row=0, padx=X)
-
-        button(
-            self.window,
-            "Custom Content",
-            self._open_questions_view
-        ).grid(column=2, row=0, padx=X)
-
     def _build_player_entries(self):
-        """Builds the player name entry widgets.
+        """Builds the player name entry widgets. The default value of the
+        first entry widget is set to the currently logged in user's username.
 
         Returns:
             player_comboboxes (list): Widgets for selecting players.
@@ -172,10 +179,8 @@ class SettingsView:
         return board_size_combobox
 
     def _handle_game_start_event(self):
-        """Calls SettingsServices class methods which collect and
-        validate the selected settings and accommodates the UI accordingly.
-        Internet connection is also checked so that Open Trivia DB categories
-        can be unselected before starting a new game."""
+        """Calls SettingsServices class methods which collect and validate
+        the selected settings, and accommodates the UI accordingly."""
 
         players = self.service.collect_player_settings(self.players)
         player_colors = self.service.collect_player_color_settings()
@@ -183,20 +188,16 @@ class SettingsView:
         category_colors = self.service.collect_category_color_settings()
         board_size = self.service.collect_board_size_settings(self.board_size)
 
-        if all([
-            self.service.check_player_number_validity(),
-            self.service.check_player_names_validity(),
-            self.service.check_category_number_validity(),
-        ]) and (bool(self.service.check_otdb_connection()) or all([
-            self.service.check_otdb_connection() is False,
-            "Random (Open Trivia DB)" not in self.service.categories,
-        ])):
+        if self.service.check_settings_validity() is True:
             self.service.handle_session_save(players, categories, board_size)
             self._open_game_view(player_colors, category_colors)
         else:
             self._handle_game_not_being_able_to_start()
 
     def _handle_game_not_being_able_to_start(self):
+        """Accommodates the UI based on the reason why a game
+        could not be started."""
+
         if self.service.check_player_number_validity() is False:
             show_player_number_error_dialog()
         elif self.service.check_player_names_validity() is False:
@@ -205,6 +206,7 @@ class SettingsView:
             show_category_number_error_dialog()
         elif self.service.check_otdb_connection() is False:
             show_no_otdb_connection_dialog()
+
         self.window.focus()
 
     def _open_questions_view(self):
@@ -219,7 +221,12 @@ class SettingsView:
         rules_view.initialize_window()
 
     def _open_game_view(self, player_colors, category_colors):
-        """Destroys the current window and initializes a new one."""
+        """Destroys the current window and initializes a new one.
+
+        Args:
+            player_colors (list): The default player colors as string values.
+            category_colors (list): The default category colors as string values.
+        """
 
         from ui.game_view import GameView
         self.window.destroy()

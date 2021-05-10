@@ -108,12 +108,8 @@ class TestSettingsServices(unittest.TestCase):
         selected_board_size.set("Medium")
         self.assertEqual(self.service.collect_board_size_settings(selected_board_size), 5)
 
-    def test_handle_session_save(self):
-        self.assertEqual(
-            self.service.handle_session_save(
-                [self.user], [self.question.category, self.question.category], 5),
-            None,
-        )
+    def test_check_settings_validity(self):
+        self.assertEqual(self.service.check_settings_validity(), False)
 
     def test_check_player_number_validity(self):
         self.assertEqual(self.service.check_player_number_validity(), False)
@@ -129,6 +125,13 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_check_otdb_connection_is_not_working(self):
         self.assertEqual(self.service.check_otdb_connection(0.0001), False)
+
+    def test_handle_session_save(self):
+        self.assertEqual(
+            self.service.handle_session_save(
+                [self.user], [self.question.category, self.question.category], 5),
+            None,
+        )
 
     def test_handle_logout(self):
         self.assertEqual(len(self.database.get_logged_in_user()), 1)
