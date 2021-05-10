@@ -47,13 +47,13 @@ Painikkeet:
 
 ### Pelin asetukset
 
-Kirjautumisen jälkeen avautuu valikkonäkymä, jossa voi esimerkiksi valita pelin asetukset. Pelin aloittamiseksi vaaditaan vähintään yksi pelaaja ja kaksi kategoriaa. Tyhjiä tai geneerisiä oletusarvoja ei huomioida, joten esimerkiksi alla oleva peli käynnistyisi neljällä pelaajalla ja viidellä kategorialla. Asetuksista voi säätää myös pelilaudan kokoa. Kokeile rohkeasti erilaisia vaihtoehtoja!
+Kirjautumisen jälkeen avautuu valikkonäkymä, jossa voi esimerkiksi valita pelin asetukset. Pelin aloittamiseksi vaaditaan vähintään yksi pelaaja ja kaksi kategoriaa sekä internet-yhteys, mikäli [Open Trivia Databasesta](https://opentdb.com/) haettuja kategorioita on valittuna. Tyhjiä tai geneerisiä oletusarvoja ei huomioida, joten esimerkiksi alla oleva peli käynnistyisi neljällä pelaajalla ja viidellä kategorialla. Asetuksista voi säätää myös pelilaudan kokoa. Kokeile rohkeasti erilaisia vaihtoehtoja!
 
 ![Settings](screenshots/settings.png)
 
 Painikkeet:
 
-- "Logout": kirjaa ulos ja avaa kirjautumisnäkymän.
+- "Logout": kirjaa käyttäjän ulos ja avaa kirjautumisnäkymän.
 - "Custom Content": avaa omien kysymysten hallinnointinäkymän.
 - "Rules": näyttää pelin säännöt.
 - "About Open Trivia DB": näyttää lisätietoja [Open Trivia Databasesta](https://opentdb.com/).
@@ -61,9 +61,9 @@ Painikkeet:
 
 ### Omat kysymykset
 
-Omien kysymysten hallintanäkymässä on kaksi osaa. Oikeanpuoleisessa näkymän osassa voi luoda omia kysymyksiä täyttämällä vaaditut tiedot. 
+Omien kysymysten hallintanäkymässä on kaksi osaa. Oikeanpuoleisessa osassa voi luoda omia kysymyksiä täyttämällä vaaditut tiedot. 
 
-Vasemmanpuoleisessa osassa voi puolestaa selata ja muokata jo luotuja kysymyksiä. Mikäli yksikään rekisteröity käyttäjä ei ole luonut omia kysymyksiä, lista olisi tyhjä. Alla olevassa kuvassa kysymyksiä on kuitenkin jo aiemmin luotu. Kullakin rivillä on ilmoitettu kysymyksen numero, kategoria, haastavuus, kysymys, vastaus ja luoja.
+Vasemmanpuoleisessa osassa voi puolestaan selata ja muokata jo luotuja kysymyksiä, sekä omia että muiden. Mikäli yksikään rekisteröity käyttäjä ei ole luonut omia kysymyksiä, lista olisi siis tyhjä. Alla olevassa kuvassa kysymyksiä on kuitenkin jo aiemmin luotu. Kullakin rivillä on ilmoitettu kysymyksen id-numero, kategoria, haastavuus, kysymys, vastaus ja kysymyksen lisänneen käyttäjän käyttäjänimi.
 
 ![Custom Content](screenshots/custom_content.png)
 
@@ -84,21 +84,21 @@ Aloitustilassa peli voi näyttää esimerkiksi tältä:
 
 Pelinäkymän osat ovat
 
-- vasemmassa yläkulmassa oleva pistetaulukko,
+- vasemmassa ylälaidassa oleva pistetaulukko,
 - vasemmassa keskiosassa oleva kysymys- ja vastaustila,
-- vasemmassa alakulmassa oleva kategoriataulukko,
+- vasemmassa alalaidassa oleva kategoriataulukko,
 - oikeassa laidassa oleva pelilauta.
 
-Pelin aloittaa vasemmassa ylälaidassa olevan osoittimen osoittama pelaaja. Peli alkaa noppaa 'heittämällä'.
+Pelin aloittaa pistetaulukossa olevan osoittimen osoittama pelaaja. Peli alkaa noppaa 'heittämällä'.
 
 Painikkeet:
 
 - "Cast": arpoo nopan silmäluvun.
 - "Quit": lopettaa pelin ja avaa pelin asetusten näkymän.
 - "Rules": näyttää pelin säännöt.
-- "Statistics": näyttää pelinaikaiset tilastot.
+- "Statistics": näyttää pelisession tilastot.
 
-Nopan 'heittämisen' jälkeen pelivuorossa oleva pelaaja siirtyy automaattisesti nopan osoittaman silmäluvun verrran pelilaudalla. Samalla näkymän vasempaan osaan ilmestyy pelilaudan kategoriaruutua vastaava kysymys. 
+Nopan 'heittämisen' jälkeen pelivuorossa oleva pelaaja siirtyy automaattisesti nopan osoittaman silmäluvun verran pelilaudalla. Samalla näkymän vasempaan osaan ilmestyy pelilaudan ruutua vastaavasta kategoriasta haettu kysymys. 
 
 ![Game Question](screenshots/game_question.png)
 
@@ -106,16 +106,16 @@ Painikkeet:
 
 - "Show answer": näyttää oikean vastauksen kysymykseen.
 
-Kun pelaaja on vastannut kysymykseen, oikea vastaus saadaan esiin "Show answer" -painikkeella. Tämän jälkeen näkymään ilmestyy oikea vastaus ja painikkeet, joilla pelaajan vastaus vahvistetaan joko oikeaksi ("Player's answer was correct") tai vääräksi ("Player's answer was incorrect").
+Kun pelaaja on vastannut kysymykseen ja oikea vastaus on näytetty, näkymään ilmestyy painikkeet, joilla pelaajan vastaus vahvistetaan joko oikeaksi tai vääräksi.
 
 ![Game Answer](screenshots/game_answer.png)
 
 Painikkeet:
 
-- "Player's answer was correct": pelaaja saa kategoriapisteen, mikäli kategoriassa ei vielä ole pistettä.
-- "Player's answer was incorrect": pelaaja menettää kategoriapisteen, mikäli kategoriassa on piste.
+- "Player's answer was correct": pelaaja saa oikeasta vastauksesta kategoriapisteen, mikäli tällä ei vielä ole kyseistä pistettä.
+- "Player's answer was incorrect": pelaaja menettää väärästä vastauksesta kategoriapisteen, mikäli tällä on jo kyseinen piste.
 
-Tässä tapauksessa pelaaja vastasi oikein, joten tämä sai pisteen kyseiseen kategoriaan. Vuoro päättyy, ja tilanne näyttää seuraavanlaiselta:
+Tässä tapauksessa pelaaja vastasi oikein, joten tämä sai pisteen kyseiseen kategoriaan. Samalla vuoro päättyy, ja tilanne näyttää seuraavanlaiselta:
 
 ![Game Turn End](screenshots/game_turn_end.png)
 
