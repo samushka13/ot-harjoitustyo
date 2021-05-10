@@ -48,11 +48,14 @@ def show_no_users_dialog():
             "There are currently no users on this device.",
         )
 
-def show_no_internet_connection_dialog():
+def show_no_otdb_connection_dialog():
     return messagebox.showinfo(
-            "No internet connection",
-            "It seems that this device is not connected to the internet.\
-            \n\nYou can still play, just without any Open Trivia DB categories.\
+            "Connection Error",
+            "Could not connect to the Open Trivia Database.\
+            \n\nThere are two possible reasons for this:\
+            \n1. This device is not connected to the internet.\
+            \n2. The Open Trivia Database servers are down.\
+            \n\nIn any case, you can still play, but without any Open Trivia DB categories.\
             \n\nIf you don't have any other categories, now might be a good time to create some.\n",
         )
 

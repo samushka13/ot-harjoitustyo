@@ -4,7 +4,7 @@
 
 1. Lataa uusin [release](https://github.com/samushka13/ot-harjoitustyo/releases).
 
-2. Varmista, että koneellasi on asianmukainen Python-versio (^3.6) ja Poetry-versio (^1.1.5 suositeltu).
+2. Varmista, että koneellasi on asianmukainen [Python](https://www.python.org/)-versio (^3.6) ja [Poetry](https://python-poetry.org/)-versio (^1.1.5 suositeltu).
 
 3. Asenna projektin riippuvuudet komennolla:
 
@@ -24,7 +24,7 @@ Mikäli pelisessioon valitaan kategoria "Random (Open Trivia DB)", joka hakee ti
 
 Sovellus luo käynnistymisensä yhteydessä tietojen tallennukseen käytettävät tietokantatiedostot automaattisesti juurihakemiston yläpuoleiseen kansioon, jossa esimerkiksi projektin README sijaitsee, mikäli kyseisiä tiedostoja ei vielä ole. Tiedostojen nimiä voi tarvittaessa muokata [konfiguraatiotiedostossa](https://github.com/samushka13/ot-harjoitustyo/blob/master/config.txt), joka löytyy projektin juurihakemiston yläpuoleisesta kansiosta.
 
-Nimet on oltava mallia "tiedoston_nimi.db", eli konfiguraatiotiedostossa tulee muokata käytännössä vain yhtäsuuruusmerkkien ja pisteiden välisiä alueita. Mikäli tiedoston nimi on kirjoitettu virheellisesti, sovellus luo tietokantatiedostot oletusarvoisilla nimillä "trivioboros.db" ja "trivioboros_tests.db".
+Nimet on oltava mallia "tiedoston_nimi.db", eli konfiguraatiotiedostossa tulee muokata käytännössä vain yhtäsuuruusmerkkien ja pisteiden välisiä alueita. Mikäli tiedoston nimi on kirjoitettu virheellisesti, sovellus luo tiedoston oletusarvoisella nimellä "trivioboros.db" tai "trivioboros_tests.db" riippuen siitä, kummasta tiedostosta on kyse.
 
 Mikäli sovelluksen käyttöliittymän ikkunat näyttävät pienehköiltä, kannattaa kokeilla näytön resoluution muuttamista. Valitettavasti sovellus ei taivu ikkunan koon muuttamiseen, sillä erityisesti pelinäkymän kohdalla tämä olisi tuottanut huomattavan määrän toteutuksellisia haasteita.
 
@@ -53,9 +53,10 @@ Kirjautumisen jälkeen avautuu valikkonäkymä, jossa voi esimerkiksi valita pel
 
 Painikkeet:
 
-- "Rules": näyttää pelin säännöt.
 - "Logout": kirjaa ulos ja avaa kirjautumisnäkymän.
 - "Custom Content": avaa omien kysymysten hallinnointinäkymän.
+- "Rules": näyttää pelin säännöt.
+- "About Open Trivia DB": näyttää lisätietoja [Open Trivia Databasesta](https://opentdb.com/).
 - "Start Game": aloittaa pelin valituilla asetuksilla.
 
 ### Omat kysymykset
@@ -97,13 +98,15 @@ Painikkeet:
 - "Rules": näyttää pelin säännöt.
 - "Statistics": näyttää pelinaikaiset tilastot.
 
-Nopan 'heittämisen' jälkeen pelivuorossa oleva pelaaja siirtyy automaattisesti nopan osoittaman silmäluvun verrran pelilaudalla. Samalla näkymän vasempaan osaan ilmestyy pelilaudan kategoriaruutua vastaava kysymys. Kun pelaaja on vastannut kysymykseen, oikea vastaus saadaan esiin "Show answer" -painikkeella.
-
-Kun peli jatkuu jonkin aikaa, se voi näyttää esimerkiksi alla olevan kuvan kaltaiselta. Kuten huomataan, pelaajat ovat saaneet joihinkin kategorioihin pisteitä.
+Nopan 'heittämisen' jälkeen pelivuorossa oleva pelaaja siirtyy automaattisesti nopan osoittaman silmäluvun verrran pelilaudalla. Samalla näkymän vasempaan osaan ilmestyy pelilaudan kategoriaruutua vastaava kysymys. 
 
 ![Game Question](screenshots/game_question.png)
 
-Oikean vastauksen lisäksi näkymään ilmestyy myös painikkeet, joilla pelaajan vastaus vahvistetaan joko oikeaksi tai vääräksi:
+Painikkeet:
+
+- "Show answer": näyttää oikean vastauksen kysymykseen.
+
+Kun pelaaja on vastannut kysymykseen, oikea vastaus saadaan esiin "Show answer" -painikkeella. Tämän jälkeen näkymään ilmestyy oikea vastaus ja painikkeet, joilla pelaajan vastaus vahvistetaan joko oikeaksi ("Player's answer was correct") tai vääräksi ("Player's answer was incorrect").
 
 ![Game Answer](screenshots/game_answer.png)
 
@@ -111,6 +114,14 @@ Painikkeet:
 
 - "Player's answer was correct": pelaaja saa kategoriapisteen, mikäli kategoriassa ei vielä ole pistettä.
 - "Player's answer was incorrect": pelaaja menettää kategoriapisteen, mikäli kategoriassa on piste.
+
+Tässä tapauksessa pelaaja vastasi oikein, joten tämä sai pisteen kyseiseen kategoriaan. Vuoro päättyy, ja tilanne näyttää seuraavanlaiselta:
+
+![Game Turn End](screenshots/game_turn_end.png)
+
+Kun peli jatkuu jonkin aikaa, se voi näyttää esimerkiksi alla olevan kuvan kaltaiselta. Kuten vasemmasta ylälaidasta huomataan, pelaajat ovat saaneet jo monia kategoriapisteitä.
+
+![Game Progression](screenshots/game_progression.png)
 
 Peli päättyy, kun yksi pelaajista pääsee aloitusruutuun tai sen yli kaikkien kategoriapisteiden kera. Esimerkiksi alla olevassa kuvassa pelaaja nimeltä "samushka" on voittanut pelin.
 

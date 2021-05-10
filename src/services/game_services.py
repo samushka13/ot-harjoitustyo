@@ -201,7 +201,7 @@ class GameServices:
 
     def _get_otdb_question_item_category(self):
         """Calls the Open Trivia API to get a random question item and
-        provides its category. 
+        provides its category.
 
         Returns:
             category (str): The current category.

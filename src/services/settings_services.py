@@ -57,12 +57,12 @@ class SettingsServices:
         """
 
         default_player_colors = [
-            "red",
-            "brown",
-            "green",
-            "purple",
-            "orange",
-            "blue",
+            "IndianRed1",
+            "lime green",
+            "DeepSkyBlue2",
+            "gold",
+            "DarkOrchid1",
+            "chocolate1",
         ]
 
         return default_player_colors
@@ -124,18 +124,18 @@ class SettingsServices:
         """
 
         self.category_colors = [
-            "white",
-            "red",
-            "gold",
+            "black",
+            "red2",
+            "gold2",
             "green",
             "purple",
             "orange",
-            "blue",
-            "grey",
             "brown",
-            "pink",
-            "magenta",
-            "turquoise",
+            "RoyalBlue3",
+            "slate grey",
+            "OrangeRed3",
+            "maroon2",
+            "cyan4",
         ]
 
         return self.category_colors
@@ -287,9 +287,19 @@ class SettingsServices:
 
         return bool(len(self.categories) >= 2)
 
-    def check_internet_connection(self):
+    def check_otdb_connection(self, timeout=3):
+        """Checks connection to the Open Trivia Database servers.
+
+        Args:
+            timeout (int, optional): Time in seconds after which
+            a timeout-related connection error is raised. Defaults to 3.
+
+        Returns:
+            True, if the connection is ok, or False, if not.
+        """
+
         try:
-            requests.get("https://www.google.com/", timeout=2)
+            requests.get("https://opentdb.com/", timeout=timeout)
             return True
         except (requests.ConnectionError, requests.Timeout):
             return False

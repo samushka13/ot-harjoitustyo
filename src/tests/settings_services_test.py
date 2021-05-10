@@ -41,7 +41,7 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_get_default_player_colors(self):
         self.assertEqual(len(self.service.get_default_player_colors()), 6)
-        self.assertEqual(self.service.get_default_player_colors()[0], "red")
+        self.assertEqual(self.service.get_default_player_colors()[0], "IndianRed1")
 
     def test_get_default_board_sizes(self):
         self.assertEqual(len(self.service.get_default_board_sizes()), 6)
@@ -54,7 +54,7 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_get_default_category_colors(self):
         self.assertEqual(len(self.service.get_default_category_colors()), 12)
-        self.assertEqual(self.service.get_default_category_colors()[0], "white")
+        self.assertEqual(self.service.get_default_category_colors()[0], "black")
 
     def test_get_default_difficulties(self):
         self.assertEqual(len(self.service.get_default_difficulties()), 3)
@@ -81,7 +81,7 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_collect_player_color_settings(self):
         self.assertEqual(len(self.service.collect_player_color_settings()), 6)
-        self.assertEqual(self.service.collect_player_color_settings()[0], "red")
+        self.assertEqual(self.service.collect_player_color_settings()[0], "IndianRed1")
 
     def test_collect_category_settings(self):
         entry_field_1 = combobox()
@@ -101,7 +101,7 @@ class TestSettingsServices(unittest.TestCase):
 
     def test_collect_category_color_settings(self):
         self.assertEqual(len(self.service.collect_category_color_settings()), 12)
-        self.assertEqual(self.service.collect_category_color_settings()[0], "white")
+        self.assertEqual(self.service.collect_category_color_settings()[0], "black")
 
     def test_collect_board_size_settings(self):
         selected_board_size = combobox()
@@ -124,8 +124,11 @@ class TestSettingsServices(unittest.TestCase):
     def test_check_category_number_validity(self):
         self.assertEqual(self.service.check_category_number_validity(), False)
 
-    def test_check_internet_connection(self):
-        self.assertEqual(self.service.check_internet_connection(), True)
+    def test_check_otdb_connection_is_working(self):
+        self.assertEqual(self.service.check_otdb_connection(), True)
+
+    def test_check_otdb_connection_is_not_working(self):
+        self.assertEqual(self.service.check_otdb_connection(0.0001), False)
 
     def test_handle_logout(self):
         self.assertEqual(len(self.database.get_logged_in_user()), 1)

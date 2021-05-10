@@ -13,7 +13,7 @@ from ui.dialogs import (
     show_player_name_error_dialog,
     show_category_number_error_dialog,
     show_about_otdb_dialog,
-    show_no_internet_connection_dialog,
+    show_no_otdb_connection_dialog,
 )
 from ui.stylings import (
     get_window_settings,
@@ -187,8 +187,8 @@ class SettingsView:
             self.service.check_player_number_validity(),
             self.service.check_player_names_validity(),
             self.service.check_category_number_validity(),
-        ]) and (bool(self.service.check_internet_connection()) or all([
-            self.service.check_internet_connection() is False,
+        ]) and (bool(self.service.check_otdb_connection()) or all([
+            self.service.check_otdb_connection() is False,
             "Random (Open Trivia DB)" not in self.service.categories,
         ])):
             self.service.handle_session_save(players, categories, board_size)
@@ -203,8 +203,8 @@ class SettingsView:
             show_player_name_error_dialog()
         elif self.service.check_category_number_validity() is False:
             show_category_number_error_dialog()
-        elif self.service.check_internet_connection() is False:
-            show_no_internet_connection_dialog()
+        elif self.service.check_otdb_connection() is False:
+            show_no_otdb_connection_dialog()
         self.window.focus()
 
     def _open_questions_view(self):
