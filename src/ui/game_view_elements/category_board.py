@@ -21,7 +21,7 @@ class CategoryBoard:
             service (class): The current services class.
             window (window): A tkinter window.
             canvas (widget): A tkinter canvas widget.
-            category_colors (list): List of category colors.
+            category_colors (list): The category colors as string values.
         """
 
         self.window = window

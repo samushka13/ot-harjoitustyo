@@ -50,7 +50,7 @@ class StatisticsView:
         ).place(x=180, y=260, anchor="center")
 
     def _draw_player_names(self):
-        """Draws player names."""
+        """Draws player names with a loop."""
 
         for i, player in enumerate(self.service.players):
             player = display_textbox(self.window, 1, 25, TEXT_FONT)
@@ -59,7 +59,7 @@ class StatisticsView:
             player.config(state=DISABLED)
 
     def _draw_player_laps(self):
-        """Draws laps traveled per player."""
+        """Draws laps traveled per player with a loop."""
 
         for i in range(len(self.service.players)):
             laps = display_textbox(self.window, 1, 5, TEXT_FONT)

@@ -75,13 +75,15 @@ class TestSettingsServices(unittest.TestCase):
             entry_field_3,
             entry_field_4,
         ]
-        self.assertEqual(len(self.service.collect_player_settings(added_players)), 2)
-        self.assertEqual(self.service.collect_player_settings(added_players)[0], "samushka")
-        self.assertEqual(self.service.collect_player_settings(added_players)[1], "Player 4")
+        self.service.collect_player_settings(added_players)
+        self.assertEqual(len(self.service.players), 2)
+        self.assertEqual(self.service.players[0], "samushka")
+        self.assertEqual(self.service.players[1], "Player 4")
 
     def test_collect_player_color_settings(self):
-        self.assertEqual(len(self.service.collect_player_color_settings()), 6)
-        self.assertEqual(self.service.collect_player_color_settings()[0], "IndianRed1")
+        self.service.collect_player_color_settings()
+        self.assertEqual(len(self.service.player_colors), 6)
+        self.assertEqual(self.service.player_colors[0], "IndianRed1")
 
     def test_collect_category_settings(self):
         entry_field_1 = combobox()
@@ -95,18 +97,21 @@ class TestSettingsServices(unittest.TestCase):
             entry_field_2,
             entry_field_3,
         ]
-        self.assertEqual(len(self.service.collect_category_settings(added_categories)), 2)
-        self.assertEqual(self.service.collect_category_settings(added_categories)[0], "Movies")
-        self.assertEqual(self.service.collect_category_settings(added_categories)[1], "TV")
+        self.service.collect_category_settings(added_categories)
+        self.assertEqual(len(self.service.categories), 2)
+        self.assertEqual(self.service.categories[0], "Movies")
+        self.assertEqual(self.service.categories[1], "TV")
 
     def test_collect_category_color_settings(self):
-        self.assertEqual(len(self.service.collect_category_color_settings()), 12)
-        self.assertEqual(self.service.collect_category_color_settings()[0], "black")
+        self.service.collect_category_color_settings()
+        self.assertEqual(len(self.service.category_colors), 12)
+        self.assertEqual(self.service.category_colors[0], "black")
 
     def test_collect_board_size_settings(self):
         selected_board_size = combobox()
         selected_board_size.set("Medium")
-        self.assertEqual(self.service.collect_board_size_settings(selected_board_size), 5)
+        self.service.collect_board_size_settings(selected_board_size)
+        self.assertEqual(self.service.board_size, 5)
 
     def test_check_settings_validity(self):
         self.assertEqual(self.service.check_settings_validity(), False)
@@ -127,11 +132,10 @@ class TestSettingsServices(unittest.TestCase):
         self.assertEqual(self.service.check_otdb_connection(0.0001), False)
 
     def test_handle_session_save(self):
-        self.assertEqual(
-            self.service.handle_session_save(
-                [self.user], [self.question.category, self.question.category], 5),
-            None,
-        )
+        self.service.players = [self.user]
+        self.service.categories = [self.question.category, self.question.category]
+        self.service.board_size = 5
+        self.assertEqual(self.service.handle_session_save(), None)
 
     def test_handle_logout(self):
         self.assertEqual(len(self.database.get_logged_in_user()), 1)

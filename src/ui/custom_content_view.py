@@ -74,12 +74,12 @@ class CustomContentView:
 
         basic_label(self.window, "Question"
         ).grid(column=0, row=5, columnspan=2)
-        self.question_entry = edit_textbox(self.window, 6, 50)
+        self.question_entry = edit_textbox(self.window, 6)
         self.question_entry.grid(column=0, row=6, columnspan=2)
 
         basic_label(self.window, "Answer"
         ).grid(column=0, row=7, columnspan=2)
-        self.answer_entry = edit_textbox(self.window, 4, 50)
+        self.answer_entry = edit_textbox(self.window, 4)
         self.answer_entry.grid(column=0, row=8, columnspan=2)
 
         button(self.window, "Save", self._handle_save_event
@@ -105,7 +105,7 @@ class CustomContentView:
         ).grid(column=4, row=11)
 
     def _build_listbox(self):
-        """Builds a listbox widget.
+        """Builds a listbox widget and populates it with question items.
 
         Returns:
             A listbox with all question items in the database.
@@ -189,7 +189,7 @@ class CustomContentView:
 
     def _handle_delete_item(self):
         """Shows a confirmation dialog, and, if the user confirms,
-        calls CustomContentServices class methods which determine the question ids and
+        calls services class methods which determine the question ids and
         handle item deletion, then accommodates the UI accordingly."""
 
         selected = self.service.determine_question_ids(self.listbox)
@@ -201,7 +201,7 @@ class CustomContentView:
 
     def _handle_delete_all(self):
         """Shows a confirmation dialog, and, if the user confirms,
-        calls CustomContentServices class methods which handle item deletion.
+        calls services class methods which handle item deletion.
         Then accommodates the UI accordingly."""
 
         if show_delete_all_confirmation_dialog() == "yes":
@@ -219,7 +219,7 @@ class CustomContentView:
         self.listbox.focus()
 
     def _open_settings_view(self):
-        """Destroys the current view and initialize a new one."""
+        """Destroys the current window and initialize a new one."""
 
         from ui.settings_view import settings_view
         self.window.destroy()

@@ -141,4 +141,6 @@ Peli päättyy, kun yksi pelaajista pääsee aloitusruutuun tai sen yli kaikkien
 
 ![Game End](screenshots/game_end.png)
 
-Pelin päätyttyä sovellus ilmoittaa, kuka voitti, ja antaa mahdollisuuden palata pelin asetusten näkymään.
+On syytä huomioida, että pelilogiikka toimii sen verran vikkelästi, ettei käyttöliittymä välttämättä ennätä piirtää uutta nopan silmälukua ja pelinappulan sijaintia, mikäli voiton ehdot täyttyvät.
+
+Joka tapauksessa, pelin päätyttyä sovellus ilmoittaa, kuka voitti, ja antaa mahdollisuuden palata pelin asetusten näkymään.

@@ -2,27 +2,28 @@ title Starting a new game (valid inputs)
 
 SettingsView->SettingsView: _handle_game_start_event()
 activate SettingsView
+SettingsView->SettingsView: _handle_settings_collection()
 SettingsView->+SettingsServices: collect_player_settings(players)
-SettingsServices-->-SettingsView: players
+SettingsServices-->-SettingsView: 
 SettingsView->+SettingsServices: collect_player_color_settings()
 SettingsServices->SettingsServices: get_default_player_colors()
-SettingsServices-->-SettingsView: player_colors
+SettingsServices-->-SettingsView: 
 SettingsView->+SettingsServices: collect_category_settings(categories)
-SettingsServices-->-SettingsView: categories
+SettingsServices-->-SettingsView: 
 SettingsView->+SettingsServices: collect_category_color_settings()
 SettingsServices->SettingsServices: get_default_category_colors()
-SettingsServices-->-SettingsView: category_colors
+SettingsServices-->-SettingsView: 
 SettingsView->+SettingsServices: collect_board_size_settings(board_size)
 SettingsServices->SettingsServices: get_default_board_sizes()
-SettingsServices-->-SettingsView: board_size
+SettingsServices-->-SettingsView: 
 SettingsView->+SettingsServices: check_settings_validity()
 SettingsServices-->-SettingsView: True
-SettingsView->+SettingsServices: handle_session_save(players, categories, board_size)
+SettingsView->+SettingsServices: handle_session_save()
 SettingsServices->+DatabaseServices: remove_game_active_status()
 DatabaseServices-->-SettingsServices: 
 SettingsServices->+DatabaseServices: save_session_variables(difficulty, board_size, players, categories)
 DatabaseServices-->-SettingsServices: 
 SettingsServices-->-SettingsView:
-SettingsView->SettingsView: _open_game_view(player_colors, category_colors)
+SettingsView->SettingsView: _open_game_view()
 deactivate SettingsView
 SettingsView->*GameView: GameView(player_colors, category_colors).initialize_window()

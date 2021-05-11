@@ -165,13 +165,13 @@ def display_textbox(window, height, width, font=BOARD_TEXT_FONT):
 
     return textbox
 
-def edit_textbox(window, height, width, font=TEXT_FONT):
+def edit_textbox(window, height, width=50, font=TEXT_FONT):
     """Builds a tkinter textbox widget.
 
     Args:
         window (Tk): The parent window of the widget.
         height (int): The height of the widget.
-        width (int): The width of the widget.
+        width (int): The width of the widget. Defaults to 50.
         font (tuple): The font of the text. Defaults to TEXT_FONT.
 
     Returns:
@@ -197,9 +197,9 @@ def listbox(window=None, height=30, width=82):
     """Builds a tkinter listbox widget.
 
     Args:
-        window (Tk): The parent window of the widget.
-        height (int): The height of the widget.
-        width (int): The width of the widget.
+        window (Tk): The parent window of the widget. Defaults to None.
+        height (int): The height of the widget. Defaults to 30.
+        width (int): The width of the widget. Defaults to 82.
 
     Returns:
         default_listbox (Listbox): A listbox widget.
@@ -241,7 +241,7 @@ def canvas(window, height, width):
 
     return default_canvas
 
-def board_segment(board, distance: float, extent: float, fill):
+def board_segment(board, distance, extent, fill):
     """Builds a tkinter arc element on a canvas.
 
     Args:

@@ -33,6 +33,10 @@ class GameServices:
         self.player_positions_indices = [0, 0, 0, 0, 0, 0]
         self.player_points = []
 
+    # -------------------------------------------------------------------------
+    # Methods for setting up the game:
+    # -------------------------------------------------------------------------
+
     def calculate_segment_size(self):
         """Calculates the size of an individual board segment.
 
@@ -80,6 +84,23 @@ class GameServices:
 
         return category_places
 
+    def get_default_player_points(self):
+        """Provides default player points.
+
+        Returns:
+            self.player_points (list): The default player points.
+        """
+
+        for player in range(len(self.players)):
+            for category in range(len(self.categories)):
+                self.player_points.append((player, category, 0))
+
+        return self.player_points
+
+    # -------------------------------------------------------------------------
+    # Methods related to player positions and die functionalities:
+    # -------------------------------------------------------------------------
+
     def update_player_positions_radii(self, player, number):
         """Keeps track of the players' positions on the game board,
         so that the UI knows where to draw the player tokens.
@@ -108,9 +129,6 @@ class GameServices:
         Args:
             player (int): The current player.
             number (int): The current die face.
-
-        Returns:
-            self.player_positions_indices (list): The players' current positions as indices.
         """
 
         segments = self.calculate_number_of_segments()
@@ -118,9 +136,8 @@ class GameServices:
         if new_position_index >= segments:
             while new_position_index >= segments:
                 new_position_index -= segments
-        self.player_positions_indices[player] = new_position_index
 
-        return self.player_positions_indices
+        self.player_positions_indices[player] = new_position_index
 
     def count_laps(self, player, starting_position, new_position):
         """Counts the laps player tokens have travelled during the session.
@@ -170,16 +187,33 @@ class GameServices:
 
         return die_face
 
-    def get_category_for_player(self):
-        """Provides a category for the player based on
-        the player token's current position.
+    # -------------------------------------------------------------------------
+    # Methods related to the question phase:
+    # -------------------------------------------------------------------------
 
-        Calls the Open Trivia Database API for a question item,
-        if the current category is not a custom category.
+    def get_category_for_player(self):
+        """Calls another method that calculates the current category index,
+        then provides a category name based on that index.
+
+        If the current category is not a custom category, calls another method
+        that provides a category from the Open Trivia Database.
 
         Returns:
             category (str): The current category.
         """
+
+        self._update_current_category_index()
+
+        category = self.categories[self.current_category_index]
+
+        if "Open Trivia" in category:
+            self.get_otdb_question_item()
+            category = self.get_otdb_question_item_category()
+
+        return category
+
+    def _update_current_category_index(self):
+        """Determines the current category based on the player token's current position."""
 
         category_places = self.get_category_places()
         if self.player_positions_indices[self.current_turn] == 0:
@@ -189,41 +223,57 @@ class GameServices:
                 if self.player_positions_indices[self.current_turn] in nested_list:
                     self.current_category_index = category_places.index(nested_list)+1
 
-        category = self.categories[self.current_category_index]
-
-        if "Open Trivia" in category:
-            self._get_otdb_question_item_category()
-
-        return category
-
-    def _get_otdb_question_item_category(self):
-        """Calls the Open Trivia API to get a random question item and
-        provides its category.
-
-        Returns:
-            category (str): The current category.
-        """
-
-        self.otdb_question_item = requests.get("https://opentdb.com/api.php?amount=1")
-        question_type = html.unescape(self.otdb_question_item.json()['results'][0]['type'])
-        self.check_otdb_question_item_type(question_type)
-
-        category = html.unescape(self.otdb_question_item.json()['results'][0]['category'])
-
-        return category
-
-    def check_otdb_question_item_type(self, question_type):
-        """If the question type is 'true or false',
-        a new call is made to get a bit more challenging question.
+    def get_otdb_question_item(self, timeout=3):
+        """Calls the Open Trivia Database API to get a random question item.
+        If the API call is successful, calls another method that ensures
+        the provided question item type is as desired, i.e. non-boolean.
 
         Args:
-            question_type (str): The type of the requested question.
+            timeout (int, optional): Time in seconds after which
+            a timeout-related connection error is raised. Defaults to 3.
+        """
+
+        try:
+            url = "https://opentdb.com/api.php?amount=1"
+            self.otdb_question_item = requests.get(url, timeout=timeout)
+        except (requests.ConnectionError, requests.Timeout):
+            self.otdb_question_item = None
+
+        if self.otdb_question_item is not None:
+            question_type = html.unescape(self.otdb_question_item.json()['results'][0]['type'])
+            self.check_otdb_question_item_type(question_type)
+
+    def get_otdb_question_item_category(self):
+        """Provides the category of an Open Trivia Database question item.
+        If the API call has previously been unsuccessful, the method returns None.
+
+        Returns:
+            category (str or None): The current category.
+        """
+
+        if self.otdb_question_item is not None:
+            category = html.unescape(self.otdb_question_item.json()['results'][0]['category'])
+        else:
+            category = None
+
+        return category
+
+    def check_otdb_question_item_type(self, question_type, timeout=3):
+        """If the question item type is 'boolean' (i.e. a 'true-or-false' question,
+        a new Open Trivia Database API call is made to get a more challenging question.
+
+        Args:
+            question_type (str, optional): The question type. Defaults to None.
+            timeout (int, optional): Time in seconds after which
+            a timeout-related connection error is raised. Defaults to 3.
         """
 
         if question_type == 'boolean':
-            self.otdb_question_item = requests.get(
-                "https://opentdb.com/api.php?amount=1&type=multiple"
-            )
+            try:
+                url = "https://opentdb.com/api.php?amount=1&type=multiple"
+                self.otdb_question_item = requests.get(url, timeout=timeout)
+            except (requests.ConnectionError, requests.Timeout):
+                self.otdb_question_item = None
 
     def get_question_for_player(self):
         """Provides a question from the current category by calling
@@ -275,6 +325,10 @@ class GameServices:
 
         return answer
 
+    # -------------------------------------------------------------------------
+    # Methods related to ending a player's turn:
+    # -------------------------------------------------------------------------
+
     def update_current_turn(self):
         """Updates the turn counter to point to the next player.
         The counter resets when it equals the number of players.
@@ -288,19 +342,6 @@ class GameServices:
             self.current_turn = 0
 
         return self.current_turn
-
-    def get_default_player_points(self):
-        """Provides default player points.
-
-        Returns:
-            self.player_points (list): The default player points.
-        """
-
-        for player in range(len(self.players)):
-            for category in range(len(self.categories)):
-                self.player_points.append((player, category, 0))
-
-        return self.player_points
 
     def add_point_to_player(self):
         """Provides updated player points by checking whether
@@ -337,6 +378,10 @@ class GameServices:
                 self.player_points[i] = remove_point
 
         return self.player_points
+
+    # -------------------------------------------------------------------------
+    # Methods related to ending the game:
+    # -------------------------------------------------------------------------
 
     def check_victory_condition(self, player_starting_laps):
         """Checks whether the current player's new position is on or over

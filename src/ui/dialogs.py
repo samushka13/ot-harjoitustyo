@@ -19,7 +19,7 @@ def show_login_error_dialog():
 
 def show_login_success_dialog(username: str):
     return messagebox.showinfo(
-        "Logged in!",
+        "Logged In!",
         f"Welcome back, {username}!",
     )
 
@@ -36,7 +36,7 @@ def show_registration_error_dialog():
         \n\nIf the problem persists, try reinstalling the software.",
     )
 
-def show_users_dialog(users):
+def show_users_dialog(users: str):
     return messagebox.showinfo(
             "Users",
             f"List of users on this device: \n\n{users}",
@@ -48,37 +48,26 @@ def show_no_users_dialog():
             "There are currently no users on this device.",
         )
 
-def show_no_otdb_connection_dialog():
-    return messagebox.showinfo(
-            "Connection Error",
-            "Could not connect to the Open Trivia Database.\
-            \n\nThere are two possible reasons for this:\
-            \n1. This device is not connected to the internet.\
-            \n2. The Open Trivia Database servers are down.\
-            \n\nIn any case, you can still play, but without any Open Trivia DB categories.\
-            \n\nIf you don't have any other categories, now might be a good time to create some.\n",
-        )
-
 # -------------------------------------------------------------------------
 # Settings:
 # -------------------------------------------------------------------------
 
 def show_player_number_error_dialog():
     return messagebox.showinfo(
-        "No players added",
+        "No Players Added",
         "At least one player must be added to start a new game.\
         \n\nYou can type in a custom name or select one from predefined values.\n"
     )
 
 def show_player_name_error_dialog():
     return messagebox.showinfo(
-        "Player name error",
+        "Player Name Error",
         "Players must be given unique names."
     )
 
 def show_category_number_error_dialog():
     return messagebox.showinfo(
-        "Not enough categories",
+        "Not Enough Categories",
         "At least two categories must be added to start a new game.\
         \n\nYou can select them using the category dropdown lists.\
         \n\nIf the lists are empty, try creating some questions in the Custom Content view.\n"
@@ -97,13 +86,24 @@ and thus so are all such questions used in this program as well.
 """,
         )
 
+def show_no_otdb_connection_dialog():
+    return messagebox.showinfo(
+            "Connection Error",
+            "Could not connect to the Open Trivia Database.\
+            \n\nThere are two possible reasons for this:\
+            \n1. This device has no internet connection.\
+            \n2. The Open Trivia DB servers are down.\
+            \n\nYou can still play, but without Open Trivia DB categories.\
+            \n\nIf you don't have any other categories, now might be a good time to create some.\n",
+        )
+
 # -------------------------------------------------------------------------
 # Custom Content:
 # -------------------------------------------------------------------------
 
 def show_invalid_input_lengths():
     return messagebox.showinfo(
-        "Invalid input lengths",
+        "Invalid Input Lengths",
         "Ensure that the text input lengths are within the following limits:\
         \n\nCategory: 1-30 characters\
         \nQuestion: 1-300 characters\
@@ -162,27 +162,35 @@ def show_delete_all_confirmation_dialog():
 def show_delete_all_information_dialog(number: int):
     if number == 0:
         dialog = messagebox.showinfo(
-        "Nothing to delete",
+        "Nothing To Delete",
         "No questions were deleted, as they belong to other usernames."
     )
     elif number == 1:
         dialog = messagebox.showinfo(
-        "Delete Succesful",
+        "Delete Successful",
         f"{number} question was deleted."
     )
     else:
         dialog = messagebox.showinfo(
-        "Delete Succesful",
+        "Delete Successful",
         f"{number} questions were deleted."
     )
 
     return dialog
 
 # -------------------------------------------------------------------------
-# Game Sessions:
+# Game Session:
 # -------------------------------------------------------------------------
 
-def quit_game_dialog():
+def show_error_while_retrieving_category_dialog():
+    return messagebox.askquestion(
+        "Category Error",
+        "There was an error trying to get a category from the Open Trivia Database.\
+        \n\nDo you want to try again ('yes'),\
+        \nor quit the game ('no')?\n"
+    )
+
+def show_quit_game_dialog():
     return messagebox.askquestion(
         "Quit Game",
         "Are you sure you want to quit this game?"
@@ -190,6 +198,6 @@ def quit_game_dialog():
 
 def show_player_victory_dialog(player: str):
     return messagebox.showinfo(
-        "The game has ended",
+        "The Game Has Ended",
         f"Congratulations, {player}, you are victorious!"
     )

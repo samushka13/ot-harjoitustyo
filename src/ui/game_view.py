@@ -10,7 +10,8 @@ from ui.settings_view import settings_view
 from ui.rules_view import rules_view
 from ui.statistics_view import StatisticsView
 from ui.dialogs import (
-    quit_game_dialog,
+    show_error_while_retrieving_category_dialog,
+    show_quit_game_dialog,
     show_player_victory_dialog,
 )
 from ui.widgets import (
@@ -144,7 +145,7 @@ class GameView:
         """Builds buttons for showing rules and statistics,
         and quitting the current game session."""
 
-        button(self.window, "Quit", self._quit_game,
+        button(self.window, "Quit", self._handle_quit_game,
         ).place(x=1260, y=30, anchor="e")
 
         button(self.window, "Rules", self._open_rules_view,
@@ -211,18 +212,33 @@ class GameView:
 
     def _handle_question_phase(self):
         """Shows the current category and question,
-        and builds a button for showing the correct answer."""
+        and builds a button for showing the correct answer.
 
-        self.service.get_category_for_player()
-        self.category_board.highlight_category(self.service.current_category_index)
+        If an error occurs while retrieving a category from the Open Trivia Database,
+        i.e. the category is None, calls another method that will handle the situation,
+        so that the UI won't get stuck in an unplayable state."""
 
-        self.question_textbox = display_textbox(self.window, 7, 45)
-        self.question_textbox.place(x=30, y=285, anchor="w")
-        self.question_textbox.insert(tk.END, self.service.get_question_for_player())
-        self.question_textbox.config(state=DISABLED)
+        if self.service.get_category_for_player() is None:
+            self._handle_category_error()
+        else:
+            self.category_board.highlight_category(self.service.current_category_index)
 
-        self.show_answer_btn = button(self.window, "Show answer", self._show_answer)
-        self.show_answer_btn.place(x=280, y=420, anchor="center")
+            self.question_textbox = display_textbox(self.window, 7, 45)
+            self.question_textbox.place(x=30, y=285, anchor="w")
+            self.question_textbox.insert(tk.END, self.service.get_question_for_player())
+            self.question_textbox.config(state=DISABLED)
+
+            self.show_answer_btn = button(self.window, "Show answer", self._show_answer)
+            self.show_answer_btn.place(x=280, y=420, anchor="center")
+
+    def _handle_category_error(self):
+        """If an error occurs while retrieving a category from the Open Trivia Database,
+        shows a dialog that lets the user choose whether to try again or quit the game."""
+
+        if show_error_while_retrieving_category_dialog() == "yes":
+            self._handle_question_phase()
+        else:
+            self._open_settings_view()
 
     def _show_answer(self):
         """Shows the correct answer and buttons for confirming
@@ -297,12 +313,12 @@ class GameView:
         show_player_victory_dialog(player_name)
         self._open_settings_view()
 
-    def _quit_game(self):
+    def _handle_quit_game(self):
         """Shows a dialog with confirmation buttons. If the user selects 'yes',
         calls a services class method which removes the game's active status
         and then another method which handles the view change."""
 
-        if quit_game_dialog() == 'yes':
+        if show_quit_game_dialog() == "yes":
             self._open_settings_view()
 
     def _open_settings_view(self):

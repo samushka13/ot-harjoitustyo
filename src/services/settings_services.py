@@ -21,7 +21,6 @@ class SettingsServices:
         self.player_colors = []
         self.categories = []
         self.category_colors = []
-        self.difficulty_names = []
         self.board_size = None
 
     def get_default_players(self):
@@ -53,10 +52,10 @@ class SettingsServices:
         so increasing the number here would require changes in the UI as well.
 
         Returns:
-            default_player_colors (list): The player colors as string values.
+            player_colors (list): The player colors as string values.
         """
 
-        default_player_colors = [
+        player_colors = [
             "IndianRed1",
             "lime green",
             "DeepSkyBlue2",
@@ -65,7 +64,7 @@ class SettingsServices:
             "chocolate1",
         ]
 
-        return default_player_colors
+        return player_colors
 
     def get_default_board_sizes(self):
         """Provides a list of default board sizes.
@@ -120,10 +119,10 @@ class SettingsServices:
         for the added colors to be actually shown.
 
         Returns:
-            self.category_colors (list): The category colors as string values.
+            category_colors (list): The category colors as string values.
         """
 
-        self.category_colors = [
+        category_colors = [
             "black",
             "red2",
             "gold2",
@@ -138,7 +137,7 @@ class SettingsServices:
             "cyan4",
         ]
 
-        return self.category_colors
+        return category_colors
 
     def get_default_difficulties(self):
         """Provides a list of default difficulty names.
@@ -148,16 +147,16 @@ class SettingsServices:
         Therefore, changing this is not recommended.
 
         Returns:
-            self.difficulty_names (list): The difficulty names as string values.
+            difficulty_names (list): The difficulty names as string values.
         """
 
-        self.difficulty_names = [
+        difficulty_names = [
             "Easy",
             "Intermediate",
             "Advanced Triviliast"
         ]
 
-        return self.difficulty_names
+        return difficulty_names
 
     def collect_player_settings(self, added_players):
         """Provides a list of player names from user inputs.
@@ -165,9 +164,6 @@ class SettingsServices:
 
         Args:
             added_players (list): The selected player names as string values.
-
-        Returns:
-            self.players (list): The selected player names as string values.
         """
 
         self.players = []
@@ -175,20 +171,12 @@ class SettingsServices:
             if entry.get() != "" and entry.get() != "Add player":
                 self.players.append(entry.get())
 
-        return self.players
-
     def collect_player_color_settings(self):
         """Provides a list of player colors from default values.
         Can be expanded so that it takes the values from user inputs,
-        when the UI accommodates such a feature.
+        when the UI accommodates such a feature."""
 
-        Returns:
-            player_colors (list): The player colors as string values.
-        """
-
-        player_colors = self.get_default_player_colors()
-
-        return player_colors
+        self.player_colors = self.get_default_player_colors()
 
     def collect_category_settings(self, added_categories):
         """Provides a list of category names from user inputs.
@@ -196,9 +184,6 @@ class SettingsServices:
 
         Args:
             added_categories (list): The selected categories as string values.
-
-        Returns:
-            self.categories (list): The string values of the selected category names.
         """
 
         self.categories = []
@@ -206,36 +191,23 @@ class SettingsServices:
             if category.get() not in ("", "Add category"):
                 self.categories.append(category.get())
 
-        return self.categories
-
     def collect_category_color_settings(self):
         """Provides a list of category colors from default values.
         Can be expanded so that it takes the values from user inputs,
-        when the UI accommodates such a feature.
+        when the UI accommodates such a feature."""
 
-        Returns:
-            category_colors (list): The category colors as string values.
-        """
-
-        category_colors = self.get_default_category_colors()
-
-        return category_colors
+        self.category_colors = self.get_default_category_colors()
 
     def collect_board_size_settings(self, selected_board_size):
         """Provides the board size from user input.
 
         Args:
             selected_board_size (str): The name of the selected board size.
-
-        Returns:
-            self.board_size (int): The selected board size.
         """
 
         for i in range(0, len(self.get_default_board_sizes())):
             if selected_board_size.get() == [x[0] for x in self.get_default_board_sizes()][i]:
                 self.board_size = [x[1] for x in self.get_default_board_sizes()][i]
-
-        return self.board_size
 
     def check_settings_validity(self):
         """Checks the settings and Open Trivia DB connection validity
@@ -300,21 +272,15 @@ class SettingsServices:
         except (requests.ConnectionError, requests.Timeout):
             return False
 
-    def handle_session_save(self, players, categories, board_size):
+    def handle_session_save(self):
         """Calls database class methods which ensure that no other game session is active
         and then save the current game session variables to the database.
 
         The difficulty is injected as an empty string value (""), as difficulty selection is
-        currently not supported.
-
-        Args:
-            players (list): The selected players.
-            categories (list): The selected categories.
-            board_size (int): The selected board size.
-        """
+        currently not supported."""
 
         self.database.remove_game_active_status()
-        self.database.save_session_variables("", board_size, players, categories)
+        self.database.save_session_variables("", self.board_size, self.players, self.categories)
 
     def logout_users(self):
         """Calls a DatabaseServices class method to remove all logged in users

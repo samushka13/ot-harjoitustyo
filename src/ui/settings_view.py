@@ -119,8 +119,10 @@ class SettingsView:
         ).grid(column=2, row=14, padx=X)
 
     def _build_player_entries(self):
-        """Builds the player name entry widgets. The default value of the
-        first entry widget is set to the currently logged in user's username.
+        """Builds the player name entry widgets with a loop.
+
+        The default value of the first entry widget is
+        set to the currently logged in user's username.
 
         Returns:
             player_comboboxes (list): Widgets for selecting players.
@@ -141,8 +143,10 @@ class SettingsView:
         return player_comboboxes
 
     def _build_category_comboboxes(self):
-        """Builds the category selection widgets. Sets the random
-        Open Trivia DB category as default value for the first two boxes.
+        """Builds the category selection widgets with a loop.
+
+        The default value of the first two boxes is
+        set to the Open Trivia Database category.
 
         Returns:
             category_comboboxes (list): Widgets for selecting categories.
@@ -179,20 +183,25 @@ class SettingsView:
         return board_size_combobox
 
     def _handle_game_start_event(self):
-        """Calls SettingsServices class methods which collect and validate
-        the selected settings, and accommodates the UI accordingly."""
+        """Calls other methods which handle the collection and validation
+        of the selected settings, then accommodates the UI accordingly."""
 
-        players = self.service.collect_player_settings(self.players)
-        player_colors = self.service.collect_player_color_settings()
-        categories = self.service.collect_category_settings(self.categories)
-        category_colors = self.service.collect_category_color_settings()
-        board_size = self.service.collect_board_size_settings(self.board_size)
+        self._handle_settings_collection()
 
         if self.service.check_settings_validity() is True:
-            self.service.handle_session_save(players, categories, board_size)
-            self._open_game_view(player_colors, category_colors)
+            self.service.handle_session_save()
+            self._open_game_view()
         else:
             self._handle_game_not_being_able_to_start()
+
+    def _handle_settings_collection(self):
+        """Calls services class methods which collect the selected settings."""
+
+        self.service.collect_player_settings(self.players)
+        self.service.collect_player_color_settings()
+        self.service.collect_category_settings(self.categories)
+        self.service.collect_category_color_settings()
+        self.service.collect_board_size_settings(self.board_size)
 
     def _handle_game_not_being_able_to_start(self):
         """Accommodates the UI based on the reason why a game
@@ -220,17 +229,12 @@ class SettingsView:
 
         rules_view.initialize_window()
 
-    def _open_game_view(self, player_colors, category_colors):
-        """Destroys the current window and initializes a new one.
-
-        Args:
-            player_colors (list): The default player colors as string values.
-            category_colors (list): The default category colors as string values.
-        """
+    def _open_game_view(self):
+        """Destroys the current window and initializes a new one."""
 
         from ui.game_view import GameView
         self.window.destroy()
-        GameView(player_colors, category_colors).initialize_window()
+        GameView(self.service.player_colors, self.service.category_colors).initialize_window()
 
     def _handle_logout(self):
         """Calls SettingsServices class methods which logs out all users,

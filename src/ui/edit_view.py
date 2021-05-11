@@ -31,7 +31,7 @@ class EditView:
 
         Args:
             selected: The question class entity selected for editing.
-            service: The current services class entity.
+            service: The current services class entity. Defaults to custom_content_services.
         """
 
         self.window = None
@@ -48,7 +48,9 @@ class EditView:
         self.window = tk.Tk()
         get_window_settings(self.window, EDIT_QUESTION_WINDOW_NAME, EDIT_QUESTION_WINDOW_SIZE)
         self._build_layout()
-        self._build_widgets()
+        self._build_label_widgets()
+        self._build_entry_widgets()
+        self._build_button_widgets()
         self.window.mainloop()
 
     def _build_layout(self):
@@ -58,8 +60,8 @@ class EditView:
         for i in (0,10):
             self.window.grid_rowconfigure(i, weight=3)
 
-    def _build_widgets(self):
-        """Builds the widgets of the parent window."""
+    def _build_label_widgets(self):
+        """Builds the label widgets of the parent window."""
 
         title_label(self.window, "Edit"
         ).grid(column=0, row=0, columnspan=2, padx=X)
@@ -67,13 +69,22 @@ class EditView:
         basic_label(self.window, "Category"
         ).grid(column=0, row=1, columnspan=2, padx=X, pady=Y)
 
+        basic_label(self.window, "Difficulty",
+        ).grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
+
+        basic_label(self.window, "Question",
+        ).grid(column=0, row=5, columnspan=2, padx=X, pady=Y)
+
+        basic_label(self.window, "Answer",
+        ).grid(column=0, row=7, columnspan=2, padx=X, pady=Y)
+
+    def _build_entry_widgets(self):
+        """Builds the widgets of the parent window."""
+
         self.category_combobox = combobox(self.window, 43)
         self.category_combobox['values'] = self.service.get_categories()
         self.category_combobox.set(self.service.get_item_for_editing(self.selected)[0])
         self.category_combobox.grid(column=0, row=2, columnspan=2, padx=X)
-
-        basic_label(self.window, "Difficulty",
-        ).grid(column=0, row=3, columnspan=2, padx=X, pady=Y)
 
         self.difficulty_combobox = combobox(self.window, 43)
         self.difficulty_combobox['values'] = self.service.get_difficulties()
@@ -81,19 +92,16 @@ class EditView:
         self.difficulty_combobox.set(self.service.get_item_for_editing(self.selected)[1])
         self.difficulty_combobox.grid(column=0, row=4, columnspan=2, padx=X)
 
-        basic_label(self.window, "Question",
-        ).grid(column=0, row=5, columnspan=2, padx=X, pady=Y)
-
-        self.question_entry = edit_textbox(self.window, 6, 50)
+        self.question_entry = edit_textbox(self.window, 6)
         self.question_entry.grid(column=0, row=6, columnspan=2, padx=X)
         self.question_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[2])
 
-        basic_label(self.window, "Answer",
-        ).grid(column=0, row=7, columnspan=2, padx=X, pady=Y)
-
-        self.answer_entry = edit_textbox(self.window, 4, 50)
+        self.answer_entry = edit_textbox(self.window, 4)
         self.answer_entry.grid(column=0, row=8, columnspan=2, padx=X)
         self.answer_entry.insert(tk.END, self.service.get_item_for_editing(self.selected)[3])
+
+    def _build_button_widgets(self):
+        """Builds the button widgets of the parent window."""
 
         button(self.window, "Save", self._handle_question_item_update
         ).grid(column=0, row=10)

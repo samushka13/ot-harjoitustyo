@@ -36,4 +36,5 @@
 |  8.5. |  2  | Koodin, testien ja dokumentaation kiillottelua.                     |
 |  9.5. |  4  | Kysymysten hakeminen Open Trivia Databasesta toteutettu.            |
 | 10.5. |  3  | Dokumentaatiota päivitetty. Koodin ja UI:n parantelua.              |
-|  yht. | 94  |                                                                     |
+| 11.5. |  1  | Virhetilanteiden käsittelyn, koodin ja dokumentaation parantelua.   |
+|  yht. | 95  |                                                                     |

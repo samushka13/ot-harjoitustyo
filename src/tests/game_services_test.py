@@ -52,13 +52,9 @@ class TestGameServices(unittest.TestCase):
         self.assertEqual(len(self.service.categories), 3)
         self.assertEqual(self.service.categories[0], "TV")
 
-    def test_calculate_segment_size(self):
+    def test_board_segment_calculations(self):
         self.assertEqual(self.service.calculate_segment_size(), 120)
-
-    def test_calculate_number_of_segments(self):
         self.assertEqual(self.service.calculate_number_of_segments(), 3)
-
-    def test_get_category_places(self):
         self.assertEqual(self.service.get_category_places(), [[1], [2]])
 
     def test_update_player_positions_radii(self):
@@ -84,10 +80,8 @@ class TestGameServices(unittest.TestCase):
         self.assertEqual(self.service.count_laps(1, [360, 360, 360, 360, 360, 360], 180), 180)
         self.assertEqual(self.service.laps, [1, 3, 0, 0, 0, 0])
 
-    def test_get_die_faces(self):
-        self.assertEqual(self.service.get_die_faces()[0][1], 1)
-
     def test_get_die_face(self):
+        self.assertEqual(self.service.get_die_faces()[0][1], 1)
         self.assertEqual(self.service.get_die_face()[1] in range(1,7), True)
 
     def test_get_question_for_player_flow_with_different_categories(self):
@@ -107,12 +101,24 @@ class TestGameServices(unittest.TestCase):
                 self.assertEqual(question is not None, True)
                 self.assertEqual(answer is not None, True)
 
-    def test_check_otdb_question_item_type(self):
+    def test_get_otdb_question_item_and_category_when_connection_is_ok(self):
+        self.service.get_otdb_question_item()
+        self.assertNotEqual(self.service.otdb_question_item, None)
+        self.assertNotEqual(self.service.get_otdb_question_item_category(), None)
+
+    def test_get_otdb_question_item_and_category_when_connection_is_not_ok(self):
+        self.service.get_otdb_question_item(timeout=0.0001)
+        self.assertEqual(self.service.otdb_question_item, None)
+        self.assertEqual(self.service.get_otdb_question_item_category(), None)
+
+    def test_check_otdb_question_item_type_when_connection_is_ok(self):
         self.service.check_otdb_question_item_type('boolean')
-        self.assertEqual(
-            html.unescape(self.service.otdb_question_item.json()['results'][0]['type']),
-            'multiple',
-        )
+        type_after = html.unescape(self.service.otdb_question_item.json()['results'][0]['type'])
+        self.assertEqual(type_after, 'multiple')
+
+    def test_check_otdb_question_item_type_when_connection_is_not_ok(self):
+        self.service.check_otdb_question_item_type('boolean', timeout=0.0001)
+        self.assertEqual(self.service.otdb_question_item, None)
 
     def test_update_current_turn(self):
         self.assertEqual(self.service.current_turn, 0)

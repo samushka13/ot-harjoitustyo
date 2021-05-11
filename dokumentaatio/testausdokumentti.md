@@ -33,8 +33,7 @@ Käyttöohjeen mukainen asennus ja erilaiset konfiguraatiot on testattu macOS- j
 
 ## Sovellukseen jääneet laatuongelmat
 
-Sovellukseen jäi kolme reunatapausta, joiden yhteydessä sovellus ei toimi toivotulla tavalla. Sovellus ei nimittäin osaa esittää käyttäjälle käyttöliittymän kautta järkevää virheilmoitusta, mikäli
+Sovellukseen jäi vain kaksi reunatapausta, joiden yhteydessä sovellus ei toimi toivotulla tavalla. Sovellus ei nimittäin osaa esittää käyttäjälle käyttöliittymän kautta järkevää virheilmoitusta, mikäli
 
-1. internet-yhteys katkeaa kesken pelin, johon on valittu mukaan [Open Trivia Databasesta](https://opentdb.com/api_config.php) haettuja kategorioita,
-2. konfiguraatiossa määriteltyihin tiedostoihin ei ole luku- tai kirjoitusoikeuksia,
-3. käyttäjä poistaa jonkin sovelluksen käyttämän tiedoston (kuten tietokannan) kesken sovelluksen käytön.
+1. konfiguraatiossa määriteltyihin tiedostoihin ei ole luku- tai kirjoitusoikeuksia,
+2. käyttäjä poistaa jonkin sovelluksen käyttämän tiedoston (kuten tietokannan) kesken sovelluksen käytön.

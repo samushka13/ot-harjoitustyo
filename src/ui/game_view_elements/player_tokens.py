@@ -28,7 +28,7 @@ class PlayerTokens:
         self._draw_tokens()
 
     def _draw_tokens(self):
-        """Draws the player tokens onto the game board."""
+        """Draws the player tokens onto the game board with a loop."""
 
         for i in range(len(self.players)):
             token = self.canvas.create_arc(
