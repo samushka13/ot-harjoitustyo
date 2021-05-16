@@ -34,7 +34,7 @@ Huomioithan, että peli on originaali konsepti, joten mahdollisesta matkimisesta
 
        poetry run invoke start
 
-Mikäli asennuksessa ilmenee ongelmia, käänny [käyttöohjeen](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md) puoleen.
+Tarkemmat asennusohjeet löytyvät [käyttöohjeesta](https://github.com/samushka13/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md).
 
 ### Testaus
 

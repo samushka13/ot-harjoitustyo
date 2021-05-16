@@ -16,8 +16,6 @@
 
        poetry run invoke start
 
-Mikäli käynnistäessä tulee vastaan virheilmoitus siitä, ettei moduulia [requests](https://pypi.org/project/requests/) löydy, se täytyy käydä asentamassa oheisen linkin ohjeiden mukaisesti tai komennolla "pip3 install requests". Mikäli asennuksen jälkeen sovellusta käynnistäessä tulee uudelleen vastaan sama virheilmoitus, paketin asennus kannattaa tehdä virtuaaliympäristössä, eli komennon "poetry shell" jälkeen.
-
 ### Järjestelmävaatimukset
 
 Mikäli pelisessioon valitaan kategoria "Random (Open Trivia DB)", joka hakee tietoja kutsumalla [Open Trivia Database API:a](https://opentdb.com/api_config.php), internet-yhteys on välttämätön. Omilla kategorioilla pelatessa internet-yhteyttä ei tarvita.

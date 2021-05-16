@@ -37,4 +37,5 @@
 |  9.5. |  4  | Kysymysten hakeminen Open Trivia Databasesta toteutettu.            |
 | 10.5. |  3  | Dokumentaatiota päivitetty. Koodin ja UI:n parantelua.              |
 | 11.5. |  1  | Virhetilanteiden käsittelyn, koodin ja dokumentaation parantelua.   |
-|  yht. | 95  |                                                                     |
+| 16.5. |  1  | Korjattu poetryyn liittyvä puute. Loppupalautuksen testailua.       |
+|  yht. | 96  |                                                                     |
